@@ -21,7 +21,7 @@ const SiteHeader = () => {
   }, [location]);
 
   const menuItems = [
-    { number: "01", label: "Sobre", path: "/#sobre" },
+    { number: "01", label: "Sobre", path: "/sobre" },
     { number: "02", label: "Projetos", path: "/projetos" },
     { number: "03", label: "Serviços", path: "/#servicos" },
   ];
