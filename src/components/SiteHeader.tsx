@@ -29,22 +29,23 @@ const SiteHeader = () => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-8 md:px-20 lg:px-28 py-6 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-[999] transition-all duration-500 ${
           isMenuOpen 
             ? "bg-background/90 backdrop-blur-md" 
             : "bg-transparent"
         }`}
       >
-        {/* --- LADO ESQUERDO: LOGO --- */}
-        <div className="z-[1000] shrink-0">
-          <Link to="/" className="hover:opacity-80 transition-opacity">
-            <img 
-              src={logoDelongWhite}
-              alt="Delong Media House" 
-              className="h-10 md:h-12 w-auto object-contain" 
-            />
-          </Link>
-        </div>
+        <div className="max-w-7xl mx-auto w-full px-8 md:px-12 py-6 flex justify-between items-center">
+          {/* --- LADO ESQUERDO: LOGO --- */}
+          <div className="z-[1000] shrink-0">
+            <Link to="/" className="hover:opacity-80 transition-opacity">
+              <img 
+                src={logoDelongWhite}
+                alt="Delong Media House" 
+                className="h-10 md:h-12 w-auto object-contain" 
+              />
+            </Link>
+          </div>
 
         {/* --- LADO DIREITO: GRUPO UNIFICADO --- */}
         <div className="flex items-center gap-6 z-[1000]">
@@ -96,6 +97,7 @@ const SiteHeader = () => {
             Contato <span>→</span>
           </Link>
 
+        </div>
         </div>
       </motion.nav>
 
