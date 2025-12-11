@@ -34,7 +34,7 @@ const HeroSection = () => {
       }} className="flex justify-between items-center w-full">
           {/* LADO ESQUERDO: MARCA */}
           <div className="w-auto">
-            <img src={logoDelongWhite} alt="Delong Media House" className="h-8 md:h-10 w-auto" />
+            <img src={logoDelongWhite} alt="Delong Media House" className="h-12 md:h-14 w-auto" />
           </div>
 
           {/* CENTRO: MENU NUMERADO (Sem Blog) */}
