@@ -98,9 +98,9 @@ const ProjectsPage = () => {
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tighter mb-12"
+            className="text-6xl md:text-8xl lg:text-[7rem] font-medium tracking-tighter mb-12 uppercase"
           >
-            Todos os Projetos
+            Projetos
           </motion.h1>
 
           {/* FILTRO LIMPO (Apenas "ALL") */}
