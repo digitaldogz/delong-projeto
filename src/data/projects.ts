@@ -64,6 +64,7 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop",
     description: "Convenção internacional realizada em Hanói reunindo delegações de mais de 50 países para discussões sobre segurança global.",
     fullDescription: "Um evento de três dias com painéis, workshops e networking, projetado para facilitar a cooperação internacional em segurança pública.",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-people-walking-in-a-busy-street-1284-large.mp4",
     gallery: [
       "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1475721027785-f74eccf877e2?q=80&w=2070&auto=format&fit=crop",
@@ -81,6 +82,7 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=1973&auto=format&fit=crop",
     description: "Campanha digital multicanal focada em construir confiança e segurança no ambiente digital para consumidores e empresas.",
     fullDescription: "A campanha alcançou mais de 10 milhões de pessoas através de redes sociais, TV e mídia digital, estabelecendo novos padrões de comunicação sobre segurança cibernética.",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-a-city-2598-large.mp4",
     gallery: [
       "https://images.unsplash.com/photo-1551818255-e6e10975bc17?q=80&w=1973&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop",
@@ -116,6 +118,7 @@ export const projects: Project[] = [
     image: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1770&auto=format&fit=crop",
     description: "Concerto exclusivo para clientes VIP do MSB Bank, apresentando artistas internacionais em uma noite memorável.",
     fullDescription: "Evento para 500 convidados selecionados com produção de palco de última geração, catering premium e experiências personalizadas.",
+    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-dj-playing-music-at-a-concert-4306-large.mp4",
     gallery: [
       "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=1770&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2070&auto=format&fit=crop",
