@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 
 const projects = [
   {
     id: 1,
     size: "large",
+    slug: "hanoi-convention",
     title: "HANOI CONVENTION",
     client: "Ministry of Public Security",
     year: "2025",
@@ -14,6 +16,7 @@ const projects = [
   {
     id: 2,
     size: "large",
+    slug: "brave-warrior",
     title: "THE BRAVE WARRIOR",
     client: "Reality TV Show",
     year: "2025",
@@ -23,6 +26,7 @@ const projects = [
   {
     id: 3,
     size: "small",
+    slug: "msb-private-concert",
     title: "SOUL OF THE NATION",
     client: "MSB Bank",
     year: "2025",
@@ -32,6 +36,7 @@ const projects = [
   {
     id: 4,
     size: "small",
+    slug: "exhibition-public-security",
     title: "RED STAGE LIVE",
     client: "Viettel",
     year: "2025",
@@ -41,6 +46,7 @@ const projects = [
   {
     id: 5,
     size: "small",
+    slug: "vinfast-fierce-spirit",
     title: "BLUE HORIZON",
     client: "VietinBank",
     year: "2025",
@@ -50,6 +56,7 @@ const projects = [
   {
     id: 6,
     size: "small",
+    slug: "campaign-we-got-you",
     title: "VICTORY PATH",
     client: "Gov",
     year: "2025",
@@ -77,8 +84,9 @@ const SelectedCases = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
         
         {projects.map((project) => (
-          <div 
-            key={project.id} 
+          <Link 
+            key={project.id}
+            to={`/projeto/${project.slug}`}
             className={`group cursor-pointer flex flex-col gap-4 ${
               project.size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'
             }`}
@@ -120,16 +128,16 @@ const SelectedCases = () => {
                  </span>
                </div>
             </div>
-          </div>
+          </Link>
         ))}
 
       </div>
       
       {/* Botão de Ver Todos */}
       <div className="mt-20 flex justify-center">
-        <a href="#" className="text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors">
+        <Link to="/projetos" className="text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors">
           View All Projects
-        </a>
+        </Link>
       </div>
 
     </section>
