@@ -4,7 +4,7 @@ import { ArrowUpRight, Instagram, Facebook, Linkedin, Twitter } from 'lucide-rea
 const Footer = () => {
   return (
     <footer className="w-full bg-background text-foreground border-t border-border">
-      <div className="max-w-7xl mx-auto px-8 md:px-12 grid grid-cols-1 lg:grid-cols-2">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-12 grid grid-cols-1 lg:grid-cols-2">
         
         {/* LADO ESQUERDO: Identidade e Botão Gigante */}
         <div className="py-8 md:py-16 lg:py-24 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-between min-h-[500px]">
@@ -80,7 +80,7 @@ const Footer = () => {
       </div>
 
       {/* COPYRIGHT BAR */}
-      <div className="max-w-7xl mx-auto w-full border-t border-border py-6 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground/60 uppercase tracking-wider">
+      <div className="max-w-[1400px] mx-auto w-full border-t border-border py-6 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground/60 uppercase tracking-wider">
         <span>© 2025 ZEIT MEDIA. All rights reserved.</span>
         <div className="flex gap-6 mt-4 md:mt-0">
           <a href="#" className="hover:text-foreground">Privacy Policy</a>

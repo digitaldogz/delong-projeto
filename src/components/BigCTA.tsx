@@ -7,7 +7,7 @@ const BigCTA = () => {
       {/* Elemento Decorativo de Fundo (Glow Vermelho) */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-destructive/20 rounded-full blur-[120px] pointer-events-none"></div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-8 md:px-12 text-center md:text-left w-full">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-12 text-center md:text-left w-full">
         <h2 className="font-black text-foreground leading-[0.9] tracking-tighter uppercase select-none">
           <span className="block text-5xl md:text-[7rem] lg:text-[9rem] hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-foreground hover:to-muted-foreground transition-all duration-500">
             Let's Create

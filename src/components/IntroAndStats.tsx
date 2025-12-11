@@ -48,7 +48,7 @@ const IntroAndStats = () => {
       
       {/* --- SEÇÃO 1: INTRO (ABOUT) --- */}
       <section className="relative w-full py-32 px-8 md:px-12 border-t border-border">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
+        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
           
           {/* Coluna Esquerda: Label "About Us" */}
           <div className="md:col-span-3 flex items-start gap-3">
@@ -87,7 +87,7 @@ const IntroAndStats = () => {
         <div className="absolute inset-0 z-0 bg-gradient-to-b from-zinc-900/50 to-background"></div>
 
         {/* Conteúdo dos Números */}
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12">
+        <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
             
             <motion.div 

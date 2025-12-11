@@ -68,7 +68,7 @@ const projects = [
 const SelectedCases = () => {
   return (
     <section className="w-full bg-background py-24 border-t border-border">
-      <div className="max-w-7xl mx-auto px-8 md:px-12">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-12">
         
         {/* Cabeçalho da Seção */}
         <div className="mb-16">
