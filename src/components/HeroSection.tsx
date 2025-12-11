@@ -1,104 +1,109 @@
-import { ArrowRight, Play } from 'lucide-react';
+import React from "react";
+import { motion, type Transition } from "framer-motion";
+
+// --- Configurações de Motion Design ---
+const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1]; 
+
+const transitionText: Transition = {
+  duration: 1,
+  ease: EA_ZEIT,
+};
 
 const HeroSection = () => {
   return (
-    <div className="relative w-full min-h-screen bg-background text-foreground overflow-hidden font-sans selection:bg-destructive selection:text-destructive-foreground">
+    <div className="relative w-full h-screen bg-background text-foreground flex flex-col justify-between overflow-hidden font-sans selection:bg-foreground selection:text-background">
       
-      {/* Header */}
-      <header className="absolute top-0 left-0 w-full p-8 md:px-12 flex justify-between items-start z-50">
-        
-        {/* Logo */}
-        <div className="flex-shrink-0">
-          <span className="text-2xl font-bold tracking-tighter text-foreground">ZEIT</span>
-        </div>
-
-        {/* Navigation */}
-        <nav className="hidden md:flex flex-col items-end gap-2">
-          <ul className="flex gap-8 text-sm font-medium tracking-wide">
-            {['01 About', '02 Works', '03 Services', '04 Blog'].map((item) => (
-              <li key={item}>
-                <a 
-                  href="#" 
-                  className="text-muted-foreground hover:text-foreground transition-colors duration-300"
-                >
-                  {item}
-                </a>
-              </li>
-            ))}
-          </ul>
-          
-          {/* CTA */}
-          <a href="#" className="mt-2 flex items-center gap-2 text-sm font-bold text-foreground hover:text-primary transition-colors group">
-            CONTACT 
-            <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-          </a>
+      {/* 1. HEADER (Slide Down Suave) */}
+      <motion.header
+        initial={{ y: "-100%" }}
+        animate={{ y: "0%" }}
+        transition={{ duration: 0.8, ease: EA_ZEIT }}
+        className="w-full px-8 py-6 flex justify-between items-center border-b border-border"
+      >
+        <div className="text-xl font-bold tracking-tighter">ZEITGEIST</div>
+        <nav className="hidden md:flex gap-6 text-sm text-muted-foreground">
+          <span className="cursor-pointer hover:text-foreground transition-colors">Work</span>
+          <span className="cursor-pointer hover:text-foreground transition-colors">Studio</span>
+          <span className="cursor-pointer hover:text-foreground transition-colors">Contact</span>
         </nav>
+      </motion.header>
 
-        {/* Mobile Menu */}
-        <div className="md:hidden text-foreground cursor-pointer">
-          <div className="space-y-1.5">
-            <span className="block w-8 h-0.5 bg-foreground"></span>
-            <span className="block w-8 h-0.5 bg-foreground"></span>
+      {/* ÁREA PRINCIPAL */}
+      <main className="flex-1 flex flex-col md:flex-row items-center justify-center md:justify-between px-8 md:px-16 relative">
+        
+        {/* 2. TÍTULO PRINCIPAL (Masked Slide-Up) */}
+        <div className="z-10 flex flex-col gap-2 md:gap-4">
+          
+          {/* Linha 1 */}
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={{ y: "0%" }}
+              transition={{ 
+                ...transitionText, 
+                delay: 0.2
+              }}
+              className="text-5xl md:text-8xl font-medium tracking-tight leading-[1.1]"
+            >
+              Art Comes First
+            </motion.h1>
+          </div>
+
+          {/* Linha 2 */}
+          <div className="overflow-hidden">
+            <motion.h1
+              initial={{ y: "100%" }}
+              animate={{ y: "0%" }}
+              transition={{ 
+                ...transitionText, 
+                delay: 0.3
+              }}
+              className="text-5xl md:text-8xl font-medium tracking-tight leading-[1.1] text-muted-foreground"
+            >
+              Creative Above All
+            </motion.h1>
           </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="absolute bottom-24 left-8 md:left-12 z-20 max-w-4xl pointer-events-none">
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tighter leading-[0.9] text-foreground uppercase">
-          <span className="block">Art Comes First —</span>
-          <span className="block text-muted-foreground">Creative Above All</span>
-        </h1>
+        {/* 3. WIDGET / CARD FLUTUANTE */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ 
+            duration: 0.8, 
+            ease: EA_ZEIT, 
+            delay: 0.8
+          }}
+          className="mt-12 md:mt-0 relative w-full md:w-72 bg-foreground/5 backdrop-blur-md border border-border p-6 rounded-none md:mr-12"
+        >
+          <div className="flex justify-between items-start mb-8">
+            <span className="text-xs uppercase tracking-widest text-muted-foreground">Latest</span>
+            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          </div>
+          <h3 className="text-xl font-normal mb-2">Neon Landscapes</h3>
+          <p className="text-sm text-muted-foreground">Digital installation for the modern museum era.</p>
+          <div className="mt-6 flex items-center gap-2 text-xs font-mono border-t border-border pt-4">
+            <span>→</span>
+            <span>VIEW PROJECT</span>
+          </div>
+        </motion.div>
+
       </main>
 
-      {/* New Project Widget */}
-      <div className="absolute bottom-24 right-8 md:right-12 z-20 hidden md:block">
-        <div className="w-[300px] bg-card border border-border p-3 flex items-center gap-4 cursor-pointer hover:border-muted-foreground/50 transition-colors group">
-          
-          {/* Project Thumbnail */}
-          <div className="relative w-16 h-16 overflow-hidden flex-shrink-0">
-            <div className="absolute inset-0 bg-gradient-to-tr from-purple-900 to-blue-600 opacity-80"></div>
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Play size={20} fill="currentColor" className="text-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </div>
+      {/* 4. FOOTER (Fade In Lento) */}
+      <motion.footer
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: 1.0 }}
+        className="px-8 py-6 flex justify-between items-end text-xs text-muted-foreground uppercase tracking-widest"
+      >
+        <div>© 2024 Agency</div>
+        <div className="hidden md:block">Scroll to explore</div>
+      </motion.footer>
 
-          {/* Widget Text */}
-          <div className="flex flex-col justify-center">
-            <span className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">
-              New Project
-            </span>
-            <span className="text-xs font-bold text-foreground leading-tight group-hover:underline">
-              CAMPAIGN 'WE GOT YOU'
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="absolute bottom-6 left-0 w-full px-8 md:px-12 flex justify-between items-end z-30 text-[10px] md:text-xs font-medium tracking-widest uppercase">
-        
-        {/* Social Links */}
-        <div className="flex gap-6 text-muted-foreground/60">
-          <a href="#" className="hover:text-foreground transition-colors">Instagram</a>
-          <a href="#" className="hover:text-foreground transition-colors">Facebook</a>
-          <a href="#" className="hover:text-foreground transition-colors">Behance</a>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="hidden md:block absolute left-1/2 bottom-0 -translate-x-1/2 animate-bounce text-foreground/20">
-          ↓
-        </div>
-
-        {/* Quick Links */}
-        <div className="flex gap-6 text-foreground">
-          <a href="#" className="hover:text-primary transition-colors">[ All Works ]</a>
-          <a href="#" className="hover:text-primary transition-colors">[ Show Reel ]</a>
-        </div>
-      </footer>
-
-      {/* Background Effect */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,_hsl(var(--card))_0%,_hsl(var(--background))_70%)] opacity-40 pointer-events-none"></div>
+      {/* Elemento de Fundo para ambiência */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/10 to-transparent pointer-events-none" />
+      
     </div>
   );
 };
