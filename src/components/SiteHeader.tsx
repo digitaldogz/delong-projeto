@@ -30,9 +30,9 @@ const SiteHeader = () => {
     <>
       <motion.nav
         className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-6 md:px-12 py-6 transition-all duration-500 ${
-          isScrolled || isMenuOpen 
-            ? "bg-background/90 backdrop-blur-md border-b border-border/10" 
-            : "bg-transparent border-b border-transparent"
+          isMenuOpen 
+            ? "bg-background/90 backdrop-blur-md" 
+            : "bg-transparent"
         }`}
       >
         {/* --- LADO ESQUERDO: LOGO --- */}
