@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, type Transition } from "framer-motion";
+import logoDelongMedia from "@/assets/logo-delong.png";
 
 // --- Configurações de Motion Design ---
 const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1]; 
@@ -20,7 +21,7 @@ const HeroSection = () => {
         transition={{ duration: 0.8, ease: EA_ZEIT }}
         className="w-full px-8 py-6 flex justify-between items-center border-b border-border"
       >
-        <div className="text-xl font-bold tracking-tighter">ZEITGEIST</div>
+        <img src={logoDelongMedia} alt="Delong Media House" className="h-8 md:h-10 w-auto" />
         <nav className="hidden md:flex gap-6 text-sm text-muted-foreground">
           <span className="cursor-pointer hover:text-foreground transition-colors">Work</span>
           <span className="cursor-pointer hover:text-foreground transition-colors">Studio</span>
