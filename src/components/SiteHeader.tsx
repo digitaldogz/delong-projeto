@@ -8,14 +8,14 @@ const SiteHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  // 1. Detectar Scroll
+  // Detectar Scroll
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // 2. Fechar menu ao navegar
+  // Fechar menu ao navegar
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
@@ -29,41 +29,41 @@ const SiteHeader = () => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-8 md:px-12 py-6 transition-all duration-500 ${
-          isScrolled || isMenuOpen
-            ? "bg-background/90 backdrop-blur-md border-b border-border/10"
+        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-6 md:px-12 py-6 transition-all duration-500 ${
+          isScrolled || isMenuOpen 
+            ? "bg-background/90 backdrop-blur-md border-b border-border/10" 
             : "bg-transparent border-b border-transparent"
         }`}
       >
-        {/* --- LADO ESQUERDO: LOGO (Fixo) --- */}
-        <div className="z-[1000]">
+        {/* --- LADO ESQUERDO: LOGO --- */}
+        <div className="z-[1000] shrink-0">
           <Link to="/" className="hover:opacity-80 transition-opacity">
-            <img
+            <img 
               src={logoDelongWhite}
-              alt="Delong Media House"
-              className="h-10 md:h-12 w-auto object-contain"
+              alt="Delong Media House" 
+              className="h-10 md:h-12 w-auto object-contain" 
             />
           </Link>
         </div>
 
-        {/* --- LADO DIREITO: ÁREA DINÂMICA + CONTATO --- */}
-        <div className="flex items-center gap-6 md:gap-8 z-[1000]">
+        {/* --- LADO DIREITO: GRUPO UNIFICADO --- */}
+        <div className="flex items-center gap-6 z-[1000]">
           
-          {/* A: TROCA ENTRE TEXTO E ÍCONE (AnimatePresence) */}
+          {/* ÁREA DE TROCA (Links <-> Sanduíche) */}
           <AnimatePresence mode="wait">
             {!isScrolled && !isMenuOpen ? (
-              // ESTADO 1: LINKS DE TEXTO (Visível no topo desktop)
+              // MODO 1: LINKS DE TEXTO (Desktop no Topo)
               <motion.div
-                key="text-links"
-                initial={{ opacity: 0, x: 20 }}
+                key="text-nav"
+                initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20, transition: { duration: 0.2 } }}
+                exit={{ opacity: 0, x: 10, transition: { duration: 0.2 } }}
                 className="hidden md:flex items-center gap-8"
               >
                 {menuItems.map((item) => (
-                  <Link
-                    key={item.label}
-                    to={item.path}
+                  <Link 
+                    key={item.label} 
+                    to={item.path} 
                     className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
                   >
                     <span className="font-normal opacity-50">{item.number}</span>
@@ -72,7 +72,7 @@ const SiteHeader = () => {
                 ))}
               </motion.div>
             ) : (
-              // ESTADO 2: ÍCONE SANDUÍCHE (Visível ao rolar ou mobile)
+              // MODO 2: ÍCONE SANDUÍCHE (Rolando ou Mobile)
               <motion.button
                 key="burger-icon"
                 initial={{ opacity: 0, x: -10 }}
@@ -81,32 +81,21 @@ const SiteHeader = () => {
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="flex flex-col gap-1.5 p-2 cursor-pointer group"
               >
-                <span
-                  className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
-                    isMenuOpen ? "rotate-45 translate-y-2" : ""
-                  }`}
-                />
-                <span
-                  className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${
-                    isMenuOpen ? "opacity-0" : "opacity-100 group-hover:w-4 self-end"
-                  }`}
-                />
-                <span
-                  className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
-                    isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                  }`}
-                />
+                <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+                <span className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100 group-hover:w-4 self-end"}`} />
+                <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
               </motion.button>
             )}
           </AnimatePresence>
 
-          {/* B: BOTÃO CONTATO (Sempre Fixo) */}
-          <Link
-            to="/#contato"
-            className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity"
+          {/* BOTÃO CONTATO (SEMPRE FIXO NA PONTA) */}
+          <Link 
+            to="/#contato" 
+            className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity whitespace-nowrap"
           >
             Contato <span>→</span>
           </Link>
+
         </div>
       </motion.nav>
 
@@ -120,20 +109,17 @@ const SiteHeader = () => {
             className="fixed inset-0 bg-background z-[998] flex items-center justify-center"
           >
             <div className="flex flex-col gap-8 text-center">
-              <Link
-                to="/"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
-              >
-                Home
+              <Link to="/" onClick={() => setIsMenuOpen(false)} className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors">
+                 Home
               </Link>
               {menuItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.path}
+                <Link 
+                  key={item.label} 
+                  to={item.path} 
                   onClick={() => setIsMenuOpen(false)}
                   className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
                 >
+                  <span className="block text-sm font-mono opacity-40 mb-2 font-normal">{item.number}</span>
                   {item.label}
                 </Link>
               ))}
