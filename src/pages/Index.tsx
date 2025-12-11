@@ -4,6 +4,7 @@ import ClientCloud from "@/components/ClientCloud";
 import ServicesStatement from "@/components/ServicesStatement";
 import ServicesList from "@/components/ServicesList";
 import SelectedCases from "@/components/SelectedCases";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <ServicesStatement />
       <SelectedCases />
       <ServicesList />
+      <Footer />
     </>
   );
 };
