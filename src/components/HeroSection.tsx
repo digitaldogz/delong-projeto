@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 
 // Curva de Bezier para suavidade cinematográfica
-const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1];
+const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1]; 
 
 const transitionText = {
   duration: 1,
