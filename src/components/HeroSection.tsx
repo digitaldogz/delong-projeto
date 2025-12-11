@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import logoDelongWhite from "@/assets/logo-delong-white.png";
 
 // Configuração da animação (Suave e Premium)
 const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1];
@@ -33,10 +34,7 @@ const HeroSection = () => {
       }} className="flex justify-between items-center w-full">
           {/* LADO ESQUERDO: MARCA */}
           <div className="w-auto">
-            {/* Se tiver a imagem da logo, troque este h1 pela tag <img> */}
-            <h1 className="text-xl md:text-2xl font-bold tracking-tighter uppercase leading-none">
-              DELONG<br />MEDIA HOUSE
-            </h1>
+            <img src={logoDelongWhite} alt="Delong Media House" />
           </div>
 
           {/* CENTRO: MENU NUMERADO (Sem Blog) */}
