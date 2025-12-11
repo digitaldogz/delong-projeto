@@ -4,10 +4,10 @@ import { ArrowUpRight, Instagram, Facebook, Linkedin, Twitter } from 'lucide-rea
 const Footer = () => {
   return (
     <footer className="w-full bg-background text-foreground border-t border-border">
-      <div className="grid grid-cols-1 lg:grid-cols-2">
+      <div className="max-w-7xl mx-auto px-8 md:px-12 grid grid-cols-1 lg:grid-cols-2">
         
         {/* LADO ESQUERDO: Identidade e Botão Gigante */}
-        <div className="p-8 md:p-16 lg:p-24 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-between min-h-[500px]">
+        <div className="py-8 md:py-16 lg:py-24 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-between min-h-[500px]">
           <div>
             <h3 className="text-3xl font-bold tracking-tight mb-2">Art Comes First.</h3>
             <p className="text-muted-foreground max-w-md">
@@ -37,7 +37,7 @@ const Footer = () => {
         </div>
 
         {/* LADO DIREITO: Links e Social */}
-        <div className="p-8 md:p-16 lg:p-24 flex flex-col justify-between">
+        <div className="py-8 md:py-16 lg:py-24 flex flex-col justify-between">
           
           {/* Menu de Navegação */}
           <nav className="flex flex-col w-full">
@@ -80,7 +80,7 @@ const Footer = () => {
       </div>
 
       {/* COPYRIGHT BAR */}
-      <div className="w-full border-t border-border py-6 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground/60 uppercase tracking-wider">
+      <div className="max-w-7xl mx-auto w-full border-t border-border py-6 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground/60 uppercase tracking-wider">
         <span>© 2025 ZEIT MEDIA. All rights reserved.</span>
         <div className="flex gap-6 mt-4 md:mt-0">
           <a href="#" className="hover:text-foreground">Privacy Policy</a>
