@@ -1,46 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import logoDelongWhite from "@/assets/logo-delong-white.png";
+import SiteHeader from "@/components/SiteHeader";
 import { projects } from "@/data/projects";
 
 const ProjectsPage = () => {
   return (
     <div className="w-full bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background">
       
-      {/* HEADER IDÊNTICO AO HERO SECTION */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 md:px-12 py-8 bg-background/90 backdrop-blur-md transition-all">
-         
-         {/* LADO ESQUERDO: LOGO */}
-         <Link to="/" className="w-auto hover:opacity-80 transition-opacity">
-            <img 
-               src={logoDelongWhite}
-               alt="Delong Media House" 
-               className="h-12 md:h-14 w-auto" 
-            />
-         </Link>
+      {/* HEADER GLOBAL */}
+      <SiteHeader />
 
-         {/* CENTRO: MENU NUMERADO (Igual Hero) */}
-         <div className="hidden md:flex gap-8 text-xs font-medium uppercase tracking-widest">
-            <a href="/#sobre" className="hover:text-muted-foreground transition-colors flex items-center gap-1 text-foreground">
-               <span className="opacity-50">01</span> Sobre
-            </a>
-            <span className="flex items-center gap-1 text-foreground border-b border-foreground pb-0.5">
-               <span className="opacity-50">02</span> Projetos
-            </span>
-            <a href="/#servicos" className="hover:text-muted-foreground transition-colors flex items-center gap-1 text-foreground">
-               <span className="opacity-50">03</span> Serviços
-            </a>
-         </div>
-
-         {/* LADO DIREITO: CONTATO (Texto simples igual Hero) */}
-         <a href="/#contato" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity text-foreground">
-            Contato <span>→</span>
-         </a>
-      </nav>
-
-      {/* 2. CONTEÚDO DA PÁGINA (Com Padding Top para o header não cobrir) */}
-      <div className="pt-40 pb-24 px-6 md:px-12 lg:px-16">
+      {/* CONTEÚDO DA PÁGINA (Com Padding Top para o header não cobrir) */}
+      <div className="pt-32 pb-24 px-6 md:px-12 lg:px-16">
         
         <div className="max-w-[1600px] mx-auto mb-16 md:mb-20">
           {/* TÍTULO LIMPO */}
@@ -59,7 +31,7 @@ const ProjectsPage = () => {
           </div>
         </div>
 
-        {/* 3. GRID DE PROJETOS */}
+        {/* GRID DE PROJETOS */}
         <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
           {projects.map((project, index) => (
             <motion.div

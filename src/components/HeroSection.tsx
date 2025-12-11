@@ -1,7 +1,5 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import logoDelongWhite from "@/assets/logo-delong-white.png";
 
 // Configuração da animação (Suave e Premium)
 const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1];
@@ -20,45 +18,7 @@ const HeroSection = () => {
       </div>
 
       {/* 2. CONTEÚDO (Fica por cima do vídeo - z-20) */}
-      <div className="relative z-20 w-full h-full flex flex-col justify-between px-8 md:px-12 py-8">
-        
-        {/* HEADER TRANSPARENTE (Fixo no topo) */}
-        <motion.header initial={{
-        y: -50,
-        opacity: 0
-      }} animate={{
-        y: 0,
-        opacity: 1
-      }} transition={{
-        duration: 1,
-        ease: EA_ZEIT
-      }} className="flex justify-between items-center w-full">
-          {/* LADO ESQUERDO: MARCA */}
-          <div className="w-auto">
-            <img src={logoDelongWhite} alt="Delong Media House" className="h-12 md:h-14 w-auto" />
-          </div>
-
-          {/* CENTRO: MENU NUMERADO (Sem Blog) */}
-          <nav className="hidden md:flex gap-8 text-xs font-medium uppercase tracking-widest">
-            <a href="#sobre" className="hover:text-gray-300 transition-colors flex items-center gap-1">
-              <span className="opacity-50">01</span> Sobre
-            </a>
-            <Link to="/projetos" className="hover:text-gray-300 transition-colors flex items-center gap-1">
-              <span className="opacity-50">02</span> Projetos
-            </Link>
-            <a href="#servicos" className="hover:text-gray-300 transition-colors flex items-center gap-1">
-              <span className="opacity-50">03</span> Serviços
-            </a>
-            {/* Blog removido conforme solicitado */}
-          </nav>
-
-          {/* LADO DIREITO: CONTATO */}
-          <div>
-            <a href="#contato" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
-              Contato <span>→</span>
-            </a>
-          </div>
-        </motion.header>
+      <div className="relative z-20 w-full h-full flex flex-col justify-between px-8 md:px-12 py-8 pt-28">
 
         {/* CENTRO / TÍTULO PRINCIPAL */}
         <div className="flex-1 flex flex-col justify-center md:justify-end pb-12 md:pb-20">
