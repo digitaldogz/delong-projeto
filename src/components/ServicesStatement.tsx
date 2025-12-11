@@ -3,7 +3,7 @@ import React from 'react';
 const ServicesStatement = () => {
   return (
     <section className="w-full bg-background py-32 md:py-48 border-t border-border">
-      <div className="max-w-7xl mx-auto px-8 md:px-12 flex flex-col items-center justify-center text-center">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-12 flex flex-col items-center justify-center text-center">
         
         {/* Label Superior */}
         <div className="mb-8 md:mb-12">

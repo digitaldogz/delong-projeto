@@ -62,7 +62,7 @@ const itemVariants = {
 const ClientCloud = () => {
   return (
     <section className="w-full bg-background py-32 overflow-hidden border-t border-border">
-      <div className="max-w-7xl mx-auto px-8 md:px-12">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-12">
         {/* Label Superior */}
         <div className="flex justify-center mb-16">
           <span className="text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase">
