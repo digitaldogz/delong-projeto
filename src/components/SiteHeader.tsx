@@ -6,15 +6,22 @@ import logoDelongWhite from "@/assets/logo-delong-white.png";
 const SiteHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
   // Detecta Scroll
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Detecta Mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Fecha menu ao mudar de rota
@@ -28,117 +35,110 @@ const SiteHeader = () => {
     { number: "03", label: "Serviços", path: "/#servicos" },
   ];
 
+  const showBurger = isScrolled || isMenuOpen || isMobile;
+
   return (
     <>
-      {/* --- BARRA DE NAVEGAÇÃO --- */}
-      <motion.nav
-        className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 py-6 transition-all duration-300"
-        animate={{
-          backgroundColor: isScrolled || isMenuOpen ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0)",
-          backdropFilter: isScrolled || isMenuOpen ? "blur(10px)" : "blur(0px)",
-        }}
-        style={{
-          borderBottom: isScrolled ? "1px solid rgba(255,255,255,0.05)" : "1px solid transparent"
-        }}
+      {/* BARRA FIXA (Nunca Some) */}
+      <nav
+        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-6 md:px-12 py-6 transition-all duration-500 ${
+          isScrolled || isMenuOpen
+            ? "bg-background/90 backdrop-blur-md border-b border-border/10"
+            : "bg-transparent border-b border-transparent"
+        }`}
       >
-        {/* 1. LOGO (SEMPRE VISÍVEL) */}
-        <div className="z-50 relative w-auto">
+        {/* 1. LOGO (Esquerda) */}
+        <div className="relative z-[1000]">
           <Link to="/" className="hover:opacity-80 transition-opacity">
-            <img 
+            <img
               src={logoDelongWhite}
-              alt="Delong Media House" 
-              className="h-10 md:h-12 w-auto object-contain" 
+              alt="Delong Media House"
+              className="h-10 md:h-12 w-auto object-contain"
             />
           </Link>
         </div>
 
-        {/* 2. CENTRO (TROCA DINÂMICA: TEXTO <-> ÍCONE) */}
-        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-          <AnimatePresence mode="wait">
-            
-            {/* SITUAÇÃO A: TOPO DA PÁGINA (MOSTRA TEXTO) */}
-            {!isScrolled && !isMenuOpen ? (
-              <motion.div
-                key="text-nav"
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.2 }}
-                className="hidden md:flex items-center gap-10 text-xs font-bold uppercase tracking-widest"
+        {/* 2. CENTRO (Onde a mágica acontece) */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000] flex items-center justify-center">
+          
+          {/* A: MENU DE TEXTO (Visível apenas no topo e desktop) */}
+          <div
+            className={`hidden md:flex items-center gap-10 transition-opacity duration-300 ${
+              showBurger ? "opacity-0 pointer-events-none" : "opacity-100"
+            }`}
+          >
+            {menuItems.map((item) => (
+              <Link
+                key={item.label}
+                to={item.path}
+                className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
               >
-                {menuItems.map((item) => (
-                  <Link 
-                    key={item.label} 
-                    to={item.path} 
-                    className="group flex items-center gap-2 hover:text-muted-foreground transition-colors text-foreground"
-                  >
-                    <span className="font-normal opacity-50">{item.number}</span>
-                    <span>{item.label}</span>
-                  </Link>
-                ))}
-              </motion.div>
-            ) : (
-              // SITUAÇÃO B: SCROLLADO OU MOBILE (MOSTRA SANDUÍCHE)
-              <motion.button
-                key="burger-nav"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.8 }}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex flex-col gap-1.5 p-4 cursor-pointer group"
-              >
-                {/* Linhas do Sanduíche Animadas */}
-                <motion.span 
-                  animate={{ rotate: isMenuOpen ? 45 : 0, y: isMenuOpen ? 8 : 0 }}
-                  className="w-6 h-0.5 bg-foreground block transition-transform"
-                />
-                <motion.span 
-                  animate={{ opacity: isMenuOpen ? 0 : 1 }}
-                  className="w-6 h-0.5 bg-foreground block transition-opacity group-hover:w-4 self-end"
-                />
-                <motion.span 
-                  animate={{ rotate: isMenuOpen ? -45 : 0, y: isMenuOpen ? -8 : 0 }}
-                  className="w-6 h-0.5 bg-foreground block transition-transform"
-                />
-              </motion.button>
-            )}
+                <span className="font-normal opacity-50">{item.number}</span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </div>
 
-          </AnimatePresence>
+          {/* B: BOTÃO SANDUÍCHE (Visível ao rolar ou no mobile) */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`absolute flex flex-col gap-1.5 p-2 transition-all duration-300 cursor-pointer ${
+              showBurger
+                ? "opacity-100 scale-100 pointer-events-auto"
+                : "opacity-0 scale-75 pointer-events-none"
+            }`}
+          >
+            <span
+              className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                isMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
+            />
+            <span
+              className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${
+                isMenuOpen ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                isMenuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            />
+          </button>
         </div>
 
-        {/* 3. CONTATO (SEMPRE VISÍVEL) */}
-        <div className="z-50 relative">
-          <Link 
-            to="/#contato" 
-            className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity text-foreground"
+        {/* 3. CONTATO (Direita) */}
+        <div className="relative z-[1000]">
+          <Link
+            to="/#contato"
+            className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity"
           >
             Contato <span>→</span>
           </Link>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* --- OVERLAY DO MENU CHEIO (QUANDO CLICA NO SANDUÍCHE) --- */}
+      {/* MENU TELA CHEIA (Overlay) */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-background z-40 flex items-center justify-center"
+            className="fixed inset-0 bg-background z-[998] flex items-center justify-center pt-20"
           >
             <div className="flex flex-col gap-8 text-center">
-               <Link to="/" className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors">
-                  <span className="block text-sm font-mono opacity-40 mb-2 font-normal">00</span>
-                  Home
-               </Link>
-               {menuItems.map((item) => (
-                <Link 
-                  key={item.label} 
-                  to={item.path} 
+              <Link
+                to="/"
+                className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
+              >
+                Home
+              </Link>
+              {menuItems.map((item) => (
+                <Link
+                  key={item.label}
+                  to={item.path}
                   className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
                 >
-                  <span className="block text-sm font-mono opacity-40 mb-2 font-normal">{item.number}</span>
                   {item.label}
                 </Link>
               ))}
