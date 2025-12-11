@@ -95,7 +95,7 @@ const IntroAndStats = () => {
 
         {/* Conteúdo dos Números */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 border-t border-border pt-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
             
             <motion.div 
               className="flex flex-col gap-2"
