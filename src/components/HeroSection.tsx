@@ -20,7 +20,7 @@ const HeroSection = () => {
         transition={{ duration: 0.8, ease: EA_ZEIT }}
         className="w-full px-8 py-6 flex justify-between items-center border-b border-border"
       >
-        <img src={logoDelongMedia} alt="Delong Media House" className="h-12 md:h-50 w-auto" />
+        <img src={logoDelongMedia} alt="Delong Media House" className="h-16 md:h-24 w-auto" />
         <nav className="hidden md:flex gap-6 text-sm text-muted-foreground">
           <span className="cursor-pointer hover:text-foreground transition-colors">Work</span>
           <span className="cursor-pointer hover:text-foreground transition-colors">Studio</span>
