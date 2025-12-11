@@ -34,7 +34,8 @@ const HeroSection = () => {
           {/* LADO ESQUERDO: MARCA */}
           <div className="w-auto">
             {/* Se tiver a imagem da logo, troque este h1 pela tag <img> */}
-            <h1 className="text-xl md:text-2xl font-bold tracking-tighter uppercase leading-none">DELONG MEDIA  HOUSE<br />MEDIA HOUSE
+            <h1 className="text-xl md:text-2xl font-bold tracking-tighter uppercase leading-none">
+              DELONG<br />MEDIA HOUSE
             </h1>
           </div>
 
