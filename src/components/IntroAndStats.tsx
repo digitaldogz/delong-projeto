@@ -1,5 +1,46 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { motion, useInView } from 'framer-motion';
+
+// Componente de contador animado
+const AnimatedCounter = ({ target, suffix = "" }: { target: number; suffix?: string }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  useEffect(() => {
+    if (isInView) {
+      const duration = 2000; // 2 segundos
+      const steps = 60;
+      const increment = target / steps;
+      let current = 0;
+      
+      const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+          setCount(target);
+          clearInterval(timer);
+        } else {
+          setCount(Math.floor(current));
+        }
+      }, duration / steps);
+
+      return () => clearInterval(timer);
+    }
+  }, [isInView, target]);
+
+  return (
+    <motion.span
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6 }}
+      className="text-7xl md:text-8xl font-bold tracking-tighter text-foreground"
+    >
+      {count}{suffix}
+    </motion.span>
+  );
+};
 
 const IntroAndStats = () => {
   return (
@@ -56,32 +97,44 @@ const IntroAndStats = () => {
         <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 border-t border-border pt-12">
             
-            <div className="flex flex-col gap-2">
-              <span className="text-7xl md:text-8xl font-bold tracking-tighter text-foreground">
-                200+
-              </span>
+            <motion.div 
+              className="flex flex-col gap-2"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0 }}
+              viewport={{ once: true }}
+            >
+              <AnimatedCounter target={200} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
                 Eventos organizados para grandes marcas
               </p>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col gap-2">
-              <span className="text-7xl md:text-8xl font-bold tracking-tighter text-foreground">
-                1000+
-              </span>
+            <motion.div 
+              className="flex flex-col gap-2"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              viewport={{ once: true }}
+            >
+              <AnimatedCounter target={1000} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
                 Publicações de comunicação desenhadas
               </p>
-            </div>
+            </motion.div>
 
-            <div className="flex flex-col gap-2">
-              <span className="text-7xl md:text-8xl font-bold tracking-tighter text-foreground">
-                50+
-              </span>
+            <motion.div 
+              className="flex flex-col gap-2"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ once: true }}
+            >
+              <AnimatedCounter target={50} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
                 Equipe experiente e apaixonada
               </p>
-            </div>
+            </motion.div>
 
           </div>
         </div>
