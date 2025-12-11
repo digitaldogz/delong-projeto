@@ -75,18 +75,29 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* RODAPÉ DA HERO */}
-        <div className="flex justify-between items-end border-t border-white/20 pt-6">
-          <div className="flex gap-4 text-[10px] font-bold tracking-widest uppercase opacity-70">
-            <a href="#" className="hover:text-white transition-colors">Instagram</a>
-            <span>/</span>
-            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-            <span>/</span>
-            <a href="#" className="hover:text-white transition-colors">Vimeo</a>
+        {/* --- RODAPÉ DA HERO (Minimalista: Apenas Instagram e All Works) --- */}
+        <div className="absolute bottom-8 left-0 w-full px-6 md:px-12 flex justify-between items-end z-30 text-white mix-blend-difference pointer-events-none">
+          
+          {/* ESQUERDA: APENAS INSTAGRAM */}
+          <div className="pointer-events-auto">
+            <a 
+              href="https://instagram.com" 
+              target="_blank" 
+              rel="noreferrer" 
+              className="text-[10px] font-bold tracking-widest uppercase opacity-80 hover:opacity-100 hover:text-gray-300 transition-all"
+            >
+              INSTAGRAM
+            </a>
           </div>
 
-          <div className="hidden md:block absolute left-1/2 -translate-x-1/2 bottom-8">
-            <span className="text-[10px] uppercase tracking-widest opacity-50 animate-bounce">Role para explorar</span>
+          {/* DIREITA: ALL WORKS */}
+          <div className="pointer-events-auto">
+            <a 
+              href="/projetos" 
+              className="text-[10px] font-bold tracking-widest uppercase opacity-80 hover:opacity-100 hover:text-gray-300 transition-all border border-white/30 px-4 py-2"
+            >
+              ALL WORKS
+            </a>
           </div>
         </div>
 
