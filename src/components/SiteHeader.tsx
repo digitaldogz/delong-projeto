@@ -6,7 +6,6 @@ import logoDelongWhite from "@/assets/logo-delong-white.png";
 const SiteHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
   // Detecta Scroll
@@ -14,14 +13,6 @@ const SiteHeader = () => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  // Detecta Mobile
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   // Fecha menu ao mudar de rota
@@ -35,42 +26,38 @@ const SiteHeader = () => {
     { number: "03", label: "Serviços", path: "/#servicos" },
   ];
 
-  const showBurger = isScrolled || isMenuOpen || isMobile;
-
   return (
     <>
-      {/* BARRA FIXA (Nunca Some) */}
-      <nav
-        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-6 md:px-12 py-6 transition-all duration-500 ${
-          isScrolled || isMenuOpen
-            ? "bg-background/90 backdrop-blur-md border-b border-border/10"
-            : "bg-transparent border-b border-transparent"
+      {/* BARRA DE NAVEGAÇÃO FIXA */}
+      <nav 
+        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-8 md:px-12 py-8 transition-all duration-500 ${
+          isScrolled || isMenuOpen ? "bg-background/90 backdrop-blur-md border-b border-border/10" : "bg-transparent border-b border-transparent"
         }`}
       >
-        {/* 1. LOGO (Esquerda) */}
-        <div className="relative z-[1000]">
+        {/* 1. LOGO (SEMPRE VISÍVEL - NÃO MUDA) */}
+        <div className="relative z-[1000] w-auto">
           <Link to="/" className="hover:opacity-80 transition-opacity">
-            <img
+            <img 
               src={logoDelongWhite}
-              alt="Delong Media House"
-              className="h-10 md:h-12 w-auto object-contain"
+              alt="Delong Media House" 
+              className="h-10 md:h-12 w-auto object-contain" 
             />
           </Link>
         </div>
 
-        {/* 2. CENTRO (Onde a mágica acontece) */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[1000] flex items-center justify-center">
+        {/* 2. ÁREA CENTRAL (ONDE OCORRE A TROCA) */}
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[1000] flex items-center justify-center">
           
-          {/* A: MENU DE TEXTO (Visível apenas no topo e desktop) */}
-          <div
-            className={`hidden md:flex items-center gap-10 transition-opacity duration-300 ${
-              showBurger ? "opacity-0 pointer-events-none" : "opacity-100"
+          {/* A: MENU DE TEXTO (Visível apenas no topo) */}
+          <div 
+            className={`hidden md:flex items-center gap-12 transition-all duration-500 ease-in-out ${
+              isScrolled || isMenuOpen ? "opacity-0 translate-y-[-10px] pointer-events-none" : "opacity-100 translate-y-0 pointer-events-auto"
             }`}
           >
             {menuItems.map((item) => (
-              <Link
-                key={item.label}
-                to={item.path}
+              <Link 
+                key={item.label} 
+                to={item.path} 
                 className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
               >
                 <span className="font-normal opacity-50">{item.number}</span>
@@ -79,37 +66,24 @@ const SiteHeader = () => {
             ))}
           </div>
 
-          {/* B: BOTÃO SANDUÍCHE (Visível ao rolar ou no mobile) */}
+          {/* B: BOTÃO SANDUÍCHE (Visível ao rolar) */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`absolute flex flex-col gap-1.5 p-2 transition-all duration-300 cursor-pointer ${
-              showBurger
-                ? "opacity-100 scale-100 pointer-events-auto"
-                : "opacity-0 scale-75 pointer-events-none"
+            className={`absolute flex flex-col gap-1.5 p-2 transition-all duration-500 ease-in-out cursor-pointer ${
+              isScrolled || isMenuOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-75 pointer-events-none"
             }`}
           >
-            <span
-              className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
-                isMenuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            />
-            <span
-              className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${
-                isMenuOpen ? "opacity-0" : "opacity-100"
-              }`}
-            />
-            <span
-              className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
-                isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            />
+            <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100"}`} />
+            <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
           </button>
+
         </div>
 
-        {/* 3. CONTATO (Direita) */}
+        {/* 3. CONTATO (SEMPRE VISÍVEL - NÃO MUDA) */}
         <div className="relative z-[1000]">
-          <Link
-            to="/#contato"
+          <Link 
+            to="/#contato" 
             className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity"
           >
             Contato <span>→</span>
@@ -117,7 +91,7 @@ const SiteHeader = () => {
         </div>
       </nav>
 
-      {/* MENU TELA CHEIA (Overlay) */}
+      {/* OVERLAY TELA CHEIA (ABRE AO CLICAR NO SANDUÍCHE) */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -127,16 +101,13 @@ const SiteHeader = () => {
             className="fixed inset-0 bg-background z-[998] flex items-center justify-center pt-20"
           >
             <div className="flex flex-col gap-8 text-center">
-              <Link
-                to="/"
-                className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
-              >
-                Home
-              </Link>
-              {menuItems.map((item) => (
-                <Link
-                  key={item.label}
-                  to={item.path}
+               <Link to="/" className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors">
+                  Home
+               </Link>
+               {menuItems.map((item) => (
+                <Link 
+                  key={item.label} 
+                  to={item.path} 
                   className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
                 >
                   {item.label}
