@@ -100,7 +100,7 @@ const ProjectsPage = () => {
             transition={{ duration: 0.8 }}
             className="text-6xl md:text-8xl lg:text-[7rem] font-medium tracking-tighter mb-12 uppercase"
           >
-            Projetos
+            Works
           </motion.h1>
 
           {/* FILTRO LIMPO (Apenas "ALL") */}
