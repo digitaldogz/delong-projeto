@@ -19,7 +19,7 @@ const HeroSection = () => {
       </div>
 
       {/* 2. CONTEÚDO (Fica por cima do vídeo - z-20) */}
-      <div className="relative z-20 w-full h-screen flex flex-col justify-end px-6 md:px-12 pb-32">
+      <div className="relative z-20 w-full h-screen flex flex-col justify-end px-6 md:px-24 pb-40 md:pb-48">
 
         {/* TÍTULO PRINCIPAL - Alinhado à esquerda */}
         <div className="flex flex-col gap-0 relative text-left">
@@ -30,7 +30,7 @@ const HeroSection = () => {
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
               transition={{ duration: 1, ease: EA_ZEIT, delay: 0.2 }} 
-              className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-none"
+              className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tighter leading-none"
             >
               A Arte é o Princípio —
             </motion.h1>
@@ -40,18 +40,18 @@ const HeroSection = () => {
               initial={{ y: "100%" }} 
               animate={{ y: "0%" }} 
               transition={{ duration: 1, ease: EA_ZEIT, delay: 0.3 }} 
-              className="text-6xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-none text-muted-foreground"
+              className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tighter leading-none text-muted-foreground"
             >
               Criatividade no Comando
             </motion.h2>
           </div>
 
-          {/* WIDGET FLUTUANTE (Canto Inferior Direito) */}
+          {/* WIDGET FLUTUANTE (Alinhado pela base com o texto) */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }} 
             animate={{ opacity: 1, x: 0 }} 
             transition={{ duration: 0.8, delay: 0.8 }} 
-            className="absolute right-0 -bottom-20 hidden md:flex items-center gap-4 bg-background/60 backdrop-blur-md p-4 border border-border/20 max-w-sm"
+            className="absolute right-0 bottom-0 hidden md:flex items-center gap-4 bg-background/60 backdrop-blur-md p-4 border border-border/20 max-w-sm"
           >
             <div className="w-16 h-16 bg-primary flex items-center justify-center shrink-0">
               <span className="text-[10px] text-center leading-tight font-bold text-primary-foreground">NOVO<br />CASE</span>
@@ -66,7 +66,7 @@ const HeroSection = () => {
       </div>
 
       {/* --- RODAPÉ DA HERO (Minimalista: Apenas Instagram e All Works) --- */}
-      <div className="absolute bottom-8 left-0 w-full px-6 md:px-12 flex justify-between items-end z-30 text-foreground mix-blend-difference pointer-events-none">
+      <div className="absolute bottom-8 left-0 w-full px-6 md:px-24 flex justify-between items-end z-30 text-foreground mix-blend-difference pointer-events-none">
         
         {/* ESQUERDA: APENAS INSTAGRAM */}
         <div className="pointer-events-auto">
