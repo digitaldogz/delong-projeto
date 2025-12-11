@@ -1,100 +1,134 @@
 import React from "react";
 import { motion } from "framer-motion";
 
-// Curva de Bezier para suavidade cinematográfica
+// Configurações de Animação
 const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1]; 
-
-const transitionText = {
-  duration: 1,
-  ease: EA_ZEIT,
-};
 
 const HeroSection = () => {
   return (
-    <div className="relative w-full h-screen bg-[#0a0a0a] text-white flex flex-col justify-between overflow-hidden font-sans selection:bg-white selection:text-black">
+    <div className="relative w-full h-screen overflow-hidden font-sans text-white">
       
-      {/* HEADER */}
-      <motion.header
-        initial={{ y: "-100%" }}
-        animate={{ y: "0%" }}
-        transition={{ duration: 0.8, ease: EA_ZEIT }}
-        className="w-full px-8 py-6 flex justify-between items-center border-b border-white/10"
-      >
-        {/* Aqui entra sua Logo ou o Nome da Agência */}
-        <div className="text-xl font-bold tracking-tighter uppercase">
-          Delong Media House
-        </div>
-        
-        <nav className="hidden md:flex gap-6 text-sm text-gray-400">
-          <span className="cursor-pointer hover:text-white transition-colors">Cases</span>
-          <span className="cursor-pointer hover:text-white transition-colors">Estúdio</span>
-          <span className="cursor-pointer hover:text-white transition-colors">Contato</span>
-        </nav>
-      </motion.header>
-
-      {/* ÁREA PRINCIPAL (TEXTO GIGANTE) */}
-      <main className="flex-1 flex flex-col md:flex-row items-center justify-center md:justify-between px-8 md:px-16 relative">
-        
-        <div className="z-10 flex flex-col gap-2 md:gap-4">
-          {/* Linha 1 */}
-          <div className="overflow-hidden">
-            <motion.h1
-              initial={{ y: "100%" }}
-              animate={{ y: "0%" }}
-              transition={{ ...transitionText, delay: 0.2 }}
-              className="text-5xl md:text-8xl font-medium tracking-tight leading-[1.1]"
-            >
-              A Arte é o Princípio
-            </motion.h1>
-          </div>
-
-          {/* Linha 2 */}
-          <div className="overflow-hidden">
-            <motion.h1
-              initial={{ y: "100%" }}
-              animate={{ y: "0%" }}
-              transition={{ ...transitionText, delay: 0.3 }}
-              className="text-5xl md:text-8xl font-medium tracking-tight leading-[1.1] text-gray-400"
-            >
-              Criatividade no Comando
-            </motion.h1>
-          </div>
-        </div>
-
-        {/* WIDGET / CARD FLUTUANTE */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: EA_ZEIT, delay: 0.8 }}
-          className="mt-12 md:mt-0 relative w-full md:w-72 bg-white/5 backdrop-blur-md border border-white/10 p-6 rounded-none md:mr-12"
+      {/* 1. VÍDEO DE FUNDO (Background) */}
+      <div className="absolute inset-0 w-full h-full z-0">
+        <video 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          className="w-full h-full object-cover"
         >
-          <div className="flex justify-between items-start mb-8">
-            <span className="text-xs uppercase tracking-widest text-gray-500">Destaque</span>
-            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+          {/* Vídeo Placeholder estilo 'Cinematic/Action' - O Lovable pode trocar depois pelo seu */}
+          <source src="https://assets.mixkit.co/videos/preview/mixkit-firefighters-putting-out-a-fire-3456-large.mp4" type="video/mp4" />
+        </video>
+        {/* Overlay Escuro para leitura do texto (Gradiente vindo de baixo) */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/30" />
+      </div>
+
+      {/* 2. CONTEÚDO (Fica por cima do vídeo - z-10) */}
+      <div className="relative z-10 w-full h-full flex flex-col justify-between px-8 md:px-12 py-8">
+        
+        {/* HEADER TRANSPARENTE (Sobre o vídeo) */}
+        <motion.header 
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 1, ease: EA_ZEIT }}
+          className="flex justify-between items-start w-full"
+        >
+          {/* Logo (Esquerda) */}
+          <div className="w-32 md:w-40">
+            {/* Se tiver a imagem da logo, coloque a tag <img> aqui. Por enquanto, texto estilizado */}
+            <div className="border border-white p-2 inline-block">
+               <h1 className="text-2xl font-bold leading-none tracking-tighter uppercase">ZEIT<br/><span className="text-[10px] font-normal tracking-widest">ART COMES FIRST</span></h1>
+            </div>
           </div>
-          <h3 className="text-xl font-normal mb-2">Futuro Digital</h3>
-          <p className="text-sm text-gray-400">Instalações imersivas para marcas que lideram o mercado.</p>
-          <div className="mt-6 flex items-center gap-2 text-xs font-mono border-t border-white/10 pt-4 cursor-pointer hover:text-white text-gray-400 transition-colors">
-            <span>→</span>
-            <span>VER PROJETO</span>
+
+          {/* Menu Numerado (Centro) - Idêntico à imagem 3 */}
+          <nav className="hidden md:flex gap-10 text-xs font-medium uppercase tracking-widest mt-2">
+            <a href="#about" className="hover:text-gray-300 transition-colors"><span className="opacity-50 mr-1">01</span> About</a>
+            <a href="#works" className="hover:text-gray-300 transition-colors"><span className="opacity-50 mr-1">02</span> Works</a>
+            <a href="#services" className="hover:text-gray-300 transition-colors"><span className="opacity-50 mr-1">03</span> Services</a>
+            <a href="#blog" className="hover:text-gray-300 transition-colors"><span className="opacity-50 mr-1">04</span> Blog</a>
+          </nav>
+
+          {/* Botão Contato (Direita) */}
+          <div className="mt-2">
+            <a href="#contact" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity">
+              Contact <span>→</span>
+            </a>
           </div>
-        </motion.div>
+        </motion.header>
 
-      </main>
+        {/* CENTRO / TÍTULO PRINCIPAL */}
+        <div className="flex-1 flex flex-col justify-center md:justify-end pb-12 md:pb-20">
+          <div className="flex flex-col gap-0 relative">
+            
+            {/* Texto Gigante */}
+            <div className="overflow-hidden">
+              <motion.h2 
+                initial={{ y: "100%" }}
+                animate={{ y: "0%" }}
+                transition={{ duration: 1, ease: EA_ZEIT, delay: 0.2 }}
+                className="text-5xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-none"
+              >
+                Art Comes First —
+              </motion.h2>
+            </div>
+            <div className="overflow-hidden">
+              <motion.h2 
+                initial={{ y: "100%" }}
+                animate={{ y: "0%" }}
+                transition={{ duration: 1, ease: EA_ZEIT, delay: 0.3 }}
+                className="text-5xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-none text-gray-300"
+              >
+                Creative Above All
+              </motion.h2>
+            </div>
 
-      {/* FOOTER DA HERO */}
-      <motion.footer
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, delay: 1.0 }}
-        className="px-8 py-6 flex justify-between items-end text-xs text-gray-500 uppercase tracking-widest"
-      >
-        <div>© 2024 Delong Media House</div>
-        <div className="hidden md:block">Role para explorar</div>
-      </motion.footer>
+            {/* WIDGET FLUTUANTE (Canto Inferior Direito - Igual à Imagem 3) */}
+            <motion.div 
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.8 }}
+              className="absolute right-0 bottom-0 md:bottom-10 hidden md:flex items-center gap-4 bg-black/40 backdrop-blur-md p-4 rounded border border-white/10 max-w-sm"
+            >
+              <div className="w-16 h-16 bg-blue-700 flex items-center justify-center shrink-0">
+                {/* Thumbnail placeholder */}
+                <div className="text-[10px] text-center leading-tight">NEW<br/>PROJECT</div>
+              </div>
+              <div className="flex flex-col">
+                <span className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">New Project</span>
+                <span className="text-sm font-bold uppercase leading-tight">Campaign "We Got You"</span>
+              </div>
+            </motion.div>
 
-      {/* Gradiente de fundo sutil */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/10 to-transparent pointer-events-none" />
+          </div>
+        </div>
+
+        {/* RODAPÉ DA HERO (Socials e Botão All Works) */}
+        <div className="flex justify-between items-end border-t border-white/20 pt-6">
+          
+          {/* Socials (Esquerda) */}
+          <div className="flex gap-4 text-[10px] font-bold tracking-widest uppercase">
+            <a href="#" className="hover:text-gray-400">IG</a>
+            <span className="opacity-30">/</span>
+            <a href="#" className="hover:text-gray-400">FB</a>
+            <span className="opacity-30">/</span>
+            <a href="#" className="hover:text-gray-400">Behance</a>
+          </div>
+
+          {/* Botão Central (All Works) */}
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-8 hidden md:block">
+            <div className="border border-white/30 px-6 py-2 text-[10px] font-bold tracking-widest uppercase hover:bg-white hover:text-black transition-all cursor-pointer">
+              [ All Works ]
+            </div>
+          </div>
+
+          <div className="md:hidden">
+             {/* Espaço vazio mobile */}
+          </div>
+        </div>
+
+      </div>
     </div>
   );
 };
