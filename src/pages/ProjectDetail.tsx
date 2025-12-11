@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams, Navigate } from "react-router-dom";
-import logoDelongWhite from "@/assets/logo-delong-white.png";
+import SiteHeader from "@/components/SiteHeader";
 import { getProjectBySlug, getRelatedProjects } from "@/data/projects";
 
 const ProjectDetail = () => {
@@ -21,42 +21,10 @@ const ProjectDetail = () => {
   return (
     <div className="w-full bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background">
       
-      {/* --- 1. HEADER (MANTIDO RIGOROSAMENTE IGUAL) --- */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 md:px-12 py-8 bg-gradient-to-b from-background/90 to-transparent transition-all">
-         {/* LOGO */}
-         <div className="w-auto">
-            <Link to="/">
-              <img 
-                src={logoDelongWhite}
-                alt="Delong Media House" 
-                className="h-12 md:h-14 w-auto object-contain" 
-              />
-            </Link>
-         </div>
+      {/* HEADER GLOBAL */}
+      <SiteHeader />
 
-         {/* MENU */}
-         <div className="hidden md:flex items-center gap-12 text-sm uppercase tracking-widest">
-           <Link to="/#sobre" className="group flex items-center gap-2 hover:text-muted-foreground transition-colors cursor-pointer text-muted-foreground">
-             <span className="font-light opacity-60 text-xs">01</span>
-             <span className="font-bold">Sobre</span>
-           </Link>
-           <Link to="/projetos" className="group flex items-center gap-2 text-foreground cursor-pointer hover:text-muted-foreground transition-colors">
-             <span className="font-light opacity-100 text-xs">02</span>
-             <span className="font-bold border-b border-foreground pb-0.5">Projetos</span>
-           </Link>
-           <Link to="/#servicos" className="group flex items-center gap-2 hover:text-muted-foreground transition-colors cursor-pointer text-muted-foreground">
-             <span className="font-light opacity-60 text-xs">03</span>
-             <span className="font-bold">Serviços</span>
-           </Link>
-         </div>
-
-         {/* CONTATO */}
-         <Link to="/#contato" className="text-sm font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity cursor-pointer text-foreground">
-           Contato <span>→</span>
-         </Link>
-      </nav>
-
-      {/* --- 2. HERO BANNER (IMERSIVO) --- */}
+      {/* --- HERO BANNER (IMERSIVO) --- */}
       <div className="relative w-full h-[85vh]">
         {/* Imagem de Fundo */}
         <div className="absolute inset-0">
@@ -82,7 +50,7 @@ const ProjectDetail = () => {
         </div>
       </div>
 
-      {/* --- 3. DADOS E DESCRIÇÃO (FUNDO PRETO) --- */}
+      {/* --- DADOS E DESCRIÇÃO (FUNDO PRETO) --- */}
       <div className="px-6 md:px-12 lg:px-16 py-20 max-w-[1800px] mx-auto border-b border-border/20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           
@@ -114,7 +82,7 @@ const ProjectDetail = () => {
         </div>
       </div>
 
-      {/* --- 4. VÍDEO (se existir) --- */}
+      {/* --- VÍDEO (se existir) --- */}
       {project.videoUrl && (
         <section className="w-full py-12 md:py-24">
           <div className="w-full aspect-video bg-secondary overflow-hidden relative group cursor-pointer max-w-[1800px] mx-auto">
@@ -128,7 +96,7 @@ const ProjectDetail = () => {
         </section>
       )}
 
-      {/* --- 5. GALERIA --- */}
+      {/* --- GALERIA --- */}
       <section className="w-full px-6 md:px-12 lg:px-16 pb-32 max-w-[1800px] mx-auto flex flex-col gap-8">
         
         {/* Primeira imagem full width */}
@@ -181,7 +149,7 @@ const ProjectDetail = () => {
 
       </section>
 
-      {/* --- 6. MORE STORIES (PRÓXIMOS PROJETOS) --- */}
+      {/* --- MORE STORIES (PRÓXIMOS PROJETOS) --- */}
       <div className="px-6 md:px-12 lg:px-16 py-24 border-t border-border/20">
          <h3 className="text-2xl font-medium mb-12">More Stories</h3>
          

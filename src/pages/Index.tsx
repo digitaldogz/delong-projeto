@@ -1,3 +1,4 @@
+import SiteHeader from "@/components/SiteHeader";
 import HeroSection from "@/components/HeroSection";
 import IntroAndStats from "@/components/IntroAndStats";
 import ClientCloud from "@/components/ClientCloud";
@@ -10,6 +11,7 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <>
+      <SiteHeader />
       <HeroSection />
       <IntroAndStats />
       <ClientCloud />
