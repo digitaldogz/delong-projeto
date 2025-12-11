@@ -41,7 +41,7 @@ const Footer = () => {
           
           {/* Menu de Navegação */}
           <nav className="flex flex-col w-full">
-            {['Works', 'Services', 'About Us', 'Blog', 'Careers'].map((item) => (
+            {['Works', 'Services', 'About Us', 'Careers'].map((item) => (
               <a 
                 key={item} 
                 href="#" 
