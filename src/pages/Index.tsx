@@ -12,8 +12,8 @@ const Index = () => {
       <IntroAndStats />
       <ClientCloud />
       <ServicesStatement />
-      <ServicesList />
       <SelectedCases />
+      <ServicesList />
     </>
   );
 };
