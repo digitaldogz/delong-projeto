@@ -1,90 +1,105 @@
 import React from 'react';
-import { ArrowUpRight, Instagram, Facebook, Linkedin, Twitter } from 'lucide-react';
+import { ArrowUpRight, Instagram, Facebook } from 'lucide-react';
 
 const Footer = () => {
   return (
     <footer className="w-full bg-background text-foreground border-t border-border">
-      <div className="max-w-[1400px] mx-auto px-8 md:px-12 grid grid-cols-1 lg:grid-cols-2">
+      <div className="max-w-[1400px] mx-auto px-8 md:px-12">
         
-        {/* LADO ESQUERDO: Identidade e Botão Gigante */}
-        <div className="py-8 md:py-16 lg:py-24 border-b lg:border-b-0 lg:border-r border-border flex flex-col justify-between min-h-[500px]">
-          <div>
-            <h3 className="text-3xl font-bold tracking-tight mb-2">Art Comes First.</h3>
-            <p className="text-muted-foreground max-w-md">
-              We define the cutting edge of creative culture through bold ideas and flawless execution.
-            </p>
-          </div>
+        {/* MAIN FOOTER CONTENT */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 py-16 md:py-24">
+          
+          {/* LADO ESQUERDO */}
+          <div className="flex flex-col justify-between gap-12">
+            {/* Identidade */}
+            <div>
+              <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">Art Comes First</h3>
+              <p className="text-muted-foreground max-w-md leading-relaxed">
+                We shape distinctive success stories with breakthrough ideas and creative mastery, elevating you ahead of the competition.
+              </p>
+            </div>
 
-          <div className="mt-12 lg:mt-0">
+            {/* CTA Box */}
             <a 
               href="#" 
-              className="group block w-full bg-foreground hover:bg-foreground/90 transition-colors py-8 px-6 md:px-10 flex justify-between items-center"
+              className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-8 flex justify-between items-center"
             >
-              <span className="text-xl md:text-3xl font-bold text-background tracking-tight group-hover:translate-x-2 transition-transform">
-                Got a Project? <br/> Let's Talk.
+              <span className="text-lg md:text-xl font-bold text-background tracking-tight">
+                Got A Project? Let's Talk
               </span>
-              <ArrowUpRight className="text-background w-8 h-8 md:w-12 md:h-12 group-hover:-translate-y-2 group-hover:translate-x-2 transition-transform" />
+              <ArrowUpRight className="text-background w-6 h-6 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
             </a>
             
-            <div className="mt-12">
-              <span className="text-xs text-muted-foreground/60 uppercase tracking-widest block mb-2">Vietnam Office</span>
-              <p className="text-muted-foreground text-sm">
-                123 Creative Avenue, District 1,<br/>
-                Ho Chi Minh City, Vietnam.
+            {/* Endereço */}
+            <div>
+              <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">Address</span>
+              <p className="text-muted-foreground text-sm leading-relaxed">
+                24 Tue Tinh Street, Cua Nam Ward, Hanoi.<br/>
+                9 Doan Van Bo, Xom Chieu Ward, Ho Chi Minh City.
               </p>
             </div>
           </div>
-        </div>
 
-        {/* LADO DIREITO: Links e Social */}
-        <div className="py-8 md:py-16 lg:py-24 flex flex-col justify-between">
-          
-          {/* Menu de Navegação */}
-          <nav className="flex flex-col w-full">
-            {['Works', 'Services', 'About Us', 'Careers'].map((item) => (
-              <a 
-                key={item} 
-                href="#" 
-                className="group py-6 border-b border-border flex justify-between items-center hover:pl-4 transition-all duration-300"
-              >
-                <span className="text-2xl md:text-3xl font-medium text-foreground group-hover:text-muted-foreground">{item}</span>
-                <ArrowUpRight className="text-muted-foreground group-hover:text-foreground opacity-0 group-hover:opacity-100 transition-all" />
-              </a>
-            ))}
-          </nav>
-
-          {/* Social e Contato */}
-          <div className="mt-16 flex flex-col md:flex-row justify-between items-start md:items-end gap-8">
+          {/* LADO DIREITO */}
+          <div className="flex flex-col justify-between lg:border-l lg:border-border lg:pl-16">
             
-            {/* Redes Sociais */}
-            <div className="flex gap-6">
-              {[Instagram, Facebook, Linkedin, Twitter].map((Icon, idx) => (
-                <a key={idx} href="#" className="w-10 h-10 border border-border rounded-full flex items-center justify-center hover:bg-foreground hover:text-background transition-all">
-                  <Icon size={18} />
+            {/* Menu de Navegação */}
+            <nav className="flex flex-col w-full">
+              {['Works', 'Services', 'About Us', 'Blog'].map((item) => (
+                <a 
+                  key={item} 
+                  href="#" 
+                  className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300"
+                >
+                  <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item}</span>
+                  <ArrowUpRight className="text-muted-foreground w-4 h-4 group-hover:text-foreground transition-colors" />
                 </a>
               ))}
+            </nav>
+
+            {/* Social Icons */}
+            <div className="mt-12 flex justify-start gap-8">
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Facebook size={24} />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Instagram size={24} />
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+              </a>
+              <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <span className="text-xl font-bold">Bē</span>
+              </a>
             </div>
 
-            {/* Contato Direto */}
-            <div className="text-left md:text-right">
-              <a href="mailto:hello@zeitmedia.com" className="block text-lg font-bold hover:text-muted-foreground transition-colors">
-                hello@zeitmedia.com
-              </a>
-              <a href="tel:+84901234567" className="block text-muted-foreground hover:text-foreground transition-colors">
-                +84 90 123 4567
-              </a>
+            {/* Contato */}
+            <div className="mt-12 grid grid-cols-2 gap-8">
+              <div>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">Contact Us</span>
+                <a href="mailto:info@zeitmedia.vn" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">
+                  info@zeitmedia.vn
+                </a>
+              </div>
+              <div className="text-right">
+                <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">Phone Number</span>
+                <a href="tel:+8484848686" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">
+                  (+84) 84 848 8686
+                </a>
+              </div>
             </div>
           </div>
+
         </div>
 
       </div>
 
       {/* COPYRIGHT BAR */}
-      <div className="max-w-[1400px] mx-auto w-full border-t border-border py-6 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground/60 uppercase tracking-wider">
-        <span>© 2025 ZEIT MEDIA. All rights reserved.</span>
-        <div className="flex gap-6 mt-4 md:mt-0">
-          <a href="#" className="hover:text-foreground">Privacy Policy</a>
-          <a href="#" className="hover:text-foreground">Terms of Use</a>
+      <div className="border-t border-border">
+        <div className="max-w-[1400px] mx-auto w-full py-6 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground uppercase tracking-wider">
+          <span>© 2025 ZEIT MEDIA. All rights reserved</span>
         </div>
       </div>
     </footer>
