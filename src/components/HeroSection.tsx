@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import logoDelongWhite from "@/assets/logo-delong-white.png";
 
 // Configuração da animação (Suave e Premium)
@@ -42,9 +43,9 @@ const HeroSection = () => {
             <a href="#sobre" className="hover:text-gray-300 transition-colors flex items-center gap-1">
               <span className="opacity-50">01</span> Sobre
             </a>
-            <a href="#projetos" className="hover:text-gray-300 transition-colors flex items-center gap-1">
+            <Link to="/projetos" className="hover:text-gray-300 transition-colors flex items-center gap-1">
               <span className="opacity-50">02</span> Projetos
-            </a>
+            </Link>
             <a href="#servicos" className="hover:text-gray-300 transition-colors flex items-center gap-1">
               <span className="opacity-50">03</span> Serviços
             </a>
