@@ -81,17 +81,10 @@ const IntroAndStats = () => {
       </section>
 
       {/* --- SEÇÃO 2: ESTATÍSTICAS (STATS) --- */}
-      <section className="relative w-full py-40 flex items-center bg-secondary overflow-hidden">
+      <section className="relative w-full py-40 flex items-center bg-background overflow-hidden">
         
-        {/* Imagem de Fundo */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=2800&auto=format&fit=crop" 
-            alt="Background Texture" 
-            className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
-        </div>
+        {/* Fundo com gradiente sutil */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-zinc-900/50 to-background"></div>
 
         {/* Conteúdo dos Números */}
         <div className="relative z-10 w-full max-w-7xl mx-auto px-8 md:px-12">
