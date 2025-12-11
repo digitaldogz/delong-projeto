@@ -18,15 +18,14 @@ const HeroSection = () => {
       </div>
 
       {/* 2. CONTEÚDO (Fica por cima do vídeo - z-20) */}
-      <div className="relative z-20 w-full h-full flex flex-col justify-between px-8 md:px-12 py-8 pt-28">
+      <div className="relative z-20 w-full h-full flex flex-col justify-end px-8 md:px-16 lg:px-24 pb-32 md:pb-40">
 
-        {/* CENTRO / TÍTULO PRINCIPAL */}
-        <div className="flex-1 flex flex-col justify-center md:justify-end pb-12 md:pb-20">
-          <div className="flex flex-col gap-0 relative">
-            
-            {/* Texto Gigante Animado */}
-            <div className="overflow-hidden">
-              <motion.h2 initial={{
+        {/* TÍTULO PRINCIPAL - Posicionado no canto inferior esquerdo */}
+        <div className="flex flex-col gap-0 max-w-5xl">
+          
+          {/* Texto Gigante Animado - Branco */}
+          <div className="overflow-hidden">
+            <motion.h2 initial={{
               y: "100%"
             }} animate={{
               y: "0%"
@@ -34,12 +33,12 @@ const HeroSection = () => {
               duration: 1,
               ease: EA_ZEIT,
               delay: 0.2
-            }} className="text-5xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-none">
-                A Arte é o Princípio —
-              </motion.h2>
-            </div>
-            <div className="overflow-hidden">
-              <motion.h2 initial={{
+            }} className="text-4xl md:text-7xl lg:text-8xl font-medium tracking-tighter leading-[0.95] text-white">
+              A Arte é o Princípio —
+            </motion.h2>
+          </div>
+          <div className="overflow-hidden">
+            <motion.h2 initial={{
               y: "100%"
             }} animate={{
               y: "0%"
@@ -47,33 +46,31 @@ const HeroSection = () => {
               duration: 1,
               ease: EA_ZEIT,
               delay: 0.3
-            }} className="text-5xl md:text-8xl lg:text-9xl font-medium tracking-tighter leading-none text-gray-400">
-                Criatividade no Comando
-              </motion.h2>
-            </div>
-
-            {/* WIDGET FLUTUANTE (Canto Inferior Direito) */}
-            <motion.div initial={{
-            opacity: 0,
-            x: 50
-          }} animate={{
-            opacity: 1,
-            x: 0
-          }} transition={{
-            duration: 0.8,
-            delay: 0.8
-          }} className="absolute right-0 bottom-0 md:bottom-10 hidden md:flex items-center gap-4 bg-black/60 backdrop-blur-md p-4 border border-white/10 max-w-sm">
-              <div className="w-16 h-16 bg-blue-700 flex items-center justify-center shrink-0">
-                <span className="text-[10px] text-center leading-tight font-bold">NOVO<br />CASE</span>
-              </div>
-              <div className="flex flex-col pr-4">
-                <span className="text-[10px] uppercase tracking-widest text-gray-400 mb-1">Destaque Recente</span>
-                <span className="text-sm font-bold uppercase leading-tight">Campanha "Futuro Visível"</span>
-              </div>
-            </motion.div>
-
+            }} className="text-4xl md:text-7xl lg:text-8xl font-medium tracking-tighter leading-[0.95] text-white">
+              Criatividade no Comando
+            </motion.h2>
           </div>
         </div>
+
+        {/* WIDGET FLUTUANTE - Canto Inferior Direito, alinhado com base do título */}
+        <motion.div initial={{
+          opacity: 0,
+          x: 50
+        }} animate={{
+          opacity: 1,
+          x: 0
+        }} transition={{
+          duration: 0.8,
+          delay: 0.8
+        }} className="absolute right-8 md:right-16 lg:right-24 bottom-32 md:bottom-40 hidden md:flex items-center gap-4 bg-black/60 backdrop-blur-md p-4 border border-white/10 max-w-sm">
+          <div className="w-16 h-16 bg-blue-700 flex items-center justify-center shrink-0">
+            <span className="text-[10px] text-center leading-tight font-bold text-white">NOVO<br />CASE</span>
+          </div>
+          <div className="flex flex-col pr-4">
+            <span className="text-[10px] uppercase tracking-widest text-white/50 mb-1">Destaque Recente</span>
+            <span className="text-sm font-bold uppercase leading-tight text-white">Campanha "Futuro Visível"</span>
+          </div>
+        </motion.div>
 
         {/* --- RODAPÉ DA HERO (Minimalista: Apenas Instagram e All Works) --- */}
         <div className="absolute bottom-8 left-0 w-full px-6 md:px-12 flex justify-between items-end z-30 text-white mix-blend-difference pointer-events-none">

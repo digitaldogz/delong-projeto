@@ -35,13 +35,13 @@ const SiteHeader = () => {
             : "bg-transparent"
         }`}
       >
-        {/* --- LADO ESQUERDO: LOGO --- */}
+        {/* --- LADO ESQUERDO: LOGO COM BORDA --- */}
         <div className="z-[1000] shrink-0">
-          <Link to="/" className="hover:opacity-80 transition-opacity">
+          <Link to="/" className="hover:opacity-80 transition-opacity border border-white/80 px-3 py-2 flex items-center">
             <img 
               src={logoDelongWhite}
               alt="Delong Media House" 
-              className="h-10 md:h-12 w-auto object-contain" 
+              className="h-6 md:h-8 w-auto object-contain" 
             />
           </Link>
         </div>
@@ -88,12 +88,12 @@ const SiteHeader = () => {
             )}
           </AnimatePresence>
 
-          {/* BOTÃO CONTATO (SEMPRE FIXO NA PONTA) */}
+          {/* BOTÃO CONTATO - Apenas texto com seta, sem fundo */}
           <Link 
             to="/#contato" 
-            className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity whitespace-nowrap"
+            className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-1 hover:opacity-70 transition-opacity whitespace-nowrap"
           >
-            Contato <span>→</span>
+            CONTACT <span className="ml-1">→</span>
           </Link>
 
         </div>
