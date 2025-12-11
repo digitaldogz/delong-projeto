@@ -58,33 +58,33 @@ const ProjectsPage = () => {
   return (
     <div className="w-full bg-background text-foreground min-h-screen font-sans selection:bg-foreground selection:text-background">
       
-      {/* 1. HEADER FIXO (STICKY) */}
-      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 md:px-12 py-6 bg-background/90 backdrop-blur-md border-b border-border/5 transition-all">
+      {/* HEADER IDÊNTICO AO HERO SECTION */}
+      <nav className="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-8 md:px-12 py-8 bg-background/90 backdrop-blur-md transition-all">
          
-         {/* LADO ESQUERDO: LOGO (Link para Home) */}
-         <Link to="/" className="w-auto cursor-pointer hover:opacity-80 transition-opacity">
+         {/* LADO ESQUERDO: LOGO */}
+         <Link to="/" className="w-auto hover:opacity-80 transition-opacity">
             <img 
                src={logoDelongWhite}
                alt="Delong Media House" 
-               className="h-10 md:h-12 w-auto object-contain" 
+               className="h-12 md:h-14 w-auto" 
             />
          </Link>
 
-         {/* CENTRO: MENU (Volta para seções da Home) */}
-         <div className="hidden md:flex gap-8 text-xs font-bold uppercase tracking-widest bg-foreground/5 px-8 py-3 rounded-full border border-border/10">
-            <Link to="/" className="hover:text-foreground text-muted-foreground transition-colors">
-               Home
-            </Link>
-            <a href="/#sobre" className="hover:text-foreground text-muted-foreground transition-colors">
-               Sobre
+         {/* CENTRO: MENU NUMERADO (Igual Hero) */}
+         <div className="hidden md:flex gap-8 text-xs font-medium uppercase tracking-widest">
+            <a href="/#sobre" className="hover:text-muted-foreground transition-colors flex items-center gap-1 text-foreground">
+               <span className="opacity-50">01</span> Sobre
             </a>
-            <a href="/#servicos" className="hover:text-foreground text-muted-foreground transition-colors">
-               Serviços
+            <span className="flex items-center gap-1 text-foreground border-b border-foreground pb-0.5">
+               <span className="opacity-50">02</span> Projetos
+            </span>
+            <a href="/#servicos" className="hover:text-muted-foreground transition-colors flex items-center gap-1 text-foreground">
+               <span className="opacity-50">03</span> Serviços
             </a>
          </div>
 
-         {/* LADO DIREITO: CONTATO */}
-         <a href="/#contato" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:bg-foreground hover:text-background transition-all border border-border/20 px-6 py-3 rounded-full">
+         {/* LADO DIREITO: CONTATO (Texto simples igual Hero) */}
+         <a href="/#contato" className="text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-80 transition-opacity text-foreground">
             Contato <span>→</span>
          </a>
       </nav>
