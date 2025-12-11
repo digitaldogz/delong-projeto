@@ -61,17 +61,17 @@ const itemVariants = {
 
 const ClientCloud = () => {
   return (
-    <section className="w-full bg-background py-32 px-4 md:px-12 overflow-hidden border-t border-border">
-      
-      {/* Label Superior */}
-      <div className="flex justify-center mb-16">
-        <span className="text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase">
-          ▪ Featured Clients
-        </span>
-      </div>
+    <section className="w-full bg-background py-32 overflow-hidden border-t border-border">
+      <div className="max-w-7xl mx-auto px-8 md:px-12">
+        {/* Label Superior */}
+        <div className="flex justify-center mb-16">
+          <span className="text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase">
+            ▪ Featured Clients
+          </span>
+        </div>
 
-      {/* O BLOCO DE TEXTO */}
-      <div className="max-w-7xl mx-auto">
+        {/* O BLOCO DE TEXTO */}
+        <div className="w-full">
         <motion.div 
           className="text-justify leading-none md:leading-[0.9] tracking-tighter"
           style={{ textAlignLast: "center" }}
@@ -104,8 +104,8 @@ const ClientCloud = () => {
             );
           })}
         </motion.div>
+        </div>
       </div>
-      
     </section>
   );
 };
