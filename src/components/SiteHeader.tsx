@@ -29,7 +29,7 @@ const SiteHeader = () => {
   return (
     <>
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-6 md:px-12 py-6 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-[999] flex justify-between items-center px-8 md:px-20 lg:px-28 py-6 transition-all duration-500 ${
           isMenuOpen 
             ? "bg-background/90 backdrop-blur-md" 
             : "bg-transparent"
