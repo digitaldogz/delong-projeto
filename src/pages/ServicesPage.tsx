@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/Footer';
@@ -44,29 +44,20 @@ const services = [
 ];
 
 const ServicesPage = () => {
-  const { scrollY } = useScroll();
-  
-  // Fade out baseado no scroll (0-300px de scroll)
-  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
-  const heroY = useTransform(scrollY, [0, 300], [0, -50]);
-  
-  // Botão de contato permanece visível
-  const contactOpacity = useTransform(scrollY, [0, 200, 400], [1, 1, 0]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
       
       {/* Hero Section */}
-      <section className="pt-32 pb-20 md:pt-40 md:pb-32">
+      <section className="pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-8">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12">
             <motion.h1 
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
-              style={{ opacity: heroOpacity, y: heroY }}
-              className="text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic"
+              className="text-7xl md:text-9xl lg:text-[12rem] font-light tracking-tight italic leading-[0.85]"
             >
               Serviços
             </motion.h1>
@@ -74,26 +65,26 @@ const ServicesPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="max-w-md"
+              className="max-w-sm md:pt-8"
             >
-              <motion.p 
-                style={{ opacity: heroOpacity }}
-                className="text-muted-foreground text-sm mb-6"
-              >
+              <p className="text-muted-foreground text-sm mb-8 leading-relaxed">
                 Trabalhamos com marcas grandes e pequenas, locais e globais, em uma ampla gama de serviços criativos.
-              </motion.p>
-              <motion.div style={{ opacity: contactOpacity }}>
-                <Link 
-                  to="/#contato" 
-                  className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-foreground hover:text-background transition-all"
-                >
-                  Trabalhe conosco
-                </Link>
-              </motion.div>
+              </p>
+              <Link 
+                to="/#contato" 
+                className="inline-flex items-center justify-center bg-foreground text-background px-8 py-4 text-xs font-medium tracking-widest hover:bg-foreground/90 transition-all"
+              >
+                [ Trabalhe Conosco ]
+              </Link>
             </motion.div>
           </div>
         </div>
       </section>
+
+      {/* Divider Line */}
+      <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="w-full h-px bg-border/50" />
+      </div>
 
       {/* Services List */}
       <section className="pb-32">
@@ -101,37 +92,42 @@ const ServicesPage = () => {
           {services.map((service, index) => (
             <motion.div 
               key={service.number}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
-              viewport={{ once: true, margin: "-100px" }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 py-16 md:py-24 border-t border-border/30"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: "-50px" }}
+              className="py-16 md:py-24 border-b border-border/30"
             >
-              {/* Text Content */}
-              <div className="flex flex-col justify-center order-2 md:order-1">
-                <span className="text-xs text-muted-foreground font-mono mb-4">{service.number}</span>
-                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight mb-6">
-                  {service.title}
-                </h2>
-                <p className="text-muted-foreground text-sm md:text-base leading-relaxed max-w-lg">
-                  {service.description}
-                </p>
-              </div>
+              <div className="grid grid-cols-12 gap-6 md:gap-8">
+                {/* Number */}
+                <div className="col-span-12 md:col-span-1">
+                  <span className="text-xs text-muted-foreground font-mono">{service.number}</span>
+                </div>
+                
+                {/* Text Content */}
+                <div className="col-span-12 md:col-span-4 flex flex-col justify-start">
+                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-6">
+                    {service.title}
+                  </h2>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    {service.description}
+                  </p>
+                </div>
 
-              {/* Image */}
-              <div className="order-1 md:order-2">
-                <motion.div 
-                  className="relative aspect-[4/3] overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ duration: 0.4 }}
-                >
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-background/10" />
-                </motion.div>
+                {/* Image */}
+                <div className="col-span-12 md:col-span-7 md:pl-8">
+                  <motion.div 
+                    className="relative aspect-[16/10] overflow-hidden"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                </div>
               </div>
             </motion.div>
           ))}
