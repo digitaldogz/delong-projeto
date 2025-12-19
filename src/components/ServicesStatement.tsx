@@ -24,10 +24,9 @@ const ServicesStatement = () => {
           {/* Botão Estilo "Outline" */}
           <Link 
             to="/servicos" 
-            className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-mono text-xs font-bold text-foreground tracking-[0.2em] uppercase border border-border hover:border-foreground transition-colors duration-300"
+            className="inline-flex items-center justify-center px-8 py-4 font-mono text-xs font-bold text-foreground tracking-[0.2em] uppercase border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300"
           >
-            <span className="relative z-10">[ Todos os Serviços ]</span>
-            <div className="absolute inset-0 bg-foreground transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 -z-0 mix-blend-difference"></div>
+            [ Todos os Serviços ]
           </Link>
         </div>
 
