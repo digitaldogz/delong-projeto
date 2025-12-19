@@ -128,16 +128,59 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* --- 5. IMAGEM FINAL --- */}
-      <section className="w-full h-[60vh] overflow-hidden relative">
-         <img 
-           src="https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=1974&auto=format&fit=crop" 
-           className="w-full h-full object-cover opacity-60"
-           alt="Ambience"
-         />
-         <div className="absolute inset-0 flex items-center justify-center">
-            <h3 className="text-3xl md:text-5xl font-bold uppercase tracking-widest text-foreground/20">Delong Media House</h3>
-         </div>
+      {/* --- 5. GALERIA EM X --- */}
+      <section className="w-full py-16 overflow-hidden relative bg-background">
+        {/* Primeira fileira - move para a esquerda */}
+        <div className="mb-4 overflow-hidden">
+          <div className="flex gap-4 animate-marquee-left" style={{ animationDuration: '40s', width: 'max-content' }}>
+            {[
+              "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=600&auto=format&fit=crop",
+            ].map((src, i) => (
+              <div key={i} className="shrink-0 w-[300px] md:w-[400px] h-[200px] md:h-[280px] overflow-hidden">
+                <img 
+                  src={src} 
+                  alt={`Crew ${i + 1}`}
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Segunda fileira - move para a direita */}
+        <div className="overflow-hidden">
+          <div className="flex gap-4 animate-marquee-right" style={{ animationDuration: '40s', width: 'max-content' }}>
+            {[
+              "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1560439514-4e9645039924?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1560439514-4e9645039924?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop",
+              "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=600&auto=format&fit=crop",
+            ].map((src, i) => (
+              <div key={i} className="shrink-0 w-[300px] md:w-[400px] h-[200px] md:h-[280px] overflow-hidden">
+                <img 
+                  src={src} 
+                  alt={`Event ${i + 1}`}
+                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <Footer />
