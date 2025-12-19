@@ -25,7 +25,8 @@ const Footer = () => {
             <div>
               <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">ENDEREÇO</span>
               <p className="text-muted-foreground text-sm leading-relaxed">Irati, Paraná - Brasil
-Curitiba, Paraná - Brasil<br />
+Curitiba, Paraná - Brasil
+              <br />
                 9 Doan Van Bo, Xom Chieu Ward, Ho Chi Minh City.
               </p>
             </div>
