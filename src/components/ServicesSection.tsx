@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 // DADOS TRADUZIDOS E REFINADOS PARA "DELONG MEDIA HOUSE"
@@ -88,10 +89,10 @@ const ServicesSection = () => {
 
             {/* BOTÃO FLUTUANTE NA IMAGEM */}
             <div className="absolute bottom-8 left-8 z-20">
-               <button className="flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] md:text-xs font-bold text-white uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 group">
+               <Link to="/servicos" className="flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] md:text-xs font-bold text-white uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 group">
                  Explorar Serviços 
                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-               </button>
+               </Link>
             </div>
           </div>
         </div>

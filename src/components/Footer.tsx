@@ -24,7 +24,7 @@ const Footer = () => {
             </div>
 
             {/* CTA Box */}
-            <a href="#" className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-8 flex justify-between items-center">
+            <a href="https://wa.me/5542999277578" target="_blank" rel="noreferrer" className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-8 flex justify-between items-center">
               <span className="text-lg md:text-xl font-bold text-background tracking-tight">Tem um projeto? Vamos conversar</span>
               <ArrowUpRight className="text-background w-6 h-6 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
             </a>
