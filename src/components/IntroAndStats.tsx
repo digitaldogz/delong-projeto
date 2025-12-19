@@ -34,22 +34,20 @@ const AnimatedCounter = ({
       return () => clearInterval(timer);
     }
   }, [isInView, target]);
-  return (
-    <motion.span 
-      ref={ref} 
-      initial={{ opacity: 0, y: 20 }} 
-      animate={isInView ? { opacity: 1, y: 0 } : {}} 
-      transition={{ duration: 0.6 }} 
-      className="text-7xl md:text-8xl font-bold tracking-tighter text-foreground"
-    >
+  return <motion.span ref={ref} initial={{
+    opacity: 0,
+    y: 20
+  }} animate={isInView ? {
+    opacity: 1,
+    y: 0
+  } : {}} transition={{
+    duration: 0.6
+  }} className="text-7xl md:text-8xl font-bold tracking-tighter text-foreground">
       {count}{suffix}
-    </motion.span>
-  );
+    </motion.span>;
 };
-
 const IntroAndStats = () => {
-  return (
-    <div className="w-full bg-background text-foreground selection:bg-destructive selection:text-destructive-foreground">
+  return <div className="w-full bg-background text-foreground selection:bg-destructive selection:text-destructive-foreground">
       
       {/* --- SEÇÃO 1: INTRO (ABOUT) --- */}
       <section className="relative w-full py-32 px-8 md:px-12 border-t border-border">
@@ -65,8 +63,8 @@ const IntroAndStats = () => {
 
           {/* Coluna Direita: Conteúdo Principal */}
           <div className="md:col-span-9 flex flex-col gap-10">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] tracking-tight">
-              Fundada para inovar, nossa<br />
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] tracking-tight">A referência em produção
+de alto impacto.<br />
               produtora audiovisual do Brasil<br />
               e do Mundo.
             </h2>
@@ -95,39 +93,54 @@ const IntroAndStats = () => {
         <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 md:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
             
-            <motion.div 
-              className="flex flex-col gap-2" 
-              initial={{ opacity: 0, y: 30 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.6, delay: 0 }} 
-              viewport={{ once: true }}
-            >
+            <motion.div className="flex flex-col gap-2" initial={{
+            opacity: 0,
+            y: 30
+          }} whileInView={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.6,
+            delay: 0
+          }} viewport={{
+            once: true
+          }}>
               <AnimatedCounter target={200} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
                 Eventos organizados para grandes marcas
               </p>
             </motion.div>
 
-            <motion.div 
-              className="flex flex-col gap-2" 
-              initial={{ opacity: 0, y: 30 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.6, delay: 0.2 }} 
-              viewport={{ once: true }}
-            >
+            <motion.div className="flex flex-col gap-2" initial={{
+            opacity: 0,
+            y: 30
+          }} whileInView={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.6,
+            delay: 0.2
+          }} viewport={{
+            once: true
+          }}>
               <AnimatedCounter target={1000} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
                 Publicações de comunicação desenhadas
               </p>
             </motion.div>
 
-            <motion.div 
-              className="flex flex-col gap-2" 
-              initial={{ opacity: 0, y: 30 }} 
-              whileInView={{ opacity: 1, y: 0 }} 
-              transition={{ duration: 0.6, delay: 0.4 }} 
-              viewport={{ once: true }}
-            >
+            <motion.div className="flex flex-col gap-2" initial={{
+            opacity: 0,
+            y: 30
+          }} whileInView={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            duration: 0.6,
+            delay: 0.4
+          }} viewport={{
+            once: true
+          }}>
               <AnimatedCounter target={50} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
                 Equipe experiente e apaixonada
@@ -138,8 +151,6 @@ const IntroAndStats = () => {
         </div>
       </section>
 
-    </div>
-  );
+    </div>;
 };
-
 export default IntroAndStats;
