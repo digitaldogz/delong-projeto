@@ -82,12 +82,14 @@ const ServicesPage = () => {
       </section>
 
       {/* Divider Line */}
-      <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-        <div className="w-full h-px bg-border/50" />
+      <div className="w-full">
+        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+          <div className="w-full h-px bg-border/40" />
+        </div>
       </div>
 
       {/* Services List */}
-      <section className="pb-32">
+      <section className="pt-16 pb-32">
         <div className="max-w-[1400px] mx-auto px-8 md:px-12">
           {services.map((service, index) => (
             <motion.div 
@@ -96,29 +98,29 @@ const ServicesPage = () => {
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true, margin: "-50px" }}
-              className="py-16 md:py-24 border-b border-border/30"
             >
-              <div className="grid grid-cols-12 gap-6 md:gap-8">
-                {/* Number */}
-                <div className="col-span-12 md:col-span-1">
-                  <span className="text-xs text-muted-foreground font-mono">{service.number}</span>
-                </div>
-                
-                {/* Text Content */}
-                <div className="col-span-12 md:col-span-4 flex flex-col justify-start">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-medium tracking-tight mb-6">
-                    {service.title}
-                  </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {service.description}
-                  </p>
+              <div className="flex flex-col md:flex-row gap-8 md:gap-12 py-16 md:py-20">
+                {/* Left side - Number + Text */}
+                <div className="flex gap-8 md:gap-12 md:w-[45%]">
+                  {/* Number */}
+                  <span className="text-xs text-muted-foreground font-mono shrink-0 pt-2">{service.number}</span>
+                  
+                  {/* Text Content */}
+                  <div className="flex flex-col">
+                    <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">
+                      {service.title}
+                    </h2>
+                    <p className="text-muted-foreground text-sm leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Image */}
-                <div className="col-span-12 md:col-span-7 md:pl-8">
+                {/* Right side - Image */}
+                <div className="md:w-[55%]">
                   <motion.div 
-                    className="relative aspect-[16/10] overflow-hidden"
-                    whileHover={{ scale: 1.02 }}
+                    className="relative aspect-[16/9] overflow-hidden"
+                    whileHover={{ scale: 1.01 }}
                     transition={{ duration: 0.4 }}
                   >
                     <img 
@@ -129,6 +131,9 @@ const ServicesPage = () => {
                   </motion.div>
                 </div>
               </div>
+              
+              {/* Divider Line */}
+              <div className="w-full h-px bg-border/40" />
             </motion.div>
           ))}
         </div>
