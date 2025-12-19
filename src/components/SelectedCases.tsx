@@ -1,73 +1,63 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
-
-const projects = [
-  {
-    id: 1,
-    size: "large",
-    slug: "hanoi-convention",
-    title: "HANOI CONVENTION",
-    client: "Ministry of Public Security",
-    year: "2025",
-    category: "Events",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2600&auto=format&fit=crop"
-  },
-  {
-    id: 2,
-    size: "large",
-    slug: "brave-warrior",
-    title: "THE BRAVE WARRIOR",
-    client: "Reality TV Show",
-    year: "2025",
-    category: "Production",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
-  },
-  {
-    id: 3,
-    size: "small",
-    slug: "msb-private-concert",
-    title: "SOUL OF THE NATION",
-    client: "MSB Bank",
-    year: "2025",
-    category: "Events",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    id: 4,
-    size: "small",
-    slug: "exhibition-public-security",
-    title: "RED STAGE LIVE",
-    client: "Viettel",
-    year: "2025",
-    category: "Events",
-    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    id: 5,
-    size: "small",
-    slug: "vinfast-fierce-spirit",
-    title: "BLUE HORIZON",
-    client: "VietinBank",
-    year: "2025",
-    category: "Production",
-    image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    id: 6,
-    size: "small",
-    slug: "campaign-we-got-you",
-    title: "VICTORY PATH",
-    client: "Gov",
-    year: "2025",
-    category: "Events",
-    image: "https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=2070&auto=format&fit=crop"
-  }
-];
-
+const projects = [{
+  id: 1,
+  size: "large",
+  slug: "hanoi-convention",
+  title: "HANOI CONVENTION",
+  client: "Ministry of Public Security",
+  year: "2025",
+  category: "Events",
+  image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2600&auto=format&fit=crop"
+}, {
+  id: 2,
+  size: "large",
+  slug: "brave-warrior",
+  title: "THE BRAVE WARRIOR",
+  client: "Reality TV Show",
+  year: "2025",
+  category: "Production",
+  image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop"
+}, {
+  id: 3,
+  size: "small",
+  slug: "msb-private-concert",
+  title: "SOUL OF THE NATION",
+  client: "MSB Bank",
+  year: "2025",
+  category: "Events",
+  image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
+}, {
+  id: 4,
+  size: "small",
+  slug: "exhibition-public-security",
+  title: "RED STAGE LIVE",
+  client: "Viettel",
+  year: "2025",
+  category: "Events",
+  image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?q=80&w=2070&auto=format&fit=crop"
+}, {
+  id: 5,
+  size: "small",
+  slug: "vinfast-fierce-spirit",
+  title: "BLUE HORIZON",
+  client: "VietinBank",
+  year: "2025",
+  category: "Production",
+  image: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=2070&auto=format&fit=crop"
+}, {
+  id: 6,
+  size: "small",
+  slug: "campaign-we-got-you",
+  title: "VICTORY PATH",
+  client: "Gov",
+  year: "2025",
+  category: "Events",
+  image: "https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=2070&auto=format&fit=crop"
+}];
 const SelectedCases = () => {
-  return (
-    <section className="w-full bg-background py-24 border-t border-border">
+  return <section className="w-full bg-background py-24 border-t border-border">
       <div className="max-w-[1400px] mx-auto px-8 md:px-12">
         
         {/* Cabeçalho da Seção */}
@@ -76,29 +66,16 @@ const SelectedCases = () => {
             <span className="w-1 h-1 bg-foreground rounded-full"></span>
             Our Works
           </span>
-          <h2 className="text-5xl md:text-7xl font-medium text-foreground tracking-tight">
-            Selected Cases
-          </h2>
+          <h2 className="text-5xl md:text-7xl font-medium text-foreground tracking-tight">Cases selecionados</h2>
         </div>
 
         {/* GRID DE PROJETOS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
           
-          {projects.map((project) => (
-            <Link 
-              key={project.id}
-              to={`/projeto/${project.slug}`}
-              className={`group cursor-pointer flex flex-col gap-4 ${
-                project.size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'
-              }`}
-            >
+          {projects.map(project => <Link key={project.id} to={`/projeto/${project.slug}`} className={`group cursor-pointer flex flex-col gap-4 ${project.size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}>
               {/* Container da Imagem com Zoom no Hover */}
               <div className="relative w-full overflow-hidden aspect-[16/9] bg-secondary">
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-                />
+                <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" />
                 
                 {/* Overlay "View Case" */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/20 backdrop-blur-[2px]">
@@ -129,8 +106,7 @@ const SelectedCases = () => {
                    </span>
                  </div>
               </div>
-            </Link>
-          ))}
+            </Link>)}
 
         </div>
         
@@ -142,8 +118,6 @@ const SelectedCases = () => {
         </div>
 
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default SelectedCases;
