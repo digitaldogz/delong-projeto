@@ -90,9 +90,9 @@ const IntroAndStats = () => {
 
         {/* Conteúdo dos Números */}
         <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 text-center md:text-left">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 text-center justify-items-center">
             
-            <motion.div className="flex flex-col gap-2 items-center md:items-start" initial={{
+            <motion.div className="flex flex-col gap-2 items-center" initial={{
             opacity: 0,
             y: 30
           }} whileInView={{
@@ -105,12 +105,12 @@ const IntroAndStats = () => {
             once: true
           }}>
               <AnimatedCounter target={200} suffix="+" />
-              <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
+              <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed text-center">
                 Eventos organizados para grandes marcas
               </p>
             </motion.div>
 
-            <motion.div className="flex flex-col gap-2 items-center md:items-start" initial={{
+            <motion.div className="flex flex-col gap-2 items-center" initial={{
             opacity: 0,
             y: 30
           }} whileInView={{
@@ -123,12 +123,12 @@ const IntroAndStats = () => {
             once: true
           }}>
               <AnimatedCounter target={1000} suffix="+" />
-              <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
+              <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed text-center">
                 Publicações de comunicação desenhadas
               </p>
             </motion.div>
 
-            <motion.div className="flex flex-col gap-2 items-center md:items-start" initial={{
+            <motion.div className="flex flex-col gap-2 items-center" initial={{
             opacity: 0,
             y: 30
           }} whileInView={{
@@ -141,7 +141,7 @@ const IntroAndStats = () => {
             once: true
           }}>
               <AnimatedCounter target={50} suffix="+" />
-              <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed">
+              <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed text-center">
                 Equipe experiente e apaixonada
               </p>
             </motion.div>
