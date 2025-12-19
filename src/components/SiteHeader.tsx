@@ -50,44 +50,29 @@ const SiteHeader = () => {
         {/* --- LADO DIREITO: GRUPO UNIFICADO --- */}
         <div className="flex items-center gap-6 z-[1000]">
           
-          {/* ÁREA DE TROCA (Links <-> Sanduíche) */}
-          <AnimatePresence mode="wait">
-            {!isScrolled && !isMenuOpen ? (
-              // MODO 1: LINKS DE TEXTO (Desktop no Topo)
-              <motion.div
-                key="text-nav"
-                initial={{ opacity: 0, x: 10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 10, transition: { duration: 0.2 } }}
-                className="hidden md:flex items-center gap-8"
+          {/* LINKS DE TEXTO (Desktop no Topo - sem scroll e menu fechado) */}
+          <div className={`hidden md:flex items-center gap-8 transition-opacity duration-300 ${!isScrolled && !isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'}`}>
+            {menuItems.map((item) => (
+              <Link 
+                key={item.label} 
+                to={item.path} 
+                className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
               >
-                {menuItems.map((item) => (
-                  <Link 
-                    key={item.label} 
-                    to={item.path} 
-                    className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
-                  >
-                    <span className="font-normal opacity-50">{item.number}</span>
-                    <span>{item.label}</span>
-                  </Link>
-                ))}
-              </motion.div>
-            ) : (
-              // MODO 2: ÍCONE SANDUÍCHE (Rolando ou Mobile)
-              <motion.button
-                key="burger-icon"
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -10, transition: { duration: 0.2 } }}
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="flex flex-col gap-1.5 p-2 cursor-pointer group"
-              >
-                <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-                <span className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100 group-hover:w-4 self-end"}`} />
-                <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
-              </motion.button>
-            )}
-          </AnimatePresence>
+                <span className="font-normal opacity-50">{item.number}</span>
+                <span>{item.label}</span>
+              </Link>
+            ))}
+          </div>
+
+          {/* ÍCONE SANDUÍCHE (Mobile ou quando rola/menu aberto) */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className={`flex flex-col gap-1.5 p-2 cursor-pointer group transition-opacity duration-300 ${isScrolled || isMenuOpen ? 'opacity-100' : 'md:opacity-0 md:pointer-events-none md:absolute'}`}
+          >
+            <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
+            <span className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100 group-hover:w-4 self-end"}`} />
+            <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+          </button>
 
           {/* BOTÃO CONTATO (SEMPRE FIXO NA PONTA) */}
           <Link 
