@@ -1,11 +1,15 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { DottedSurface } from './ui/dotted-surface';
 
 const BigCTA = () => {
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-background">
+      {/* Background animado de pontos */}
+      <DottedSurface className="opacity-30" />
+
       {/* Glow vermelho sutil */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-destructive/15 rounded-full blur-[180px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-destructive/15 rounded-full blur-[180px] pointer-events-none z-[1]" />
 
       {/* Texto principal */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-12 text-center w-full">
