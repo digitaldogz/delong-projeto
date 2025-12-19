@@ -24,10 +24,7 @@ const Footer = () => {
             {/* Endereço */}
             <div>
               <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">ENDEREÇO</span>
-              <p className="text-muted-foreground text-sm leading-relaxed">Irati, Paraná - Brasil Curitiba, Paraná - Brasil
-              <br />
-                9 Doan Van Bo, Xom Chieu Ward, Ho Chi Minh City.
-              </p>
+              <p className="text-muted-foreground text-sm leading-relaxed">Irati, Paraná - Brasil</p>
             </div>
           </div>
 
@@ -64,11 +61,11 @@ const Footer = () => {
             <div className="mt-12 grid grid-cols-2 gap-8">
               <div>
                 <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">CONTATO</span>
-                <a href="mailto:info@zeitmedia.vn" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">contato@cesardelong.com</a>
+                <a href="mailto:contato@cesardelong.com" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">contato@cesardelong.com</a>
               </div>
               <div className="text-right">
                 <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">TELEFONE/WHATSAPP</span>
-                <a href="tel:+8484848686" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">(42) 42 84 848 8686</a>
+                <a href="https://wa.me/5542999277578" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">(42) 99927-7578</a>
               </div>
             </div>
           </div>
