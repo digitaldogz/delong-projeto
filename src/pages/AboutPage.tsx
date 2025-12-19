@@ -16,22 +16,22 @@ const AboutPage = () => {
           <img 
             src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" 
             alt="Delong Crew" 
-            className="w-full h-full object-cover opacity-50 grayscale"
+            className="w-full h-full object-cover opacity-60 grayscale"
           />
-          <div className="absolute inset-0 bg-background/60" />
+          <div className="absolute inset-0 bg-background/40" />
         </div>
         
         {/* Content */}
         <div className="relative z-10 flex-1 flex flex-col justify-between pt-32 pb-0">
           {/* Top Content */}
-          <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 flex flex-col md:flex-row justify-between">
+          <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 flex flex-col md:flex-row justify-between gap-8">
             {/* Left - Label + Description */}
-            <div className="max-w-sm">
+            <div className="max-w-md">
               <motion.span 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xs text-muted-foreground tracking-wider mb-6 block"
+                className="text-xs text-muted-foreground tracking-wider mb-8 block"
               >
                 (Sobre Nós)
               </motion.span>
@@ -39,7 +39,7 @@ const AboutPage = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-sm text-muted-foreground leading-relaxed"
+                className="text-sm text-foreground/80 leading-relaxed"
               >
                 Fundada para inovar, a Delong se tornou uma das principais agências de comunicação criativa, organização de eventos e consultoria de marca.
               </motion.p>
@@ -50,31 +50,22 @@ const AboutPage = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex items-start gap-2 mt-8 md:mt-0"
+              className="flex items-start gap-2"
             >
-              <div className="w-1.5 h-1.5 bg-foreground mt-1.5" />
-              <span className="text-sm text-muted-foreground">Uma Jornada de Criatividade</span>
+              <div className="w-1.5 h-1.5 bg-foreground mt-1.5 shrink-0" />
+              <span className="text-sm text-foreground/70">Uma Jornada de Criatividade</span>
             </motion.div>
           </div>
 
-          {/* Center Title */}
-          <div className="flex-1 flex items-center justify-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
-              className="text-6xl md:text-8xl lg:text-[12rem] font-light tracking-tight italic leading-none text-center"
-            >
-              Sobre Nós
-            </motion.h1>
-          </div>
+          {/* Spacer */}
+          <div className="flex-1" />
 
           {/* Bottom Marquee */}
-          <div className="w-full overflow-hidden border-t border-border/20">
-            <div className="flex animate-marquee-left py-6" style={{ animationDuration: '25s', width: 'max-content' }}>
-              {[...Array(8)].map((_, i) => (
-                <span key={i} className="text-5xl md:text-7xl lg:text-8xl font-light italic text-foreground/80 whitespace-nowrap mx-4">
-                  Nossa História / Company Story /
+          <div className="w-full overflow-hidden">
+            <div className="flex animate-marquee-left py-8" style={{ animationDuration: '20s', width: 'max-content' }}>
+              {[...Array(6)].map((_, i) => (
+                <span key={i} className="text-6xl md:text-8xl lg:text-[10rem] font-light italic text-foreground whitespace-nowrap mx-8">
+                  Nossa História /
                 </span>
               ))}
             </div>
