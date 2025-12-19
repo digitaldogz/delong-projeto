@@ -63,7 +63,9 @@ const IntroAndStats = () => {
 
           {/* Coluna Direita: Conteúdo Principal */}
           <div className="md:col-span-9 flex flex-col gap-10">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] tracking-tight">Fundada para inovar, nossa produtora <br className="hidden md:block" />
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] tracking-tight">Fundada para inovar,
+nossa produtora  do
+Brasil e do Mundo.<br className="hidden md:block" />
               do Brasil e do Mundo.
             </h2>
             
