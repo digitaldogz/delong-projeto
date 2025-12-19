@@ -22,43 +22,44 @@ const AboutPage = () => {
         </div>
         
         {/* Content */}
-        <div className="relative z-10 flex-1 flex flex-col justify-between pt-32 pb-0">
-          {/* Top Content */}
-          <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 flex flex-col md:flex-row justify-between gap-8">
-            {/* Left - Label + Description */}
-            <div className="max-w-md">
-              <motion.span 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="text-xs text-muted-foreground tracking-wider mb-8 block"
-              >
-                (Sobre Nós)
-              </motion.span>
+        <div className="relative z-10 flex-1 flex flex-col pt-32 pb-0">
+          {/* Top - Only Label */}
+          <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12">
+            <motion.span 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="text-xs text-muted-foreground tracking-wider block"
+            >
+              (Sobre Nós)
+            </motion.span>
+          </div>
+
+          {/* Middle Content - Description and Subtitle */}
+          <div className="flex-1 flex items-center">
+            <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 flex flex-col md:flex-row justify-between gap-8">
+              {/* Left - Description */}
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-sm text-foreground/80 leading-relaxed"
+                className="text-sm text-foreground/80 leading-relaxed max-w-md"
               >
                 Fundada para inovar, a Delong se tornou uma das principais agências de comunicação criativa, organização de eventos e consultoria de marca.
               </motion.p>
+
+              {/* Right - Subtitle */}
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.6 }}
+                className="flex items-start gap-2"
+              >
+                <div className="w-1.5 h-1.5 bg-foreground mt-1.5 shrink-0" />
+                <span className="text-sm text-foreground/70">Uma Jornada de Criatividade</span>
+              </motion.div>
             </div>
-
-            {/* Right - Subtitle */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex items-start gap-2"
-            >
-              <div className="w-1.5 h-1.5 bg-foreground mt-1.5 shrink-0" />
-              <span className="text-sm text-foreground/70">Uma Jornada de Criatividade</span>
-            </motion.div>
           </div>
-
-          {/* Spacer */}
-          <div className="flex-1" />
 
           {/* Bottom Marquee */}
           <div className="w-full overflow-hidden">
