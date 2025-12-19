@@ -63,10 +63,8 @@ const IntroAndStats = () => {
 
           {/* Coluna Direita: Conteúdo Principal */}
           <div className="md:col-span-9 flex flex-col gap-10">
-            <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] tracking-tight">A referência em produção
-de alto impacto.<br />
-              produtora audiovisual do Brasil<br />
-              e do Mundo.
+            <h2 className="text-4xl md:text-6xl lg:text-7xl font-semibold leading-[1.1] tracking-tight">
+              A referência em produção audiovisual de alto impacto.
             </h2>
             
             <div className="max-w-2xl">
