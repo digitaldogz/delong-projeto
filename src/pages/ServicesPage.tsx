@@ -123,27 +123,6 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="py-24 border-t border-border/30">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">
-            <div>
-              <h3 className="text-2xl md:text-3xl font-bold mb-2">A Arte Vem Primeiro</h3>
-              <p className="text-muted-foreground text-sm max-w-md">
-                Moldamos narrativas distintas com ideias inovadoras e maestria criativa, colocando você à frente da concorrência.
-              </p>
-            </div>
-            <Link 
-              to="/#contato" 
-              className="inline-flex items-center gap-3 border border-foreground px-8 py-4 text-sm font-bold hover:bg-foreground hover:text-background transition-all group"
-            >
-              Tem um projeto? Vamos conversar
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
-            </Link>
-          </div>
-        </div>
-      </section>
-
       <Footer />
     </div>
   );
