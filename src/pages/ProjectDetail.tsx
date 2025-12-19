@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams, Navigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import Footer from "@/components/Footer";
 import { getProjectBySlug, getRelatedProjects } from "@/data/projects";
 
 const ProjectDetail = () => {
@@ -174,11 +175,7 @@ const ProjectDetail = () => {
          </div>
       </div>
 
-      {/* FOOTER */}
-      <footer className="py-12 border-t border-border/20 text-center text-xs text-muted-foreground uppercase tracking-widest">
-         Delong Media House © 2025. All Rights Reserved.
-      </footer>
-
+      <Footer />
     </div>
   );
 };

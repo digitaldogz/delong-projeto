@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
+import Footer from "@/components/Footer";
 
 const AboutPage = () => {
   useEffect(() => {
@@ -142,11 +143,7 @@ const AboutPage = () => {
          </div>
       </section>
 
-      {/* FOOTER SIMPLES */}
-      <footer className="py-12 border-t border-border/20 text-center text-xs text-muted-foreground uppercase tracking-widest bg-background">
-         Delong Media House © 2025. All Rights Reserved.
-      </footer>
-
+      <Footer />
     </div>
   );
 };
