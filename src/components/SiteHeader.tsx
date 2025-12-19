@@ -75,12 +75,15 @@ const SiteHeader = () => {
           </button>
 
           {/* BOTÃO CONTATO (SEMPRE FIXO NA PONTA) */}
-          <Link 
-            to="/#contato" 
+          <button 
+            onClick={() => {
+              document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+              setIsMenuOpen(false);
+            }}
             className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity whitespace-nowrap"
           >
             Contato <span>→</span>
-          </Link>
+          </button>
 
         </div>
         </div>
