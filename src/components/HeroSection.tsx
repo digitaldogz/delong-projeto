@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { BGPattern } from "./ui/bg-pattern";
 
 // Configuração da animação (Suave e Premium)
 const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1];
@@ -17,6 +18,9 @@ const HeroSection = () => {
           <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-man-with-heads-like-statues-33516-large.mp4" type="video/mp4" />
         </video>
       </div>
+
+      {/* Pattern de fundo */}
+      <BGPattern variant="dots" mask="fade-edges" size={32} fill="rgba(255,255,255,0.15)" className="z-[5]" />
 
       {/* 2. CONTEÚDO (Fica por cima do vídeo - z-20) */}
       <div className="relative z-20 w-full h-screen flex flex-col justify-end pb-24 md:pb-28">
