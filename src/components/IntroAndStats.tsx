@@ -36,13 +36,12 @@ const AnimatedCounter = ({
     }
   }, [isInView, target]);
   return <motion.span ref={ref} initial={{
-    opacity: 0,
-    y: 20
+    opacity: 0
   }} animate={isInView ? {
-    opacity: 1,
-    y: 0
+    opacity: 1
   } : {}} transition={{
-    duration: 0.6
+    duration: 0.8,
+    ease: [0.33, 1, 0.68, 1]
   }} className="text-7xl md:text-8xl font-bold tracking-tighter text-foreground">
       {count}{suffix}
     </motion.span>;
@@ -93,16 +92,16 @@ const IntroAndStats = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 text-center justify-items-center">
             
             <motion.div className="flex flex-col gap-2 items-center" initial={{
-            opacity: 0,
-            y: 30
+            opacity: 0
           }} whileInView={{
-            opacity: 1,
-            y: 0
+            opacity: 1
           }} transition={{
-            duration: 0.6,
-            delay: 0
+            duration: 0.8,
+            delay: 0,
+            ease: [0.33, 1, 0.68, 1]
           }} viewport={{
-            once: true
+            once: true,
+            margin: "-50px"
           }}>
               <AnimatedCounter target={200} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed text-center">
@@ -111,16 +110,16 @@ const IntroAndStats = () => {
             </motion.div>
 
             <motion.div className="flex flex-col gap-2 items-center" initial={{
-            opacity: 0,
-            y: 30
+            opacity: 0
           }} whileInView={{
-            opacity: 1,
-            y: 0
+            opacity: 1
           }} transition={{
-            duration: 0.6,
-            delay: 0.2
+            duration: 0.8,
+            delay: 0.15,
+            ease: [0.33, 1, 0.68, 1]
           }} viewport={{
-            once: true
+            once: true,
+            margin: "-50px"
           }}>
               <AnimatedCounter target={1000} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed text-center">
@@ -129,16 +128,16 @@ const IntroAndStats = () => {
             </motion.div>
 
             <motion.div className="flex flex-col gap-2 items-center" initial={{
-            opacity: 0,
-            y: 30
+            opacity: 0
           }} whileInView={{
-            opacity: 1,
-            y: 0
+            opacity: 1
           }} transition={{
-            duration: 0.6,
-            delay: 0.4
+            duration: 0.8,
+            delay: 0.3,
+            ease: [0.33, 1, 0.68, 1]
           }} viewport={{
-            once: true
+            once: true,
+            margin: "-50px"
           }}>
               <AnimatedCounter target={50} suffix="+" />
               <p className="text-muted-foreground text-sm md:text-base max-w-[200px] leading-relaxed text-center">
