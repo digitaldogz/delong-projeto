@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -19,13 +19,9 @@ const queryClient = new QueryClient();
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2500);
-
-    return () => clearTimeout(timer);
-  }, []);
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -34,7 +30,7 @@ const App = () => {
         <Sonner />
         <AnimatePresence mode="wait">
           {isLoading ? (
-            <LoadingScreen key="loading" />
+            <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
           ) : (
             <BrowserRouter key="app">
               <ScrollToTop />
