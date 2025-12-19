@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 const ServicesStatement = () => {
   return <section className="w-full bg-background py-32 md:py-48 border-t border-border">
       <div className="max-w-[1400px] mx-auto px-8 md:px-12 flex flex-col items-center justify-center text-center">
@@ -16,10 +18,10 @@ const ServicesStatement = () => {
 projetamos experiências que tornam as marcas diferentes.</h2>
 
         {/* Botão Estilo "Outline" */}
-        <a href="#" className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-mono text-xs font-bold text-foreground tracking-[0.2em] uppercase border border-border hover:border-foreground transition-colors duration-300">
-          <span className="relative z-10">[ All Services ]</span>
+        <Link to="/servicos" className="group relative inline-flex items-center justify-center px-8 py-4 overflow-hidden font-mono text-xs font-bold text-foreground tracking-[0.2em] uppercase border border-border hover:border-foreground transition-colors duration-300">
+          <span className="relative z-10">[ Todos os Serviços ]</span>
           <div className="absolute inset-0 bg-foreground transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 -z-0 mix-blend-difference"></div>
-        </a>
+        </Link>
 
       </div>
     </section>;
