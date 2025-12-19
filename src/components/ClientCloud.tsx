@@ -18,21 +18,36 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.1,
+      staggerChildren: 0.08,
+      delayChildren: 0.2,
     },
   },
 };
 
-const itemVariants = {
+const rowVariants = {
+  hidden: { opacity: 1 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.05,
+    },
+  },
+};
+
+const wordVariants = {
   hidden: { 
     opacity: 0, 
-    y: 20,
+    y: 30,
+    filter: "blur(10px)",
   },
   visible: { 
     opacity: 1, 
     y: 0, 
-    transition: { duration: 0.5, ease: [0.33, 1, 0.68, 1] as const }
+    filter: "blur(0px)",
+    transition: { 
+      duration: 0.6, 
+      ease: [0.33, 1, 0.68, 1] as const 
+    }
   },
 };
 
@@ -49,7 +64,7 @@ const ClientCloud = () => {
 
         {/* Client Rows */}
         <motion.div 
-          className="flex flex-col items-center gap-2 md:gap-3"
+          className="flex flex-col items-center gap-1 md:gap-2"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -58,16 +73,17 @@ const ClientCloud = () => {
           {clientRows.map((row, rowIndex) => (
             <motion.div 
               key={rowIndex}
-              variants={itemVariants}
-              className="flex flex-wrap justify-center gap-x-4 md:gap-x-8"
+              variants={rowVariants}
+              className="flex flex-wrap justify-center gap-x-4 md:gap-x-6 lg:gap-x-8"
             >
               {row.map((client, clientIndex) => (
-                <span 
+                <motion.span 
                   key={clientIndex}
-                  className="text-sm md:text-lg lg:text-xl font-bold text-foreground tracking-wider whitespace-nowrap"
+                  variants={wordVariants}
+                  className="text-lg md:text-2xl lg:text-3xl font-bold text-foreground tracking-[0.2em] whitespace-nowrap"
                 >
                   {client}
-                </span>
+                </motion.span>
               ))}
             </motion.div>
           ))}
