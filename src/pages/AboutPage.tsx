@@ -10,25 +10,75 @@ const AboutPage = () => {
       <SiteHeader />
 
       {/* --- 1. HERO SECTION --- */}
-      <section className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
+      <section className="relative w-full h-screen flex flex-col overflow-hidden">
+        {/* Background Image */}
         <div className="absolute inset-0">
           <img 
             src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" 
             alt="Delong Crew" 
-            className="w-full h-full object-cover opacity-40 grayscale"
+            className="w-full h-full object-cover opacity-50 grayscale"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+          <div className="absolute inset-0 bg-background/60" />
         </div>
         
-        <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-12 text-center">
-          <motion.h1 
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="text-5xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic leading-none"
-          >
-            Sobre Nós
-          </motion.h1>
+        {/* Content */}
+        <div className="relative z-10 flex-1 flex flex-col justify-between pt-32 pb-0">
+          {/* Top Content */}
+          <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 flex flex-col md:flex-row justify-between">
+            {/* Left - Label + Description */}
+            <div className="max-w-sm">
+              <motion.span 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="text-xs text-muted-foreground tracking-wider mb-6 block"
+              >
+                (Sobre Nós)
+              </motion.span>
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4 }}
+                className="text-sm text-muted-foreground leading-relaxed"
+              >
+                Fundada para inovar, a Delong se tornou uma das principais agências de comunicação criativa, organização de eventos e consultoria de marca.
+              </motion.p>
+            </div>
+
+            {/* Right - Subtitle */}
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="flex items-start gap-2 mt-8 md:mt-0"
+            >
+              <div className="w-1.5 h-1.5 bg-foreground mt-1.5" />
+              <span className="text-sm text-muted-foreground">Uma Jornada de Criatividade</span>
+            </motion.div>
+          </div>
+
+          {/* Center Title */}
+          <div className="flex-1 flex items-center justify-center">
+            <motion.h1 
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
+              className="text-6xl md:text-8xl lg:text-[12rem] font-light tracking-tight italic leading-none text-center"
+            >
+              Sobre Nós
+            </motion.h1>
+          </div>
+
+          {/* Bottom Marquee */}
+          <div className="w-full overflow-hidden border-t border-border/20">
+            <div className="flex animate-marquee-left py-6" style={{ animationDuration: '25s', width: 'max-content' }}>
+              {[...Array(8)].map((_, i) => (
+                <span key={i} className="text-5xl md:text-7xl lg:text-8xl font-light italic text-foreground/80 whitespace-nowrap mx-4">
+                  Nossa História / Company Story /
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
