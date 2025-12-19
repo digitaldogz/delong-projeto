@@ -1,9 +1,7 @@
 import React from 'react';
 import { ArrowUpRight, Instagram, Facebook } from 'lucide-react';
-
 const Footer = () => {
-  return (
-    <footer className="w-full bg-background text-foreground border-t border-border">
+  return <footer className="w-full bg-background text-foreground border-t border-border">
       <div className="max-w-[1400px] mx-auto px-8 md:px-12">
         
         {/* MAIN FOOTER CONTENT */}
@@ -13,28 +11,21 @@ const Footer = () => {
           <div className="flex flex-col justify-between gap-12">
             {/* Identidade */}
             <div>
-              <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">Art Comes First</h3>
-              <p className="text-muted-foreground max-w-md leading-relaxed">
-                We shape distinctive success stories with breakthrough ideas and creative mastery, elevating you ahead of the competition.
-              </p>
+              <h3 className="text-2xl md:text-3xl font-bold tracking-tight mb-4">A arte move tudo</h3>
+              <p className="text-muted-foreground max-w-md leading-relaxed">Moldamos histórias de sucesso com ideias inovadoras e domínio técnico, elevando o padrão da sua marca e colocando você à frente da concorrência.</p>
             </div>
 
             {/* CTA Box */}
-            <a 
-              href="#" 
-              className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-8 flex justify-between items-center"
-            >
-              <span className="text-lg md:text-xl font-bold text-background tracking-tight">
-                Got A Project? Let's Talk
-              </span>
+            <a href="#" className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-8 flex justify-between items-center">
+              <span className="text-lg md:text-xl font-bold text-background tracking-tight">Tem um projeto? Vamos conversar</span>
               <ArrowUpRight className="text-background w-6 h-6 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
             </a>
             
             {/* Endereço */}
             <div>
-              <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">Address</span>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                24 Tue Tinh Street, Cua Nam Ward, Hanoi.<br/>
+              <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">ENDEREÇO</span>
+              <p className="text-muted-foreground text-sm leading-relaxed">Irati, Paraná - Brasil
+Curitiba, Paraná - Brasil<br />
                 9 Doan Van Bo, Xom Chieu Ward, Ho Chi Minh City.
               </p>
             </div>
@@ -45,16 +36,10 @@ const Footer = () => {
             
             {/* Menu de Navegação */}
             <nav className="flex flex-col w-full">
-              {['Works', 'Services', 'About Us', 'Blog'].map((item) => (
-                <a 
-                  key={item} 
-                  href="#" 
-                  className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300"
-                >
+              {['Works', 'Services', 'About Us', 'Blog'].map(item => <a key={item} href="#" className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300">
                   <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item}</span>
                   <ArrowUpRight className="text-muted-foreground w-4 h-4 group-hover:text-foreground transition-colors" />
-                </a>
-              ))}
+                </a>)}
             </nav>
 
             {/* Social Icons */}
@@ -67,7 +52,7 @@ const Footer = () => {
               </a>
               <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                 <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">
-                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
                 </svg>
               </a>
               <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -78,16 +63,12 @@ const Footer = () => {
             {/* Contato */}
             <div className="mt-12 grid grid-cols-2 gap-8">
               <div>
-                <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">Contact Us</span>
-                <a href="mailto:info@zeitmedia.vn" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">
-                  info@zeitmedia.vn
-                </a>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">CONTATO</span>
+                <a href="mailto:info@zeitmedia.vn" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">contato@cesardelong.com</a>
               </div>
               <div className="text-right">
-                <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">Phone Number</span>
-                <a href="tel:+8484848686" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">
-                  (+84) 84 848 8686
-                </a>
+                <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">TELEFONE/WHATSAPP</span>
+                <a href="tel:+8484848686" className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">(+42) 84 848 8686</a>
               </div>
             </div>
           </div>
@@ -99,11 +80,9 @@ const Footer = () => {
       {/* COPYRIGHT BAR */}
       <div className="border-t border-border">
         <div className="max-w-[1400px] mx-auto w-full py-6 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground uppercase tracking-wider">
-          <span>© 2025 ZEIT MEDIA. All rights reserved</span>
+          <span>© 2025 Delong media house todos os direitos reservados. </span>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
