@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import SiteHeader from '@/components/SiteHeader';
 import Footer from '@/components/Footer';
@@ -44,6 +44,15 @@ const services = [
 ];
 
 const ServicesPage = () => {
+  const { scrollY } = useScroll();
+  
+  // Fade out baseado no scroll (0-300px de scroll)
+  const heroOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const heroY = useTransform(scrollY, [0, 300], [0, -50]);
+  
+  // Botão de contato permanece visível
+  const contactOpacity = useTransform(scrollY, [0, 200, 400], [1, 1, 0]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
@@ -56,6 +65,7 @@ const ServicesPage = () => {
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
+              style={{ opacity: heroOpacity, y: heroY }}
               className="text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic"
             >
               Serviços
@@ -66,15 +76,20 @@ const ServicesPage = () => {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="max-w-md"
             >
-              <p className="text-muted-foreground text-sm mb-6">
-                Trabalhamos com marcas grandes e pequenas, locais e globais, em uma ampla gama de serviços criativos.
-              </p>
-              <Link 
-                to="/#contato" 
-                className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-foreground hover:text-background transition-all"
+              <motion.p 
+                style={{ opacity: heroOpacity }}
+                className="text-muted-foreground text-sm mb-6"
               >
-                Trabalhe conosco
-              </Link>
+                Trabalhamos com marcas grandes e pequenas, locais e globais, em uma ampla gama de serviços criativos.
+              </motion.p>
+              <motion.div style={{ opacity: contactOpacity }}>
+                <Link 
+                  to="/#contato" 
+                  className="inline-flex items-center gap-2 border border-foreground px-6 py-3 text-xs font-bold uppercase tracking-widest hover:bg-foreground hover:text-background transition-all"
+                >
+                  Trabalhe conosco
+                </Link>
+              </motion.div>
             </motion.div>
           </div>
         </div>
