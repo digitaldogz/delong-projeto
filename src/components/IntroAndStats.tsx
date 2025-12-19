@@ -51,8 +51,8 @@ const IntroAndStats = () => {
   return <div className="w-full bg-background text-foreground selection:bg-destructive selection:text-destructive-foreground">
       
       {/* --- SEÇÃO 1: INTRO (ABOUT) --- */}
-      <section className="relative w-full py-32 px-8 md:px-12 border-t border-border">
-        <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-12">
+      <section className="relative w-full py-32 border-t border-border">
+        <div className="max-w-[1400px] mx-auto px-8 md:px-12 grid grid-cols-1 md:grid-cols-12 gap-12">
           
           {/* Coluna Esquerda: Label "About Us" */}
           <div className="md:col-span-3 flex items-start gap-3">
@@ -90,9 +90,9 @@ const IntroAndStats = () => {
 
         {/* Conteúdo dos Números */}
         <div className="relative z-10 w-full max-w-[1400px] mx-auto px-8 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-8 text-center md:text-left">
             
-            <motion.div className="flex flex-col gap-2" initial={{
+            <motion.div className="flex flex-col gap-2 items-center md:items-start" initial={{
             opacity: 0,
             y: 30
           }} whileInView={{
@@ -110,7 +110,7 @@ const IntroAndStats = () => {
               </p>
             </motion.div>
 
-            <motion.div className="flex flex-col gap-2" initial={{
+            <motion.div className="flex flex-col gap-2 items-center md:items-start" initial={{
             opacity: 0,
             y: 30
           }} whileInView={{
@@ -128,7 +128,7 @@ const IntroAndStats = () => {
               </p>
             </motion.div>
 
-            <motion.div className="flex flex-col gap-2" initial={{
+            <motion.div className="flex flex-col gap-2 items-center md:items-start" initial={{
             opacity: 0,
             y: 30
           }} whileInView={{
