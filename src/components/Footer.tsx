@@ -9,7 +9,7 @@ const menuItems = [
 ];
 
 const Footer = () => {
-  return <footer className="w-full bg-background text-foreground border-t border-border">
+  return <footer id="footer" className="w-full bg-background text-foreground border-t border-border">
       <div className="max-w-[1400px] mx-auto px-8 md:px-12">
         
         {/* MAIN FOOTER CONTENT */}
