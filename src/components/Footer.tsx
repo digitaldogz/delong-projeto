@@ -33,7 +33,7 @@ const Footer = () => {
             
             {/* Menu de Navegação */}
             <nav className="flex flex-col w-full">
-              {['Works', 'Services', 'About Us', 'Blog'].map(item => <a key={item} href="#" className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300">
+              {['Works', 'Services', 'About Us'].map(item => <a key={item} href="#" className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300">
                   <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item}</span>
                   <ArrowUpRight className="text-muted-foreground w-4 h-4 group-hover:text-foreground transition-colors" />
                 </a>)}
