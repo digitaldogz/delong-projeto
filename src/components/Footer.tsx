@@ -1,5 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight, Instagram, Facebook } from 'lucide-react';
+
+const menuItems = [
+  { label: 'PROJETOS', path: '/projetos' },
+  { label: 'SERVIÇOS', path: '/servicos' },
+  { label: 'QUEM SOMOS', path: '/sobre' },
+];
+
 const Footer = () => {
   return <footer className="w-full bg-background text-foreground border-t border-border">
       <div className="max-w-[1400px] mx-auto px-8 md:px-12">
@@ -33,10 +41,10 @@ const Footer = () => {
             
             {/* Menu de Navegação */}
             <nav className="flex flex-col w-full">
-              {['PROJETOS', 'SERVIÇOS', 'QUEM SOMOS'].map(item => <a key={item} href="#" className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300">
-                  <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item}</span>
+              {menuItems.map(item => <Link key={item.label} to={item.path} className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300">
+                  <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item.label}</span>
                   <ArrowUpRight className="text-muted-foreground w-4 h-4 group-hover:text-foreground transition-colors" />
-                </a>)}
+                </Link>)}
             </nav>
 
             {/* Social Icons */}
