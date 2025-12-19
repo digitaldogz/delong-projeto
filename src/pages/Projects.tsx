@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
+import Footer from "@/components/Footer";
 import { projects } from "@/data/projects";
 
 const ProjectsPage = () => {
@@ -82,12 +83,9 @@ const ProjectsPage = () => {
           ))}
         </div>
 
-        {/* Footer do Grid */}
-        <div className="w-full text-center py-24 border-t border-border/10 mt-20">
-            <span className="text-xs text-muted-foreground uppercase tracking-widest">Fim da lista</span>
-        </div>
-
       </div>
+
+      <Footer />
     </div>
   );
 };
