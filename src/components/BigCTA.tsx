@@ -1,63 +1,59 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import logoWhite from '@/assets/logo-delong-white.png';
+import React from 'react';
+import { motion } from 'framer-motion';
 
 const BigCTA = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "end start"]
-  });
-
-  // 3D transformations based on scroll
-  const rotateY = useTransform(scrollYProgress, [0, 1], [-30, 30]);
-  const rotateX = useTransform(scrollYProgress, [0, 1], [15, -15]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.6, 1.2, 0.6]);
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.1, 0.3, 0.3, 0.1]);
-
   return (
-    <section 
-      ref={sectionRef}
-      className="relative w-full bg-background py-32 md:py-48 overflow-hidden flex items-center justify-center"
-    >
-      {/* Glow vermelho de fundo */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-destructive/20 rounded-full blur-[150px] pointer-events-none" />
-
-      {/* Logo 3D animada no fundo */}
-      <motion.div 
-        className="absolute inset-0 flex items-center justify-center pointer-events-none"
-        style={{
-          perspective: 1000,
-        }}
-      >
-        <motion.img
-          src={logoWhite}
+    <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center">
+      {/* Imagem de fundo */}
+      <div className="absolute inset-0">
+        <img 
+          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?q=80&w=2074&auto=format&fit=crop"
           alt=""
-          className="w-[300px] md:w-[500px] lg:w-[700px] h-auto"
-          style={{
-            rotateY,
-            rotateX,
-            scale,
-            opacity,
-            transformStyle: "preserve-3d",
-          }}
+          className="w-full h-full object-cover"
         />
-      </motion.div>
+        {/* Overlay escuro */}
+        <div className="absolute inset-0 bg-background/90" />
+        {/* Glow vermelho */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-destructive/30 rounded-full blur-[200px] pointer-events-none" />
+      </div>
 
       {/* Texto principal */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-12 text-center w-full">
-        <h2 className="font-black leading-[0.95] tracking-tight uppercase select-none">
-          <span className="block text-4xl md:text-[6rem] lg:text-[8rem] text-foreground">
+        <motion.h2 
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
+          viewport={{ once: true }}
+          className="font-black leading-[0.9] tracking-tighter uppercase"
+        >
+          <motion.span 
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            viewport={{ once: true }}
+            className="block text-5xl md:text-[7rem] lg:text-[10rem] text-foreground"
+          >
             VAMOS TORNAR
-          </span>
-          <span className="block text-4xl md:text-[6rem] lg:text-[8rem] bg-gradient-to-b from-muted-foreground/60 to-muted-foreground/20 bg-clip-text text-transparent italic">
+          </motion.span>
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            viewport={{ once: true }}
+            className="block text-5xl md:text-[7rem] lg:text-[10rem] text-muted-foreground/40 italic"
+          >
             SUA MARCA
-          </span>
-          <span className="block text-4xl md:text-[6rem] lg:text-[8rem] text-destructive">
+          </motion.span>
+          <motion.span 
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+            viewport={{ once: true }}
+            className="block text-5xl md:text-[7rem] lg:text-[10rem] text-destructive"
+          >
             INESQUECÍVEL
-          </span>
-        </h2>
+          </motion.span>
+        </motion.h2>
       </div>
     </section>
   );
