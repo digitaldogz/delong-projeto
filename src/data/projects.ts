@@ -31,6 +31,9 @@ export const projects: Project[] = [
     gallery: [
       "/projects/eventos/24EXPO00973.webp",
       "/projects/eventos/24EXPO00988.webp",
+      "/projects/eventos/24EXPO00403.webp",
+      "/projects/eventos/24EXPO00646.webp",
+      "/projects/eventos/24EXPO01484.webp",
       "/projects/eventos/24EXPO01378.webp",
       "/projects/eventos/24EXPO01654.webp",
     ],

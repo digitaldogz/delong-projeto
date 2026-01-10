@@ -97,22 +97,30 @@ const ProjectDetail = () => {
         <section className="pb-32">
           <div className="max-w-[1400px] mx-auto px-8 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {project.gallery.map((image, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="aspect-[4/3] overflow-hidden bg-secondary"
-                >
-                  <img
-                    src={image}
-                    alt={`${project.title} - Imagem ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-              ))}
+              {project.gallery.map((image, index) => {
+                // Imagem do sol (índice 3) fica grande no meio
+                const isFeatured = index === 3;
+                return (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    className={`overflow-hidden bg-secondary ${
+                      isFeatured 
+                        ? 'md:col-span-2 lg:col-span-3 aspect-[21/9]' 
+                        : 'aspect-[4/3]'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`${project.title} - Imagem ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </section>
