@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
+import { Link, useParams, Navigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
-import ImageLightbox from "@/components/ImageLightbox";
 import { getProjectBySlug, getRelatedProjects } from "@/data/projects";
-import { Button } from "@/components/ui/button";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
   const project = slug ? getProjectBySlug(slug) : undefined;
   const relatedProjects = slug ? getRelatedProjects(slug, 3) : [];
 
@@ -27,19 +23,6 @@ const ProjectDetail = () => {
     <div className="min-h-screen bg-background text-foreground">
       
       <SiteHeader />
-
-      {/* --- BOTÃO VOLTAR --- */}
-      <div className="fixed top-24 left-8 z-40">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => navigate(-1)}
-          className="bg-background/80 backdrop-blur-sm border-border/50 hover:bg-secondary"
-        >
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Voltar
-        </Button>
-      </div>
 
       {/* --- HERO BANNER --- */}
       <div className="relative w-full h-[85vh]">
@@ -104,19 +87,36 @@ const ProjectDetail = () => {
       {project.youtubeId && (
         <section className="py-12 md:py-24">
           <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-            <h3 className="text-2xl font-medium mb-8">Vídeo</h3>
             <YouTubeEmbed videoId={project.youtubeId} title={project.title} />
           </div>
         </section>
       )}
 
-      {/* --- GALERIA COM LIGHTBOX --- */}
-      <section className="pb-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          <h3 className="text-2xl font-medium mb-8">Galeria</h3>
-          <ImageLightbox images={project.gallery} projectTitle={project.title} />
-        </div>
-      </section>
+      {/* --- GALERIA DE IMAGENS --- */}
+      {project.gallery && project.gallery.length > 0 && (
+        <section className="pb-32">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {project.gallery.map((image, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="aspect-[4/3] overflow-hidden bg-secondary"
+                >
+                  <img
+                    src={image}
+                    alt={`${project.title} - Imagem ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* --- MAIS PROJETOS --- */}
       <section className="py-24 border-t border-border/30">
