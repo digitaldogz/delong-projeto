@@ -109,7 +109,7 @@ const ProjectDetail = () => {
                     transition={{ duration: 0.5, delay: index * 0.1 }}
                     className={`overflow-hidden bg-secondary ${
                       isFeatured 
-                        ? 'md:col-span-2 lg:col-span-3 aspect-[21/9]' 
+                        ? 'md:col-span-2 lg:col-span-3 aspect-[16/9]' 
                         : 'aspect-[4/3]'
                     }`}
                   >
