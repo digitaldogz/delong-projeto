@@ -16,7 +16,7 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 1,
-    slug: "exhibition-public-security",
+    slug: "expo-irati-2024",
     year: "2024",
     category: "Evento",
     title: "DOCUMENTÁRIO EXPO IRATI 2024",
@@ -24,7 +24,7 @@ export const projects: Project[] = [
     service: "Eventos / Produção",
     image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop",
     description:
-      "Comissionado pelo Ministério da Segurança Pública para a exibição '80 Anos de Jornada Pela Independência'. A Zeit (Delong) projetou um espaço experiencial em larga escala no Centro de Exibições do Vietnã.",
+      "Comissionado pela Prefeitura Municipal de Irati, este documentário é o registro definitivo da ExpoIrati 2024. Nossa produção mobilizou uma estrutura técnica avançada para capturar a magnitude do evento, equilibrando a precisão do agronegócio com a energia dos grandes espetáculos. O resultado é uma narrativa audiovisual que não apenas documenta números, mas preserva a identidade cultural e o crescimento econômico da região em uma obra de alto impacto técnico e institucional.",
     fullDescription:
       "Capturamos a essência e a energia da maior feira do Centro-Sul no documentário oficial da ExpoIrati 2024.",
     youtubeId: "q--pHHzrsCs",
