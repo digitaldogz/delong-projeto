@@ -1,12 +1,17 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
+import YouTubeEmbed from "@/components/YouTubeEmbed";
+import ImageLightbox from "@/components/ImageLightbox";
 import { getProjectBySlug, getRelatedProjects } from "@/data/projects";
+import { Button } from "@/components/ui/button";
 
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
   const project = slug ? getProjectBySlug(slug) : undefined;
   const relatedProjects = slug ? getRelatedProjects(slug, 3) : [];
 
@@ -22,6 +27,19 @@ const ProjectDetail = () => {
     <div className="min-h-screen bg-background text-foreground">
       
       <SiteHeader />
+
+      {/* --- BOTÃO VOLTAR --- */}
+      <div className="fixed top-24 left-8 z-40">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => navigate(-1)}
+          className="bg-background/80 backdrop-blur-sm border-border/50 hover:bg-secondary"
+        >
+          <ArrowLeft className="w-4 h-4 mr-2" />
+          Voltar
+        </Button>
+      </div>
 
       {/* --- HERO BANNER --- */}
       <div className="relative w-full h-[85vh]">
@@ -61,6 +79,10 @@ const ProjectDetail = () => {
                 <span className="text-sm font-bold uppercase">{project.service}</span>
               </div>
               <div className="flex flex-col gap-1">
+                <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Categoria</span>
+                <span className="text-sm font-bold uppercase">{project.category}</span>
+              </div>
+              <div className="flex flex-col gap-1">
                 <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Ano</span>
                 <span className="text-sm font-bold uppercase">{project.year}</span>
               </div>
@@ -78,74 +100,25 @@ const ProjectDetail = () => {
         </div>
       </section>
 
-      {/* --- VÍDEO --- */}
-      {project.videoUrl && (
+      {/* --- VÍDEO DO YOUTUBE --- */}
+      {project.youtubeId && (
         <section className="py-12 md:py-24">
           <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-            <div className="w-full aspect-video bg-secondary overflow-hidden relative">
-              <video 
-                controls
-                className="w-full h-full object-cover shadow-2xl"
-              >
-                <source src={project.videoUrl} type="video/mp4" />
-              </video>
-            </div>
+            <h3 className="text-2xl font-medium mb-8">Vídeo</h3>
+            <YouTubeEmbed videoId={project.youtubeId} title={project.title} />
           </div>
         </section>
       )}
 
-      {/* --- GALERIA --- */}
+      {/* --- GALERIA COM LIGHTBOX --- */}
       <section className="pb-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12 flex flex-col gap-8">
-          
-          {project.gallery[0] && (
-            <img 
-              src={project.gallery[0]} 
-              className="w-full h-auto object-cover" 
-              alt={`${project.title} - Gallery 1`}
-            />
-          )}
-
-          {project.gallery.length > 2 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-               <img 
-                 src={project.gallery[1]} 
-                 className="w-full h-[500px] object-cover" 
-                 alt={`${project.title} - Gallery 2`}
-               />
-               <img 
-                 src={project.gallery[2]} 
-                 className="w-full h-[500px] object-cover" 
-                 alt={`${project.title} - Gallery 3`}
-               />
-            </div>
-          )}
-
-          {project.gallery[3] && (
-            <img 
-              src={project.gallery[3]} 
-              className="w-full h-auto object-cover" 
-              alt={`${project.title} - Gallery 4`}
-            />
-          )}
-          
-          {project.gallery.length > 5 && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-               {project.gallery.slice(4, 7).map((img, idx) => (
-                 <img 
-                   key={idx}
-                   src={img} 
-                   className="w-full h-[300px] object-cover" 
-                   alt={`${project.title} - Gallery ${idx + 5}`}
-                 />
-               ))}
-            </div>
-          )}
-
+        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+          <h3 className="text-2xl font-medium mb-8">Galeria</h3>
+          <ImageLightbox images={project.gallery} projectTitle={project.title} />
         </div>
       </section>
 
-      {/* --- MORE STORIES --- */}
+      {/* --- MAIS PROJETOS --- */}
       <section className="py-24 border-t border-border/30">
         <div className="max-w-[1400px] mx-auto px-8 md:px-12">
            <h3 className="text-2xl font-medium mb-12">Mais Projetos</h3>
