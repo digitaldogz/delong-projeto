@@ -30,7 +30,7 @@ const ProjectDetail = () => {
           <img 
             src={project.image} 
             alt={project.title} 
-            className="w-full h-full object-cover object-top opacity-80"
+            className="w-full h-full object-cover object-[center_40%] opacity-80"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/60" />
         </div>
