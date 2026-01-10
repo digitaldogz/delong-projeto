@@ -22,19 +22,17 @@ export const projects: Project[] = [
     title: "DOCUMENTÁRIO EXPO IRATI 2024",
     client: "Prefeitura de Irati",
     service: "Eventos / Produção",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop",
+    image: "/projects/eventos/capa24EXPO01043.webp",
     description:
       "Comissionado pela Prefeitura Municipal de Irati, este documentário é o registro definitivo da ExpoIrati 2024. Nossa produção mobilizou uma estrutura técnica avançada para capturar a magnitude do evento, equilibrando a precisão do agronegócio com a energia dos grandes espetáculos. O resultado é uma narrativa audiovisual que não apenas documenta números, mas preserva a identidade cultural e o crescimento econômico da região em uma obra de alto impacto técnico e institucional.",
     fullDescription:
       "Capturamos a essência e a energia da maior feira do Centro-Sul no documentário oficial da ExpoIrati 2024.",
     youtubeId: "q--pHHzrsCs",
     gallery: [
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=2012&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1560439514-4e9645039924?q=80&w=2070&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1514525253440-b393452e8d26?q=80&w=1974&auto=format&fit=crop",
-      "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?q=80&w=2070&auto=format&fit=crop",
+      "/projects/eventos/24EXPO00973.webp",
+      "/projects/eventos/24EXPO00988.webp",
+      "/projects/eventos/24EXPO01378.webp",
+      "/projects/eventos/24EXPO01654.webp",
     ],
   },
   {
