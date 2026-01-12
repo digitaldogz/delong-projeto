@@ -58,42 +58,43 @@ const ProjectDetail = () => {
       {/* --- SEÇÃO DE INFORMAÇÕES --- */}
       <section className="py-[100px] md:py-[120px]">
         <div className="container-premium">
-          {/* Grid principal: esquerda (info) + direita (descrição) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
-            
-            {/* Coluna esquerda - Project Info */}
-            <div className="max-w-md">
+          {/* Grid 12 colunas: 4 (info) + 2 (vazio) + 6 (texto) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16">
+            {/* Coluna esquerda - Project Info (4 colunas) */}
+            <div className="lg:col-span-4">
               <div className="flex items-start gap-2 mb-10">
-                <span className="w-1.5 h-1.5 bg-foreground mt-2 shrink-0"></span>
+                <span className="w-1 h-1 bg-foreground mt-2 shrink-0" />
                 <span className="text-sm tracking-wide">Project Info</span>
               </div>
-              
-              <div>
-                <div className="flex justify-between items-baseline py-3 border-b border-border/30">
-                  <span className="text-xs text-muted-foreground/50 uppercase tracking-widest">Client</span>
-                  <span className="text-sm font-bold uppercase">{project.client}</span>
+
+              <div className="space-y-0">
+                <div className="grid grid-cols-[96px_1fr] items-baseline py-3 border-b border-border/30">
+                  <span className="text-[11px] text-muted-foreground/50 uppercase tracking-widest">Client</span>
+                  <span className="text-sm font-extrabold uppercase">{project.client}</span>
                 </div>
-                <div className="flex justify-between items-baseline py-3 border-b border-border/30">
-                  <span className="text-xs text-muted-foreground/50 uppercase tracking-widest">Service</span>
-                  <span className="text-sm font-bold uppercase">{project.service}</span>
+                <div className="grid grid-cols-[96px_1fr] items-baseline py-3 border-b border-border/30">
+                  <span className="text-[11px] text-muted-foreground/50 uppercase tracking-widest">Service</span>
+                  <span className="text-sm font-extrabold uppercase">{project.service}</span>
                 </div>
-                <div className="flex justify-between items-baseline py-3 border-b border-border/30">
-                  <span className="text-xs text-muted-foreground/50 uppercase tracking-widest">Year</span>
-                  <span className="text-sm font-bold uppercase">{project.year}</span>
+                <div className="grid grid-cols-[96px_1fr] items-baseline py-3 border-b border-border/30">
+                  <span className="text-[11px] text-muted-foreground/50 uppercase tracking-widest">Year</span>
+                  <span className="text-sm font-extrabold uppercase">{project.year}</span>
                 </div>
               </div>
             </div>
 
-            {/* Coluna direita - Descrição */}
-            <div>
-              <p className="text-[15px] leading-[1.8] text-muted-foreground/70 mb-6">
-                {project.description}
-              </p>
-              {project.fullDescription && (
-                <p className="text-[15px] leading-[1.8] text-muted-foreground/70">
-                  {project.fullDescription}
+            {/* Coluna direita - Descrição (6 colunas, começa após 2 colunas vazias) */}
+            <div className="lg:col-span-6 lg:col-start-7">
+              <div className="max-w-[560px]">
+                <p className="text-base leading-[1.8] text-muted-foreground/70 mb-8">
+                  {project.description}
                 </p>
-              )}
+                {project.fullDescription && (
+                  <p className="text-base leading-[1.8] text-muted-foreground/70">
+                    {project.fullDescription}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </div>
