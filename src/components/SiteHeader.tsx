@@ -6,8 +6,9 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoDelongWhite from "@/assets/logo-delong-white.png";
+import { scrollToTop } from "@/hooks/use-gsap-animations";
 
 // Animation easing
 const EASE_SMOOTH: [number, number, number, number] = [0.33, 1, 0.68, 1];
@@ -44,6 +45,17 @@ const SiteHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // Handle logo click - scroll to top or navigate home
+  const handleLogoClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (location.pathname === "/") {
+      scrollToTop();
+    } else {
+      navigate("/");
+    }
+  };
 
   // Scroll detection with hysteresis to prevent flickering
   useEffect(() => {
@@ -97,14 +109,18 @@ const SiteHeader = () => {
         }`}
       >
         <div className="container-premium py-6 flex justify-between items-center">
-          {/* Logo */}
-          <Link to="/" className="z-[1000] shrink-0 hover:opacity-80 transition-opacity">
+          {/* Logo - always scrolls to top */}
+          <a
+            href="/"
+            onClick={handleLogoClick}
+            className="z-[1000] shrink-0 hover:opacity-80 transition-opacity cursor-pointer"
+          >
             <img
               src={logoDelongWhite}
               alt="Delong Media House"
               className="h-10 md:h-12 w-auto object-contain"
             />
-          </Link>
+          </a>
 
           {/* Right Side: Navigation */}
           <div className="flex items-center gap-6 z-[1000]">

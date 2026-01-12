@@ -1,25 +1,24 @@
 /**
  * Hero Section Component
- * Full-screen hero with video background, animated text, and parallax on scroll.
+ * Full-screen hero with video background and GSAP entrance animations.
+ * Inspired by zeitmedia.vn style with masked text reveals and stagger effects.
  */
 
 import { useRef, useEffect, useState } from "react";
-import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useMotionValue, useTransform, motion } from "framer-motion";
 import { BGPattern } from "./ui/bg-pattern";
-
-// Animation easing
-const EASE_SMOOTH: [number, number, number, number] = [0.33, 1, 0.68, 1];
+import { useHeroAnimation } from "@/hooks/use-gsap-animations";
 
 const HeroSection = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useHeroAnimation();
   const scrollY = useMotionValue(0);
   const [containerHeight, setContainerHeight] = useState(0);
 
   // Setup scroll listener and container height
   useEffect(() => {
     const updateHeight = () => {
-      if (containerRef.current) {
-        setContainerHeight(containerRef.current.offsetHeight);
+      if (heroRef.current) {
+        setContainerHeight(heroRef.current.offsetHeight);
       }
     };
 
@@ -35,7 +34,7 @@ const HeroSection = () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", updateHeight);
     };
-  }, [scrollY]);
+  }, [scrollY, heroRef]);
 
   // Parallax transforms based on scroll
   const opacity = useTransform(scrollY, [0, containerHeight * 0.6], [1, 0]);
@@ -44,11 +43,11 @@ const HeroSection = () => {
 
   return (
     <section
-      ref={containerRef}
+      ref={heroRef}
       className="relative w-full h-screen overflow-hidden text-foreground bg-background"
     >
-      {/* Video Background */}
-      <div className="absolute inset-0 z-0">
+      {/* Video Background with reveal animation */}
+      <div className="absolute inset-0 z-0 hero-media">
         <div className="absolute inset-0 bg-background/40 z-10" />
         <video
           autoPlay
@@ -73,42 +72,27 @@ const HeroSection = () => {
         className="z-[5]"
       />
 
-      {/* Main Content */}
+      {/* Main Content with parallax */}
       <motion.div
         style={{ opacity, y, scale }}
         className="relative z-20 w-full h-screen flex flex-col justify-end pb-24 md:pb-28"
       >
         <div className="container-premium">
           <div className="flex flex-col gap-0 relative text-left">
-            {/* Animated Title */}
-            <div className="overflow-hidden">
-              <motion.h1
-                initial={{ y: "100%" }}
-                animate={{ y: "0%" }}
-                transition={{ duration: 1, ease: EASE_SMOOTH, delay: 0.2 }}
-                className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1]"
-              >
+            {/* Masked Title Animation */}
+            <div className="overflow-hidden hero-title-mask">
+              <h1 className="hero-title text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1]">
                 A Arte é o Princípio —
-              </motion.h1>
+              </h1>
             </div>
-            <div className="overflow-hidden">
-              <motion.h2
-                initial={{ y: "100%" }}
-                animate={{ y: "0%" }}
-                transition={{ duration: 1, ease: EASE_SMOOTH, delay: 0.3 }}
-                className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-muted-foreground"
-              >
+            <div className="overflow-hidden hero-title-mask">
+              <h2 className="hero-title text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-muted-foreground">
                 Criatividade no Comando
-              </motion.h2>
+              </h2>
             </div>
 
-            {/* Floating Widget */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.8 }}
-              className="absolute right-0 bottom-0 hidden md:flex items-center gap-3 bg-background/80 backdrop-blur-md p-3 border border-border/20 max-w-xs"
-            >
+            {/* Floating Widget with stagger */}
+            <div className="hero-widget absolute right-0 bottom-0 hidden md:flex items-center gap-3 bg-background/80 backdrop-blur-md p-3 border border-border/20 max-w-xs">
               <div className="w-14 h-14 bg-primary flex items-center justify-center shrink-0">
                 <span className="text-[9px] text-center leading-tight font-bold text-primary-foreground">
                   NOVO
@@ -124,18 +108,18 @@ const HeroSection = () => {
                   Campanha "Futuro Visível"
                 </span>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </motion.div>
 
-      {/* Footer Links */}
+      {/* Footer Links with stagger */}
       <motion.div
         style={{ opacity }}
-        className="absolute bottom-6 left-0 w-full z-30 text-foreground mix-blend-difference pointer-events-none"
+        className="hero-footer absolute bottom-6 left-0 w-full z-30 text-foreground mix-blend-difference pointer-events-none"
       >
         <div className="container-premium flex justify-between items-end">
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto hero-stagger">
             <a
               href="https://instagram.com"
               target="_blank"
@@ -145,7 +129,7 @@ const HeroSection = () => {
               INSTAGRAM
             </a>
           </div>
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto hero-stagger">
             <a
               href="/projetos"
               className="text-[10px] font-bold tracking-widest uppercase opacity-80 hover:opacity-100 transition-opacity border border-foreground/30 px-4 py-2"
