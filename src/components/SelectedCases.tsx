@@ -9,7 +9,6 @@ import { ArrowUpRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/data/projects";
-import { TransitionLink } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -129,7 +128,7 @@ const SelectedCases = () => {
             const size = sizeConfig[index + 1] || 'small';
             
             return (
-              <TransitionLink 
+              <Link 
                 key={project.id} 
                 to={`/projeto/${project.slug}`} 
                 className={`case-card group cursor-pointer flex flex-col gap-4 opacity-0 ${size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}
@@ -171,7 +170,7 @@ const SelectedCases = () => {
                      </span>
                    </div>
                 </div>
-              </TransitionLink>
+              </Link>
             );
           })}
 
