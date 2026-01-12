@@ -1,11 +1,16 @@
 /**
  * ServicesSection Component
- * Interactive services menu with image gallery.
+ * Interactive services menu with image gallery and GSAP animations.
  */
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const services = [
   {
     id: "01",
@@ -35,9 +40,49 @@ const services = [
 
 const ServicesSection = () => {
   const [activeId, setActiveId] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Service items stagger
+      gsap.fromTo(
+        ".service-menu-item",
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        }
+      );
+
+      // Image gallery reveal
+      gsap.fromTo(
+        ".service-gallery",
+        { opacity: 0, scale: 0.95 },
+        {
+          opacity: 1,
+          scale: 1,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="w-full bg-black text-white py-24">
+    <section ref={sectionRef} className="w-full bg-black text-white py-24">
       <div className="container-premium grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-20 items-center">
         
         {/* COLUNA ESQUERDA: MENU INTERATIVO */}
@@ -48,7 +93,7 @@ const ServicesSection = () => {
               <div 
                 key={service.id}
                 onMouseEnter={() => setActiveId(index)}
-                className="group cursor-pointer transition-all duration-300"
+                className="service-menu-item group cursor-pointer transition-all duration-300 opacity-0"
               >
                 {/* Numeração */}
                 <span className={`text-xs font-mono mb-2 block transition-colors duration-300 ${isActive ? "text-white" : "text-zinc-700"}`}>
@@ -83,7 +128,7 @@ const ServicesSection = () => {
 
         {/* COLUNA DIREITA: GALERIA STICKY */}
         <div className="lg:col-span-7 relative hidden lg:block">
-          <div className="relative w-full aspect-square md:aspect-[4/3] rounded-sm overflow-hidden bg-zinc-900 border border-white/5">
+          <div className="service-gallery relative w-full aspect-square md:aspect-[4/3] rounded-sm overflow-hidden bg-zinc-900 border border-white/5 opacity-0">
             <AnimatePresence mode="wait">
               <motion.img
                 key={activeId}

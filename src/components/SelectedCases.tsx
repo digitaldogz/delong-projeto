@@ -1,11 +1,16 @@
 /**
  * SelectedCases Component
- * Featured projects grid on the homepage.
+ * Featured projects grid on the homepage with GSAP animations.
  */
 
+import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/data/projects";
+
+gsap.registerPlugin(ScrollTrigger);
 
 // Configuração de tamanho para exibição no grid
 const sizeConfig: Record<number, 'large' | 'small'> = {
@@ -18,20 +23,102 @@ const sizeConfig: Record<number, 'large' | 'small'> = {
 };
 
 const SelectedCases = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
   // Pega os 6 primeiros projetos do arquivo de dados
   const displayProjects = projects.slice(0, 6);
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Header animation
+      const headerTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".cases-header",
+          start: "top 85%",
+        },
+      });
+
+      headerTl.fromTo(
+        ".cases-label",
+        { opacity: 0, x: -20 },
+        { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" },
+        0
+      );
+
+      headerTl.fromTo(
+        ".cases-title",
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
+        0.1
+      );
+
+      // Project cards stagger
+      const cards = gsap.utils.toArray(".case-card");
+      cards.forEach((card: any, index) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+            },
+          }
+        );
+
+        // Image scale on scroll reveal
+        gsap.fromTo(
+          card.querySelector(".case-image"),
+          { scale: 1.1 },
+          {
+            scale: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+            },
+          }
+        );
+      });
+
+      // View all button
+      gsap.fromTo(
+        ".cases-view-all",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".cases-view-all",
+            start: "top 95%",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="w-full bg-background py-24 border-t border-border">
+    <section ref={sectionRef} className="w-full bg-background py-24 border-t border-border">
       <div className="container-premium">
         
         {/* Cabeçalho da Seção */}
-        <div className="mb-16">
-          <span className="text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase flex items-center gap-2 mb-4">
+        <div className="cases-header mb-16">
+          <span className="cases-label text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase flex items-center gap-2 mb-4 opacity-0">
             <span className="w-1 h-1 bg-foreground rounded-full"></span>
             Our Works
           </span>
-          <h2 className="text-5xl md:text-7xl font-medium text-foreground tracking-tight">Cases selecionados</h2>
+          <h2 className="cases-title text-5xl md:text-7xl font-medium text-foreground tracking-tight opacity-0">
+            Cases selecionados
+          </h2>
         </div>
 
         {/* GRID DE PROJETOS */}
@@ -44,14 +131,14 @@ const SelectedCases = () => {
               <Link 
                 key={project.id} 
                 to={`/projeto/${project.slug}`} 
-                className={`group cursor-pointer flex flex-col gap-4 ${size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}
+                className={`case-card group cursor-pointer flex flex-col gap-4 opacity-0 ${size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}
               >
                 {/* Container da Imagem com Zoom no Hover */}
                 <div className="relative w-full overflow-hidden aspect-[16/9] bg-secondary">
                   <img 
                     src={project.image} 
                     alt={project.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
+                    className="case-image w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
                   />
                   
                   {/* Overlay "View Case" */}
@@ -93,7 +180,7 @@ const SelectedCases = () => {
         <div className="mt-20 flex justify-center">
           <Link 
             to="/projetos" 
-            className="text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors"
+            className="cases-view-all text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors opacity-0"
           >
             View All Projects
           </Link>
