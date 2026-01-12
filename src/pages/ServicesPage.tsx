@@ -51,7 +51,7 @@ const ServicesPage = () => {
       
       {/* Hero Section */}
       <section className="pt-32 pb-16 md:pt-40 md:pb-20">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="container-premium">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12">
             <motion.h1 
               initial={{ opacity: 0, y: 40 }}
@@ -83,14 +83,14 @@ const ServicesPage = () => {
 
       {/* Divider Line */}
       <div className="w-full">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="container-premium">
           <div className="w-full h-px bg-border/40" />
         </div>
       </div>
 
       {/* Services List */}
       <section className="pt-24 pb-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="container-premium">
           {services.map((service) => (
             <motion.article
               key={service.number}

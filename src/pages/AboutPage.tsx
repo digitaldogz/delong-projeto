@@ -24,7 +24,7 @@ const AboutPage = () => {
         {/* Content */}
         <div className="relative z-10 flex-1 flex flex-col pt-32 pb-0">
           {/* Top - Only Label */}
-          <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12">
+          <div className="container-premium w-full">
             <motion.span 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -37,7 +37,7 @@ const AboutPage = () => {
 
           {/* Middle Content - Description and Subtitle */}
           <div className="flex-1 flex items-center">
-            <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 flex flex-col md:flex-row justify-between gap-8">
+            <div className="container-premium w-full flex flex-col md:flex-row justify-between gap-8">
               {/* Left - Description */}
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -76,7 +76,7 @@ const AboutPage = () => {
 
       {/* --- 2. MANIFESTO --- */}
       <section className="py-24 md:py-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="container-premium">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             
             <motion.div 
@@ -117,7 +117,7 @@ const AboutPage = () => {
 
       {/* --- 3. VISION --- */}
       <section className="border-t border-border/30">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="container-premium !px-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[60vh]">
             
             <div className="px-8 md:px-12 py-16 lg:py-24 flex items-center justify-center lg:justify-start border-b lg:border-b-0 lg:border-r border-border/30">
@@ -144,7 +144,7 @@ const AboutPage = () => {
 
       {/* --- 4. MISSION --- */}
       <section className="border-t border-border/30">
-        <div className="max-w-[1400px] mx-auto">
+        <div className="container-premium !px-0">
           <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[60vh]">
             
             <div className="px-8 md:px-12 py-16 lg:py-24 flex flex-col justify-center order-2 lg:order-1 bg-secondary/20 border-b lg:border-b-0 lg:border-r border-border/30">

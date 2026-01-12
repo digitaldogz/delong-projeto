@@ -12,7 +12,7 @@ const BigCTA = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-destructive/15 rounded-full blur-[180px] pointer-events-none z-[1]" />
 
       {/* Texto principal */}
-      <div className="relative z-10 max-w-[1400px] mx-auto px-8 md:px-12 text-center w-full">
+      <div className="relative z-10 container-premium text-center w-full">
         <motion.h2 
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
