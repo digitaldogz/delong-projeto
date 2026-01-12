@@ -35,7 +35,7 @@ const SiteHeader = () => {
             : "bg-transparent"
         }`}
       >
-        <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 py-6 flex justify-between items-center">
+        <div className="container-premium py-6 flex justify-between items-center">
           {/* --- LADO ESQUERDO: LOGO --- */}
           <div className="z-[1000] shrink-0">
             <Link to="/" className="hover:opacity-80 transition-opacity">
