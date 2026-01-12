@@ -55,27 +55,27 @@ const ProjectDetail = () => {
       </div>
 
       {/* --- SEÇÃO DE INFORMAÇÕES --- */}
-      <section className="py-16 md:py-24">
+      <section className="py-20 md:py-32">
         <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
             
             {/* Coluna esquerda - Project Info */}
             <div className="lg:col-span-4">
-              <div className="flex items-center gap-2 mb-8">
+              <div className="flex items-center gap-3 mb-10">
                 <span className="w-2 h-2 bg-foreground"></span>
-                <span className="text-sm">Project Info</span>
+                <span className="text-sm tracking-wide">Project Info</span>
               </div>
               
               <div className="space-y-0">
-                <div className="flex justify-between py-4 border-b border-border/30">
+                <div className="grid grid-cols-[100px_1fr] py-4 border-b border-border/40">
                   <span className="text-xs text-muted-foreground uppercase tracking-widest">Client</span>
                   <span className="text-sm font-medium uppercase">{project.client}</span>
                 </div>
-                <div className="flex justify-between py-4 border-b border-border/30">
+                <div className="grid grid-cols-[100px_1fr] py-4 border-b border-border/40">
                   <span className="text-xs text-muted-foreground uppercase tracking-widest">Service</span>
                   <span className="text-sm font-medium uppercase">{project.service}</span>
                 </div>
-                <div className="flex justify-between py-4 border-b border-border/30">
+                <div className="grid grid-cols-[100px_1fr] py-4 border-b border-border/40">
                   <span className="text-xs text-muted-foreground uppercase tracking-widest">Year</span>
                   <span className="text-sm font-medium uppercase">{project.year}</span>
                 </div>
@@ -83,12 +83,12 @@ const ProjectDetail = () => {
             </div>
 
             {/* Coluna direita - Descrição */}
-            <div className="lg:col-span-8">
-              <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
+            <div className="lg:col-span-8 lg:pt-14">
+              <p className="text-base md:text-lg leading-relaxed text-muted-foreground mb-8">
                 {project.description}
               </p>
               {project.fullDescription && (
-                <p className="mt-8 text-base leading-relaxed text-muted-foreground/70">
+                <p className="text-base leading-relaxed text-muted-foreground/80">
                   {project.fullDescription}
                 </p>
               )}
