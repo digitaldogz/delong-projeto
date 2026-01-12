@@ -1,8 +1,11 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
-import { projects } from '@/data/projects';
+/**
+ * SelectedCases Component
+ * Featured projects grid on the homepage.
+ */
 
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
+import { projects } from "@/data/projects";
 // Configuração de tamanho para exibição no grid
 const sizeConfig: Record<number, 'large' | 'small'> = {
   1: 'large',

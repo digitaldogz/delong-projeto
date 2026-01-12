@@ -1,10 +1,13 @@
-import React from "react";
+/**
+ * Projects Page
+ * Grid of all projects with filters.
+ */
+
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import { projects } from "@/data/projects";
-
 const ProjectsPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">

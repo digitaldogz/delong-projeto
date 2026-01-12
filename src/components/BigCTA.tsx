@@ -1,7 +1,10 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { DottedSurface } from './ui/dotted-surface';
+/**
+ * BigCTA Component
+ * Large call-to-action section with animated text.
+ */
 
+import { motion } from "framer-motion";
+import { DottedSurface } from "./ui/dotted-surface";
 const BigCTA = () => {
   return (
     <section className="relative w-full min-h-screen overflow-hidden flex items-center justify-center bg-background">

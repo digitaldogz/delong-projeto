@@ -1,9 +1,12 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
-import SiteHeader from '@/components/SiteHeader';
-import Footer from '@/components/Footer';
+/**
+ * Services Page
+ * Full list of services with descriptions.
+ */
 
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import SiteHeader from "@/components/SiteHeader";
+import Footer from "@/components/Footer";
 const services = [
   {
     number: "01",

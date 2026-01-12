@@ -1,8 +1,11 @@
-import React from "react";
+/**
+ * About Page
+ * Company history, vision, and mission.
+ */
+
 import { motion } from "framer-motion";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
-
 const AboutPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
