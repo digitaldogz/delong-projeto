@@ -32,7 +32,7 @@ const ProjectDetail = () => {
             alt={project.title} 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
         </div>
 
         {/* Título centralizado verticalmente, alinhado à esquerda */}
