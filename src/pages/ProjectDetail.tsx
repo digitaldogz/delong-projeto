@@ -58,42 +58,45 @@ const ProjectDetail = () => {
       {/* --- SEÇÃO DE INFORMAÇÕES --- */}
       <section className="py-[100px] md:py-[120px]">
         <div className="container-premium">
-          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-12 lg:gap-16">
+          {/* Grid de 12 colunas: 4 esquerda + 6 centro + 2 vazio */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             
-            {/* Coluna esquerda - Project Info (200px fixo) */}
-            <div>
-              <div className="flex items-center gap-3 mb-8">
-                <span className="w-2 h-2 bg-foreground"></span>
+            {/* Coluna esquerda - Project Info (4 colunas) */}
+            <div className="lg:col-span-4">
+              <div className="flex items-start gap-3 mb-8">
+                <span className="w-2 h-2 bg-foreground mt-1.5 shrink-0"></span>
                 <span className="text-sm tracking-wide">Project Info</span>
               </div>
               
               <div className="space-y-0">
-                <div className="grid grid-cols-[80px_1fr] py-3 border-b border-border/40">
-                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Client</span>
-                  <span className="text-sm font-medium uppercase">{project.client}</span>
+                <div className="flex justify-between items-baseline py-4 border-b border-border/40">
+                  <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest">Client</span>
+                  <span className="text-sm font-extrabold uppercase">{project.client}</span>
                 </div>
-                <div className="grid grid-cols-[80px_1fr] py-3 border-b border-border/40">
-                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Service</span>
-                  <span className="text-sm font-medium uppercase">{project.service}</span>
+                <div className="flex justify-between items-baseline py-4 border-b border-border/40">
+                  <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest">Service</span>
+                  <span className="text-sm font-extrabold uppercase">{project.service}</span>
                 </div>
-                <div className="grid grid-cols-[80px_1fr] py-3 border-b border-border/40">
-                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Year</span>
-                  <span className="text-sm font-medium uppercase">{project.year}</span>
+                <div className="flex justify-between items-baseline py-4 border-b border-border/40">
+                  <span className="text-[11px] text-muted-foreground/60 uppercase tracking-widest">Year</span>
+                  <span className="text-sm font-extrabold uppercase">{project.year}</span>
                 </div>
               </div>
             </div>
 
-            {/* Coluna direita - Descrição (restante do espaço) */}
-            <div className="lg:pt-10">
-              <p className="text-base md:text-lg leading-[1.6] text-muted-foreground/70 mb-6">
+            {/* Coluna direita - Descrição (6 colunas, começa na col 5) */}
+            <div className="lg:col-span-6 lg:col-start-5">
+              <p className="text-base md:text-lg leading-[1.7] text-muted-foreground/70 mb-6">
                 {project.description}
               </p>
               {project.fullDescription && (
-                <p className="text-base md:text-lg leading-[1.6] text-muted-foreground/70">
+                <p className="text-base md:text-lg leading-[1.7] text-muted-foreground/70">
                   {project.fullDescription}
                 </p>
               )}
             </div>
+            
+            {/* 2 colunas vazias à direita (implícito) */}
           </div>
         </div>
       </section>
