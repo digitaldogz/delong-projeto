@@ -1,9 +1,14 @@
 /**
  * ClientCloud Component
- * Animated grid of client names.
+ * Animated grid of client names with GSAP.
  */
 
-import { motion } from "framer-motion";
+import { useRef, useEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const clientRows = [
   ["PEDAL"],
   ["RED BULL", "CANAL DE BIKE"],
@@ -16,81 +21,82 @@ const clientRows = [
   ["BLUECYCLE", "SEMEXE", "MOAGEIRA", "FOBRAS", "E MAIS..."],
 ];
 
-const containerVariants = {
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.2,
-    },
-  },
-};
-
-const rowVariants = {
-  hidden: { opacity: 1 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.05,
-    },
-  },
-};
-
-const wordVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: 30,
-    filter: "blur(10px)",
-  },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    filter: "blur(0px)",
-    transition: { 
-      duration: 0.6, 
-      ease: [0.33, 1, 0.68, 1] as const 
-    }
-  },
-};
-
 const ClientCloud = () => {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Label fade in
+      gsap.fromTo(
+        ".client-label",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 80%",
+          },
+        }
+      );
+
+      // Client words stagger animation
+      const words = gsap.utils.toArray(".client-word");
+      gsap.fromTo(
+        words,
+        { 
+          opacity: 0, 
+          y: 30, 
+          filter: "blur(10px)" 
+        },
+        {
+          opacity: 1,
+          y: 0,
+          filter: "blur(0px)",
+          duration: 0.6,
+          stagger: 0.03,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: "top 70%",
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="w-full bg-background py-32 overflow-hidden border-t border-border">
+    <section ref={sectionRef} className="w-full bg-background py-32 overflow-hidden border-t border-border">
       <div className="container-premium">
         {/* Label Superior */}
         <div className="flex justify-center mb-16">
-          <span className="text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase">
+          <span className="client-label text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase opacity-0">
             ▪ Featured Clients
           </span>
         </div>
 
         {/* Client Rows */}
-        <motion.div 
-          className="flex flex-col items-center gap-1 md:gap-2"
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-10%" }}
-        >
+        <div className="flex flex-col items-center gap-1 md:gap-2">
           {clientRows.map((row, rowIndex) => (
-            <motion.div 
+            <div 
               key={rowIndex}
-              variants={rowVariants}
               className="flex flex-wrap justify-center gap-x-4 md:gap-x-6 lg:gap-x-8"
             >
               {row.map((client, clientIndex) => (
-                <motion.span 
+                <span 
                   key={clientIndex}
-                  variants={wordVariants}
-                  className="text-lg md:text-2xl lg:text-3xl font-bold text-foreground tracking-[0.2em] whitespace-nowrap"
+                  className="client-word text-lg md:text-2xl lg:text-3xl font-bold text-foreground tracking-[0.2em] whitespace-nowrap opacity-0"
                 >
                   {client}
-                </motion.span>
+                </span>
               ))}
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
