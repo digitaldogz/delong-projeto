@@ -25,28 +25,28 @@ const ProjectDetail = () => {
       <SiteHeader />
 
       {/* --- HERO BANNER FULLSCREEN --- */}
-      <div className="relative w-full h-screen">
+      <div className="relative w-full h-screen flex items-center">
         <div className="absolute inset-0">
           <img 
             src={project.image} 
             alt={project.title} 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+          <div className="absolute inset-0 bg-black/20" />
         </div>
 
-        {/* Título e metadados alinhados com container central */}
-        <div className="absolute bottom-0 left-0 w-full">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-12 pb-16 md:pb-24">
+        {/* Título centralizado verticalmente, alinhado à esquerda */}
+        <div className="relative z-10 w-full">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-12">
             <motion.h1 
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] max-w-4xl mb-6"
+              className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] max-w-4xl mb-4"
             >
               {project.title}
             </motion.h1>
-            <div className="flex items-center gap-4 text-sm text-foreground/70">
+            <div className="flex items-center gap-4 text-sm text-foreground/80">
               <span>{project.year}</span>
               <span>{project.category}</span>
             </div>
