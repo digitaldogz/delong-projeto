@@ -6,10 +6,13 @@
 import { useRef, useEffect } from "react";
 import { useParams, Navigate, Link } from "react-router-dom";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 import { getProjectBySlug, getRelatedProjects, Project } from "@/data/projects";
+
+gsap.registerPlugin(ScrollTrigger);
 
 /* ─────────────────────────────────────────────────────────────
    Hero Banner - Fullscreen with GSAP animations
@@ -24,9 +27,17 @@ const HeroBanner = ({ project }: { project: Project }) => {
       // Image reveal with scale
       tl.fromTo(
         ".hero-image",
-        { scale: 1.1, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.4 },
+        { scale: 1.15, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.6 },
         0
+      );
+
+      // Gradient overlay fade
+      tl.fromTo(
+        ".hero-gradient",
+        { opacity: 0 },
+        { opacity: 1, duration: 1 },
+        0.3
       );
 
       // Masked title slide up
@@ -34,30 +45,30 @@ const HeroBanner = ({ project }: { project: Project }) => {
         ".hero-title",
         { yPercent: 100 },
         { yPercent: 0, duration: 1.2 },
-        0.2
+        0.3
       );
 
-      // Meta info fade in
+      // Meta info stagger fade in
       tl.fromTo(
-        ".hero-meta",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        0.6
+        ".hero-meta span",
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 },
+        0.7
       );
     }, containerRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [project.slug]);
 
   return (
     <div ref={containerRef} className="relative w-full h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="hero-image w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+          <img
+            src={project.image}
+            alt={project.title}
+            className="hero-image w-full h-full object-cover opacity-0"
+          />
+          <div className="hero-gradient absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-0" />
       </div>
 
       <div className="relative z-10 w-full">
@@ -100,14 +111,16 @@ const ProjectInfoSection = ({ project }: { project: Project }) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const items = gsap.utils.toArray(".info-item");
+      
       gsap.fromTo(
-        ".info-item",
-        { opacity: 0, y: 20 },
+        items,
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
-          stagger: 0.1,
+          stagger: 0.08,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ref.current,
@@ -182,21 +195,26 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".gallery-item",
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top 80%",
-          },
-        }
-      );
+      const items = gsap.utils.toArray(".gallery-item");
+      
+      items.forEach((item: any, index) => {
+        gsap.fromTo(
+          item,
+          { opacity: 0, y: 50, scale: 0.98 },
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.9,
+            delay: (index % 3) * 0.1, // Stagger based on position
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 90%",
+            },
+          }
+        );
+      });
     }, ref);
 
     return () => ctx.revert();
