@@ -6,9 +6,12 @@
 import { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import { projects } from "@/data/projects";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const ProjectsPage = () => {
   const heroRef = useRef<HTMLElement>(null);
@@ -39,20 +42,43 @@ const ProjectsPage = () => {
     return () => ctx.revert();
   }, []);
 
-  // Grid stagger animation
+  // Grid stagger animation with ScrollTrigger
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        ".project-card",
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-        }
-      );
+      const cards = gsap.utils.toArray(".project-card");
+      
+      cards.forEach((card: any, index) => {
+        gsap.fromTo(
+          card,
+          { opacity: 0, y: 60 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: index < 4 ? index * 0.1 : 0, // Stagger only first 4
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+            },
+          }
+        );
+
+        // Image scale reveal
+        gsap.fromTo(
+          card.querySelector(".project-image"),
+          { scale: 1.1 },
+          {
+            scale: 1,
+            duration: 1.2,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+            },
+          }
+        );
+      });
     }, gridRef);
 
     return () => ctx.revert();
@@ -72,7 +98,7 @@ const ProjectsPage = () => {
           </div>
 
           {/* Filter */}
-          <div className="page-filter flex items-center gap-6 text-sm uppercase tracking-widest border-b border-border/30 pb-6">
+          <div className="page-filter flex items-center gap-6 text-sm uppercase tracking-widest border-b border-border/30 pb-6 opacity-0">
             <span className="text-foreground font-bold cursor-pointer border-b border-foreground pb-1">
               All
             </span>
@@ -85,7 +111,7 @@ const ProjectsPage = () => {
         <div className="container-premium">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
             {projects.map((project) => (
-              <div key={project.id} className="project-card">
+              <div key={project.id} className="project-card opacity-0">
                 <Link
                   to={`/projeto/${project.slug}`}
                   className="group cursor-pointer flex flex-col gap-4 block"
@@ -95,7 +121,7 @@ const ProjectsPage = () => {
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-[0.33,1,0.68,1] group-hover:scale-105"
+                      className="project-image w-full h-full object-cover transition-transform duration-700 ease-[0.33,1,0.68,1] group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
                   </div>
