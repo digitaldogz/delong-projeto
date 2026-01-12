@@ -13,7 +13,7 @@ const ProjectsPage = () => {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 md:pt-40 md:pb-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="container-premium">
           <motion.h1 
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -32,7 +32,7 @@ const ProjectsPage = () => {
 
       {/* GRID DE PROJETOS */}
       <section className="pb-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <div className="container-premium">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
             {projects.map((project, index) => (
               <motion.div
