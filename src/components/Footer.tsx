@@ -10,7 +10,7 @@ const menuItems = [
 
 const Footer = () => {
   return <footer id="footer" className="w-full bg-background text-foreground border-t border-border">
-      <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+      <div className="container-premium">
         
         {/* MAIN FOOTER CONTENT */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 py-16 md:py-24">
@@ -84,7 +84,7 @@ const Footer = () => {
 
       {/* COPYRIGHT BAR */}
       <div className="border-t border-border">
-        <div className="max-w-[1400px] mx-auto w-full py-6 px-8 md:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground uppercase tracking-wider">
+        <div className="container-premium py-6 flex flex-col md:flex-row justify-between items-center text-xs text-muted-foreground uppercase tracking-wider">
           <span>© 2025 Delong media house todos os direitos reservados. </span>
         </div>
       </div>

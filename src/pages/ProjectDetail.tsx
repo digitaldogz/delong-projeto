@@ -37,12 +37,12 @@ const ProjectDetail = () => {
 
         {/* Título centralizado verticalmente, alinhado à esquerda */}
         <div className="relative z-10 w-full">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+          <div className="container-premium">
             <motion.h1 
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] max-w-4xl mb-4"
+              className="text-[8vw] font-bold uppercase leading-[0.9] mb-6"
             >
               {project.title}
             </motion.h1>
@@ -55,11 +55,11 @@ const ProjectDetail = () => {
       </div>
 
       {/* --- SEÇÃO DE INFORMAÇÕES --- */}
-      <section className="py-20 md:py-32">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+      <section className="py-[120px] md:py-[150px]">
+        <div className="container-premium">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
             
-            {/* Coluna esquerda - Project Info */}
+            {/* Coluna esquerda - Project Info (4 colunas) */}
             <div className="lg:col-span-4">
               <div className="flex items-center gap-3 mb-10">
                 <span className="w-2 h-2 bg-foreground"></span>
@@ -82,13 +82,13 @@ const ProjectDetail = () => {
               </div>
             </div>
 
-            {/* Coluna direita - Descrição */}
-            <div className="lg:col-span-8 lg:pt-14">
-              <p className="text-base md:text-lg leading-relaxed text-muted-foreground mb-8">
+            {/* Coluna direita - Descrição (6 colunas, deixa 2 vazias para assimetria) */}
+            <div className="lg:col-span-6 lg:pt-14">
+              <p className="text-lg leading-[1.6] text-muted-foreground/70 mb-8">
                 {project.description}
               </p>
               {project.fullDescription && (
-                <p className="text-base leading-relaxed text-muted-foreground/80">
+                <p className="text-lg leading-[1.6] text-muted-foreground/70">
                   {project.fullDescription}
                 </p>
               )}
@@ -99,8 +99,8 @@ const ProjectDetail = () => {
 
       {/* --- VÍDEO DO YOUTUBE --- */}
       {project.youtubeId && (
-        <section className="py-12 md:py-20">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+        <section className="py-[120px]">
+          <div className="container-premium">
             <YouTubeEmbed videoId={project.youtubeId} title={project.title} />
           </div>
         </section>
@@ -108,11 +108,12 @@ const ProjectDetail = () => {
 
       {/* --- GALERIA DE IMAGENS --- */}
       {project.gallery && project.gallery.length > 0 && (
-        <section className="pb-24 md:pb-32">
-          <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <section className="pb-[150px]">
+          <div className="container-premium">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {project.gallery.map((image, index) => {
-                const isWide = index === 0 || index === 4;
+                // Regra: a cada 3 imagens, a primeira (índice 0, 3, 6...) é larga
+                const isWide = index % 3 === 0;
                 return (
                   <motion.div
                     key={index}
@@ -140,8 +141,8 @@ const ProjectDetail = () => {
       )}
 
       {/* --- MAIS PROJETOS --- */}
-      <section className="py-20 md:py-24 border-t border-border/20">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
+      <section className="py-[120px] border-t border-border/20">
+        <div className="container-premium">
           <h3 className="text-sm uppercase tracking-widest text-muted-foreground mb-12">Mais Projetos</h3>
            
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -149,7 +150,7 @@ const ProjectDetail = () => {
               <Link 
                 key={related.id}
                 to={`/projeto/${related.slug}`}
-                className="group cursor-pointer"
+                className="group cursor-pointer link-underline"
               >
                 <div className="overflow-hidden aspect-[4/3] mb-4">
                   <img 
@@ -159,7 +160,7 @@ const ProjectDetail = () => {
                   />
                 </div>
                 <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">{related.category}</p>
-                <h4 className="text-sm font-medium uppercase group-hover:text-muted-foreground transition-colors leading-tight">{related.title}</h4>
+                <h4 className="text-sm font-medium uppercase group-hover:opacity-70 transition-opacity leading-tight">{related.title}</h4>
               </Link>
             ))}
           </div>
