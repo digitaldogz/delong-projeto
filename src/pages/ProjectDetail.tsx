@@ -37,23 +37,31 @@ const HeroBanner = ({ project }: { project: Project }) => {
         ".hero-gradient",
         { opacity: 0 },
         { opacity: 1, duration: 1 },
+        0.2
+      );
+
+      // Label fade in
+      tl.fromTo(
+        ".hero-label",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8 },
         0.3
       );
 
-      // Masked title slide up
+      // Masked title slide up - same as Projects page
       tl.fromTo(
         ".hero-title",
         { yPercent: 100 },
         { yPercent: 0, duration: 1.2 },
-        0.3
+        0.4
       );
 
-      // Meta info stagger fade in
+      // Meta info fade in
       tl.fromTo(
-        ".hero-meta span",
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 },
-        0.7
+        ".hero-meta",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.8 },
+        0.8
       );
     }, containerRef);
 
@@ -61,29 +69,47 @@ const HeroBanner = ({ project }: { project: Project }) => {
   }, [project.slug]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-screen flex items-center overflow-hidden">
+    <div ref={containerRef} className="relative w-full h-screen flex items-end overflow-hidden pb-20 md:pb-32">
+      {/* Background Image */}
       <div className="absolute inset-0">
-          <img
-            src={project.image}
-            alt={project.title}
-            className="hero-image w-full h-full object-cover opacity-0"
-          />
-          <div className="hero-gradient absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-0" />
+        <img
+          src={project.image}
+          alt={project.title}
+          className="hero-image w-full h-full object-cover opacity-0"
+        />
+        <div className="hero-gradient absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-0" />
       </div>
 
+      {/* Content */}
       <div className="relative z-10 w-full">
         <div className="container-premium">
+          {/* Category label */}
+          <div className="hero-label flex items-center gap-2 mb-6 opacity-0">
+            <span className="w-1 h-1 bg-foreground rounded-full"></span>
+            <span className="text-xs text-foreground/70 uppercase tracking-widest">
+              {project.category}
+            </span>
+          </div>
+
+          {/* Masked title - same style as Projects page */}
           <div className="overflow-hidden">
             <h1
-              className="hero-title font-bold uppercase leading-[1.0] mb-6"
-              style={{ fontSize: "clamp(40px, 6vw, 90px)" }}
+              className="hero-title text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic leading-[0.9]"
             >
               {project.title}
             </h1>
           </div>
-          <div className="hero-meta flex items-center gap-4 text-sm text-foreground/80">
-            <span>{project.year}</span>
-            <span>{project.category}</span>
+
+          {/* Meta info */}
+          <div className="hero-meta flex items-center gap-6 mt-8 pt-6 border-t border-foreground/20 opacity-0">
+            <div className="flex flex-col">
+              <span className="text-[10px] text-foreground/50 uppercase tracking-widest mb-1">Cliente</span>
+              <span className="text-sm font-medium">{project.client}</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-[10px] text-foreground/50 uppercase tracking-widest mb-1">Ano</span>
+              <span className="text-sm font-medium">{project.year}</span>
+            </div>
           </div>
         </div>
       </div>
