@@ -32,57 +32,66 @@ const ProjectDetail = () => {
             alt={project.title} 
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
         </div>
 
-        {/* Tag no canto superior direito */}
-        <div className="absolute top-24 right-8 md:right-12">
-          <span className="text-xs font-medium uppercase tracking-widest text-foreground/80 bg-background/20 backdrop-blur-sm px-4 py-2 rounded-full border border-border/20">
-            {project.category}
-          </span>
-        </div>
-
-        {/* Título grande na parte inferior */}
-        <div className="absolute bottom-0 left-0 w-full px-8 md:px-12 pb-12 md:pb-20">
-          <motion.h1 
-            initial={{ y: 30, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-6xl lg:text-8xl font-bold uppercase leading-[0.95] max-w-5xl"
-          >
-            {project.title}
-          </motion.h1>
+        {/* Título e metadados alinhados com container central */}
+        <div className="absolute bottom-0 left-0 w-full">
+          <div className="max-w-[1400px] mx-auto px-8 md:px-12 pb-16 md:pb-24">
+            <motion.h1 
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8 }}
+              className="text-4xl md:text-6xl lg:text-7xl font-bold uppercase leading-[0.95] max-w-4xl mb-6"
+            >
+              {project.title}
+            </motion.h1>
+            <div className="flex items-center gap-4 text-sm text-foreground/70">
+              <span>{project.year}</span>
+              <span>{project.category}</span>
+            </div>
+          </div>
         </div>
       </div>
 
       {/* --- SEÇÃO DE INFORMAÇÕES --- */}
-      <section className="py-16 md:py-24 border-b border-border/20">
+      <section className="py-16 md:py-24">
         <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
             
-            {/* Coluna esquerda - Metadados */}
+            {/* Coluna esquerda - Project Info */}
             <div className="lg:col-span-4">
-              <div className="flex flex-col gap-10">
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-[0.2em]">Cliente</span>
-                  <span className="text-base font-medium">{project.client}</span>
+              <div className="flex items-center gap-2 mb-8">
+                <span className="w-2 h-2 bg-foreground"></span>
+                <span className="text-sm">Project Info</span>
+              </div>
+              
+              <div className="space-y-0">
+                <div className="flex justify-between py-4 border-b border-border/30">
+                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Client</span>
+                  <span className="text-sm font-medium uppercase">{project.client}</span>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-[0.2em]">Serviço</span>
-                  <span className="text-base font-medium">{project.service}</span>
+                <div className="flex justify-between py-4 border-b border-border/30">
+                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Service</span>
+                  <span className="text-sm font-medium uppercase">{project.service}</span>
                 </div>
-                <div className="flex flex-col gap-1">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-[0.2em]">Ano</span>
-                  <span className="text-base font-medium">{project.year}</span>
+                <div className="flex justify-between py-4 border-b border-border/30">
+                  <span className="text-xs text-muted-foreground uppercase tracking-widest">Year</span>
+                  <span className="text-sm font-medium uppercase">{project.year}</span>
                 </div>
               </div>
             </div>
 
-            {/* Coluna direita - Descrição longa */}
+            {/* Coluna direita - Descrição */}
             <div className="lg:col-span-8">
-              <p className="text-2xl md:text-3xl lg:text-4xl leading-[1.3] font-light text-foreground/90">
+              <p className="text-lg md:text-xl leading-relaxed text-muted-foreground">
                 {project.description}
               </p>
+              {project.fullDescription && (
+                <p className="mt-8 text-base leading-relaxed text-muted-foreground/70">
+                  {project.fullDescription}
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -90,7 +99,7 @@ const ProjectDetail = () => {
 
       {/* --- VÍDEO DO YOUTUBE --- */}
       {project.youtubeId && (
-        <section className="py-16 md:py-24">
+        <section className="py-12 md:py-20">
           <div className="max-w-[1400px] mx-auto px-8 md:px-12">
             <YouTubeEmbed videoId={project.youtubeId} title={project.title} />
           </div>
@@ -103,7 +112,6 @@ const ProjectDetail = () => {
           <div className="max-w-[1400px] mx-auto px-8 md:px-12">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.gallery.map((image, index) => {
-                // Layout variado: algumas imagens ocupam largura total
                 const isWide = index === 0 || index === 4;
                 return (
                   <motion.div
@@ -114,7 +122,7 @@ const ProjectDetail = () => {
                     transition={{ duration: 0.5, delay: index * 0.05 }}
                     className={`overflow-hidden ${
                       isWide 
-                        ? 'md:col-span-2 aspect-[21/9]' 
+                        ? 'md:col-span-2 aspect-[16/9]' 
                         : 'aspect-[4/3]'
                     }`}
                   >
