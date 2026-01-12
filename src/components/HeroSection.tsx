@@ -1,13 +1,26 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { BGPattern } from "./ui/bg-pattern";
 
 // Configuração da animação (Suave e Premium)
 const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1];
 
 const HeroSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Scroll-based animations
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Transform values based on scroll
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+
   return (
-    <div className="relative w-full h-screen overflow-hidden font-sans text-foreground bg-background">
+    <div ref={containerRef} className="relative w-full h-screen overflow-hidden font-sans text-foreground bg-background">
       
       {/* 1. VÍDEO DE FUNDO (Background Loop) */}
       <div className="absolute inset-0 w-full h-full z-0">
@@ -23,7 +36,10 @@ const HeroSection = () => {
       <BGPattern variant="dots" mask="fade-edges" size={32} fill="rgba(255,255,255,0.15)" className="z-[5]" />
 
       {/* 2. CONTEÚDO (Fica por cima do vídeo - z-20) */}
-      <div className="relative z-20 w-full h-screen flex flex-col justify-end pb-24 md:pb-28">
+      <motion.div 
+        style={{ opacity, y, scale }}
+        className="relative z-20 w-full h-screen flex flex-col justify-end pb-24 md:pb-28"
+      >
         <div className="container-premium w-full">
           {/* TÍTULO PRINCIPAL - Alinhado à esquerda */}
           <div className="flex flex-col gap-0 relative text-left">
@@ -68,10 +84,13 @@ const HeroSection = () => {
 
           </div>
         </div>
-      </div>
+      </motion.div>
 
       {/* --- RODAPÉ DA HERO (Minimalista: Apenas Instagram e All Works) --- */}
-      <div className="absolute bottom-6 left-0 w-full z-30 text-foreground mix-blend-difference pointer-events-none">
+      <motion.div 
+        style={{ opacity }}
+        className="absolute bottom-6 left-0 w-full z-30 text-foreground mix-blend-difference pointer-events-none"
+      >
         <div className="container-premium w-full flex justify-between items-end">
           {/* ESQUERDA: APENAS INSTAGRAM */}
           <div className="pointer-events-auto">
@@ -95,7 +114,7 @@ const HeroSection = () => {
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
 
     </div>
   );
