@@ -1,3 +1,8 @@
+/**
+ * App Component
+ * Main application with page transitions, smooth scroll, and routing.
+ */
+
 import { useState } from "react";
 import { AnimatePresence } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
@@ -5,7 +10,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import ScrollToTop from "./components/ScrollToTop";
+import { PageTransitionProvider } from "./components/PageTransition";
 import LoadingScreen from "./components/LoadingScreen";
 import { useLenis } from "./hooks/use-lenis";
 import Index from "./pages/Index";
@@ -16,6 +21,22 @@ import ServicesPage from "./pages/ServicesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+// Inner app wrapped with transition provider (needs to be inside BrowserRouter)
+const AppRoutes = () => {
+  return (
+    <PageTransitionProvider>
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/sobre" element={<AboutPage />} />
+        <Route path="/projetos" element={<Projects />} />
+        <Route path="/servicos" element={<ServicesPage />} />
+        <Route path="/projeto/:slug" element={<ProjectDetail />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </PageTransitionProvider>
+  );
+};
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -37,15 +58,7 @@ const App = () => {
             <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
           ) : (
             <BrowserRouter key="app">
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/sobre" element={<AboutPage />} />
-                <Route path="/projetos" element={<Projects />} />
-                <Route path="/servicos" element={<ServicesPage />} />
-                <Route path="/projeto/:slug" element={<ProjectDetail />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <AppRoutes />
             </BrowserRouter>
           )}
         </AnimatePresence>

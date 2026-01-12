@@ -1,11 +1,12 @@
 /**
  * SelectedCases Component
- * Featured projects grid on the homepage.
+ * Featured projects grid on the homepage with smooth page transitions.
  */
 
-import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/projects";
+import { TransitionLink } from "./PageTransition";
+
 // Configuração de tamanho para exibição no grid
 const sizeConfig: Record<number, 'large' | 'small'> = {
   1: 'large',
@@ -40,7 +41,7 @@ const SelectedCases = () => {
             const size = sizeConfig[index + 1] || 'small';
             
             return (
-              <Link 
+              <TransitionLink 
                 key={project.id} 
                 to={`/projeto/${project.slug}`} 
                 className={`group cursor-pointer flex flex-col gap-4 ${size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}
@@ -82,7 +83,7 @@ const SelectedCases = () => {
                      </span>
                    </div>
                 </div>
-              </Link>
+              </TransitionLink>
             );
           })}
 
@@ -90,12 +91,12 @@ const SelectedCases = () => {
         
         {/* Botão de Ver Todos */}
         <div className="mt-20 flex justify-center">
-          <Link 
+          <TransitionLink 
             to="/projetos" 
             className="text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors"
           >
             View All Projects
-          </Link>
+          </TransitionLink>
         </div>
 
       </div>

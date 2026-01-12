@@ -1,14 +1,15 @@
 /**
  * Site Header Component
- * Fixed navigation with smooth transitions between links and burger menu.
- * Fully responsive and compatible with Lenis smooth scroll.
+ * Fixed navigation with smooth page transitions and burger menu.
+ * Compatible with Lenis smooth scroll and GSAP transitions.
  */
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logoDelongWhite from "@/assets/logo-delong-white.png";
 import { scrollToTop } from "@/hooks/use-gsap-animations";
+import { usePageTransition, TransitionLink } from "./PageTransition";
 
 // Animation easing
 const EASE_SMOOTH: [number, number, number, number] = [0.33, 1, 0.68, 1];
@@ -45,15 +46,15 @@ const SiteHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
+  const { navigateWithTransition } = usePageTransition();
 
-  // Handle logo click - scroll to top or navigate home
+  // Handle logo click - scroll to top or navigate home with transition
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (location.pathname === "/") {
       scrollToTop();
     } else {
-      navigate("/");
+      navigateWithTransition("/");
     }
   };
 
@@ -78,7 +79,7 @@ const SiteHeader = () => {
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    
+
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener("scroll", handleScroll);
@@ -109,7 +110,7 @@ const SiteHeader = () => {
         }`}
       >
         <div className="container-premium py-6 flex justify-between items-center">
-          {/* Logo - always scrolls to top */}
+          {/* Logo - navigates home with transition */}
           <a
             href="/"
             onClick={handleLogoClick}
@@ -126,7 +127,7 @@ const SiteHeader = () => {
           <div className="flex items-center gap-6 z-[1000]">
             {/* Desktop Navigation Slot */}
             <div className="relative hidden md:flex items-center justify-end h-10 min-w-[340px] lg:min-w-[420px]">
-              {/* Desktop Links */}
+              {/* Desktop Links with Transition */}
               <motion.div
                 initial={false}
                 animate={showLinks ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
@@ -138,14 +139,14 @@ const SiteHeader = () => {
                 }}
               >
                 {MENU_ITEMS.map((item) => (
-                  <Link
+                  <TransitionLink
                     key={item.label}
                     to={item.path}
                     className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
                   >
                     <span className="font-normal opacity-50">{item.number}</span>
                     <span>{item.label}</span>
-                  </Link>
+                  </TransitionLink>
                 ))}
               </motion.div>
 
@@ -194,15 +195,15 @@ const SiteHeader = () => {
             className="fixed inset-0 bg-background z-[998] flex items-center justify-center"
           >
             <nav className="flex flex-col gap-8 text-center">
-              <Link
+              <TransitionLink
                 to="/"
                 onClick={() => setIsMenuOpen(false)}
                 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
               >
                 Home
-              </Link>
+              </TransitionLink>
               {MENU_ITEMS.map((item) => (
-                <Link
+                <TransitionLink
                   key={item.label}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
@@ -212,7 +213,7 @@ const SiteHeader = () => {
                     {item.number}
                   </span>
                   {item.label}
-                </Link>
+                </TransitionLink>
               ))}
             </nav>
           </motion.div>
