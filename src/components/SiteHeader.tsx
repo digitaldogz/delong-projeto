@@ -8,11 +8,32 @@ const SiteHeader = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Detectar Scroll
+  // Detectar Scroll (com histerese + raf throttle para não "piscar" com Lenis)
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const thresholdIn = 80;
+    const thresholdOut = 40;
+    let rafId: number | null = null;
+
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        rafId = null;
+        const y = window.scrollY;
+
+        setIsScrolled((prev) => {
+          if (!prev && y > thresholdIn) return true;
+          if (prev && y < thresholdOut) return false;
+          return prev;
+        });
+      });
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   // Fechar menu ao navegar
@@ -49,42 +70,97 @@ const SiteHeader = () => {
 
         {/* --- LADO DIREITO: GRUPO UNIFICADO --- */}
         <div className="flex items-center gap-6 z-[1000]">
-          
-          {/* LINKS DE TEXTO (Desktop no Topo - sem scroll e menu fechado) */}
-          <div className={`hidden md:flex items-center gap-8 transition-opacity duration-300 ${!isScrolled && !isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'}`}>
-            {menuItems.map((item) => (
-              <Link 
-                key={item.label} 
-                to={item.path} 
-                className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
-              >
-                <span className="font-normal opacity-50">{item.number}</span>
-                <span>{item.label}</span>
-              </Link>
-            ))}
+          {/* Slot Desktop (mantém largura fixa para não "puxar" o layout) */}
+          <div className="relative hidden md:block h-10 w-[340px] lg:w-[420px]">
+            <AnimatePresence initial={false} mode="wait">
+              {!isScrolled && !isMenuOpen ? (
+                <motion.div
+                  key="links"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-8"
+                >
+                  {menuItems.map((item) => (
+                    <Link
+                      key={item.label}
+                      to={item.path}
+                      className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
+                    >
+                      <span className="font-normal opacity-50">{item.number}</span>
+                      <span>{item.label}</span>
+                    </Link>
+                  ))}
+                </motion.div>
+              ) : (
+                <motion.button
+                  key="burger"
+                  onClick={() => setIsMenuOpen(!isMenuOpen)}
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
+                  className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col gap-1.5 p-2 cursor-pointer group"
+                  aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
+                >
+                  <span
+                    className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                      isMenuOpen ? "rotate-45 translate-y-2" : ""
+                    }`}
+                  />
+                  <span
+                    className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${
+                      isMenuOpen
+                        ? "opacity-0"
+                        : "opacity-100 group-hover:w-4 self-end"
+                    }`}
+                  />
+                  <span
+                    className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                      isMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                    }`}
+                  />
+                </motion.button>
+              )}
+            </AnimatePresence>
           </div>
 
-          {/* ÍCONE SANDUÍCHE (Mobile ou quando rola/menu aberto) */}
+          {/* ÍCONE SANDUÍCHE (Mobile sempre) */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`flex flex-col gap-1.5 p-2 cursor-pointer group transition-opacity duration-300 ${isScrolled || isMenuOpen ? 'opacity-100' : 'md:opacity-0 md:pointer-events-none md:absolute'}`}
+            className="md:hidden flex flex-col gap-1.5 p-2 cursor-pointer group"
+            aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
           >
-            <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "rotate-45 translate-y-2" : ""}`} />
-            <span className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${isMenuOpen ? "opacity-0" : "opacity-100 group-hover:w-4 self-end"}`} />
-            <span className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${isMenuOpen ? "-rotate-45 -translate-y-2" : ""}`} />
+            <span
+              className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                isMenuOpen ? "rotate-45 translate-y-2" : ""
+              }`}
+            />
+            <span
+              className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${
+                isMenuOpen
+                  ? "opacity-0"
+                  : "opacity-100 group-hover:w-4 self-end"
+              }`}
+            />
+            <span
+              className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                isMenuOpen ? "-rotate-45 -translate-y-2" : ""
+              }`}
+            />
           </button>
 
           {/* BOTÃO CONTATO (SEMPRE FIXO NA PONTA) */}
-          <button 
+          <button
             onClick={() => {
-              document.getElementById('footer')?.scrollIntoView({ behavior: 'smooth' });
+              document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
               setIsMenuOpen(false);
             }}
             className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity whitespace-nowrap"
           >
             Contato <span>→</span>
           </button>
-
         </div>
         </div>
       </motion.nav>
