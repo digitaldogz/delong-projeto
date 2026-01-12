@@ -4,14 +4,13 @@
  */
 
 import { useRef, useEffect } from "react";
-import { useParams, Navigate } from "react-router-dom";
+import { useParams, Navigate, Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import YouTubeEmbed from "@/components/YouTubeEmbed";
 import { getProjectBySlug, getRelatedProjects, Project } from "@/data/projects";
-import { TransitionLink } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -260,7 +259,7 @@ const RelatedProjectsSection = ({ projects }: { projects: Project[] }) => (
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {projects.map((project) => (
-          <TransitionLink
+          <Link
             key={project.id}
             to={`/projeto/${project.slug}`}
             className="group cursor-pointer"
@@ -278,7 +277,7 @@ const RelatedProjectsSection = ({ projects }: { projects: Project[] }) => (
             <h4 className="text-sm font-medium uppercase group-hover:opacity-70 transition-opacity leading-tight">
               {project.title}
             </h4>
-          </TransitionLink>
+          </Link>
         ))}
       </div>
     </div>
