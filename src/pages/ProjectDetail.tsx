@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useParams, Navigate } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
@@ -175,21 +174,38 @@ const RelatedProjectsSection = ({ projects }: { projects: Project[] }) => (
 /* ─────────────────────────────────────────────────────────────
    Main Component
 ───────────────────────────────────────────────────────────── */
+/* ─────────────────────────────────────────────────────────────
+   Page transition variants
+───────────────────────────────────────────────────────────── */
+const pageVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+const pageTransition = {
+  duration: 0.4,
+  ease: [0.22, 1, 0.36, 1] as const,
+};
+
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
   const relatedProjects = slug ? getRelatedProjects(slug, 3) : [];
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [slug]);
 
   if (!project) {
     return <Navigate to="/projetos" replace />;
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <motion.div
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={pageVariants}
+      transition={pageTransition}
+      className="min-h-screen bg-background text-foreground"
+    >
       <SiteHeader />
       <HeroBanner project={project} />
       <ProjectInfoSection project={project} />
@@ -199,7 +215,7 @@ const ProjectDetail = () => {
       )}
       <RelatedProjectsSection projects={relatedProjects} />
       <Footer />
-    </div>
+    </motion.div>
   );
 };
 
