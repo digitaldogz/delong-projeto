@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { BGPattern } from "./ui/bg-pattern";
 
 // Configuração da animação (Suave e Premium)
@@ -7,17 +7,35 @@ const EA_ZEIT: [number, number, number, number] = [0.33, 1, 0.68, 1];
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  
-  // Scroll-based animations
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
+  const scrollY = useMotionValue(0);
+  const [containerHeight, setContainerHeight] = useState(0);
 
-  // Transform values based on scroll
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, 100]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.95]);
+  useEffect(() => {
+    const updateHeight = () => {
+      if (containerRef.current) {
+        setContainerHeight(containerRef.current.offsetHeight);
+      }
+    };
+    
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+
+    const handleScroll = () => {
+      scrollY.set(window.scrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, [scrollY]);
+
+  // Transform values based on scroll - fade out as we scroll past the hero
+  const opacity = useTransform(scrollY, [0, containerHeight * 0.6], [1, 0]);
+  const y = useTransform(scrollY, [0, containerHeight * 0.6], [0, 80]);
+  const scale = useTransform(scrollY, [0, containerHeight * 0.6], [1, 0.97]);
 
   return (
     <div ref={containerRef} className="relative w-full h-screen overflow-hidden font-sans text-foreground bg-background">

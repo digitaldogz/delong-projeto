@@ -1,8 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { useMotionValue } from 'framer-motion';
 
 declare global {
   interface Window {
     Lenis: any;
+    lenisInstance: any;
   }
 }
 
@@ -26,6 +28,9 @@ export const useLenis = () => {
         infinite: false,
       });
 
+      // Store globally for other components to access
+      window.lenisInstance = lenis;
+
       function raf(time: number) {
         lenis.raf(time);
         requestAnimationFrame(raf);
@@ -36,6 +41,7 @@ export const useLenis = () => {
       // Cleanup
       return () => {
         lenis.destroy();
+        window.lenisInstance = null;
       };
     };
 
@@ -45,4 +51,30 @@ export const useLenis = () => {
       if (cleanup) cleanup();
     };
   }, []);
+};
+
+// Hook to get scroll progress for a specific element
+export const useLenisScroll = () => {
+  const scrollY = useMotionValue(0);
+  const scrollProgress = useMotionValue(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScroll = window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      
+      scrollY.set(currentScroll);
+      scrollProgress.set(maxScroll > 0 ? currentScroll / maxScroll : 0);
+    };
+
+    // Listen to native scroll events (Lenis triggers these)
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial value
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [scrollY, scrollProgress]);
+
+  return { scrollY, scrollProgress };
 };
