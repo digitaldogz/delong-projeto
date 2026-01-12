@@ -1,13 +1,13 @@
 /**
  * Projects Page
- * Grid of all projects with GSAP animations and smooth transitions.
+ * Grid of all projects with GSAP animations.
  */
 
 import { useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import gsap from "gsap";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
-import { TransitionLink } from "@/components/PageTransition";
 import { projects } from "@/data/projects";
 
 const ProjectsPage = () => {
@@ -86,7 +86,7 @@ const ProjectsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
             {projects.map((project) => (
               <div key={project.id} className="project-card">
-                <TransitionLink
+                <Link
                   to={`/projeto/${project.slug}`}
                   className="group cursor-pointer flex flex-col gap-4 block"
                 >
@@ -122,7 +122,7 @@ const ProjectsPage = () => {
                       Ver Case
                     </span>
                   </div>
-                </TransitionLink>
+                </Link>
               </div>
             ))}
           </div>

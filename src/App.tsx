@@ -1,16 +1,15 @@
 /**
  * App Component
- * Main application with page transitions, smooth scroll, and routing.
+ * Main application with smooth page transitions and routing.
  */
 
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { PageTransitionProvider } from "./components/PageTransition";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
 import { useLenis } from "./hooks/use-lenis";
 import Index from "./pages/Index";
@@ -22,19 +21,33 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// Inner app wrapped with transition provider (needs to be inside BrowserRouter)
-const AppRoutes = () => {
+// Page transition wrapper
+const PageWrapper = ({ children }: { children: React.ReactNode }) => (
+  <motion.div
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}
+    transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+  >
+    {children}
+  </motion.div>
+);
+
+// Animated routes with location key
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  
   return (
-    <PageTransitionProvider>
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/sobre" element={<AboutPage />} />
-        <Route path="/projetos" element={<Projects />} />
-        <Route path="/servicos" element={<ServicesPage />} />
-        <Route path="/projeto/:slug" element={<ProjectDetail />} />
-        <Route path="*" element={<NotFound />} />
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><Index /></PageWrapper>} />
+        <Route path="/sobre" element={<PageWrapper><AboutPage /></PageWrapper>} />
+        <Route path="/projetos" element={<PageWrapper><Projects /></PageWrapper>} />
+        <Route path="/servicos" element={<PageWrapper><ServicesPage /></PageWrapper>} />
+        <Route path="/projeto/:slug" element={<PageWrapper><ProjectDetail /></PageWrapper>} />
+        <Route path="*" element={<PageWrapper><NotFound /></PageWrapper>} />
       </Routes>
-    </PageTransitionProvider>
+    </AnimatePresence>
   );
 };
 
@@ -58,7 +71,7 @@ const App = () => {
             <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
           ) : (
             <BrowserRouter key="app">
-              <AppRoutes />
+              <AnimatedRoutes />
             </BrowserRouter>
           )}
         </AnimatePresence>

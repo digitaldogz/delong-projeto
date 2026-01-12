@@ -1,15 +1,13 @@
 /**
  * Site Header Component
- * Fixed navigation with smooth page transitions and burger menu.
- * Compatible with Lenis smooth scroll and GSAP transitions.
+ * Fixed navigation with burger menu.
  */
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import logoDelongWhite from "@/assets/logo-delong-white.png";
 import { scrollToTop } from "@/hooks/use-gsap-animations";
-import { usePageTransition, TransitionLink } from "./PageTransition";
 
 // Animation easing
 const EASE_SMOOTH: [number, number, number, number] = [0.33, 1, 0.68, 1];
@@ -46,15 +44,15 @@ const SiteHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const { navigateWithTransition } = usePageTransition();
+  const navigate = useNavigate();
 
-  // Handle logo click - scroll to top or navigate home with transition
+  // Handle logo click - scroll to top or navigate home
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (location.pathname === "/") {
       scrollToTop();
     } else {
-      navigateWithTransition("/");
+      navigate("/");
     }
   };
 
@@ -110,7 +108,7 @@ const SiteHeader = () => {
         }`}
       >
         <div className="container-premium py-6 flex justify-between items-center">
-          {/* Logo - navigates home with transition */}
+          {/* Logo - navigates home */}
           <a
             href="/"
             onClick={handleLogoClick}
@@ -139,14 +137,14 @@ const SiteHeader = () => {
                 }}
               >
                 {MENU_ITEMS.map((item) => (
-                  <TransitionLink
+                  <Link
                     key={item.label}
                     to={item.path}
                     className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
                   >
                     <span className="font-normal opacity-50">{item.number}</span>
                     <span>{item.label}</span>
-                  </TransitionLink>
+                  </Link>
                 ))}
               </motion.div>
 
@@ -195,15 +193,15 @@ const SiteHeader = () => {
             className="fixed inset-0 bg-background z-[998] flex items-center justify-center"
           >
             <nav className="flex flex-col gap-8 text-center">
-              <TransitionLink
+              <Link
                 to="/"
                 onClick={() => setIsMenuOpen(false)}
                 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
               >
                 Home
-              </TransitionLink>
+              </Link>
               {MENU_ITEMS.map((item) => (
-                <TransitionLink
+                <Link
                   key={item.label}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
@@ -213,7 +211,7 @@ const SiteHeader = () => {
                     {item.number}
                   </span>
                   {item.label}
-                </TransitionLink>
+                </Link>
               ))}
             </nav>
           </motion.div>
