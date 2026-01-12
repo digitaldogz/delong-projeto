@@ -120,11 +120,11 @@ All colors MUST be HSL.
 /* Premium Agency Utilities */
 @layer components {
   .container-premium {
-    max-width: 1440px;
+    max-width: 1280px;
     margin-left: auto;
     margin-right: auto;
-    padding-left: 5vw;
-    padding-right: 5vw;
+    padding-left: clamp(20px, 4vw, 60px);
+    padding-right: clamp(20px, 4vw, 60px);
   }
 
   /* Growing underline effect for links */

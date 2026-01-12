@@ -7,9 +7,9 @@ export default {
   theme: {
   	container: {
   		center: true,
-  		padding: '5vw',
+  		padding: 'clamp(20px, 4vw, 60px)',
   		screens: {
-  			'2xl': '1440px'
+  			'2xl': '1280px'
   		}
   	},
   	extend: {

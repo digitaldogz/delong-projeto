@@ -42,7 +42,8 @@ const ProjectDetail = () => {
               initial={{ y: 30, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ duration: 0.8 }}
-              className="text-[8vw] font-bold uppercase leading-[0.9] mb-6"
+              className="font-bold uppercase leading-[1.0] mb-6"
+              style={{ fontSize: 'clamp(40px, 6vw, 90px)' }}
             >
               {project.title}
             </motion.h1>
@@ -55,40 +56,40 @@ const ProjectDetail = () => {
       </div>
 
       {/* --- SEÇÃO DE INFORMAÇÕES --- */}
-      <section className="py-[120px] md:py-[150px]">
+      <section className="py-[100px] md:py-[120px]">
         <div className="container-premium">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-12 lg:gap-16">
             
-            {/* Coluna esquerda - Project Info (4 colunas) */}
-            <div className="lg:col-span-4">
-              <div className="flex items-center gap-3 mb-10">
+            {/* Coluna esquerda - Project Info (200px fixo) */}
+            <div>
+              <div className="flex items-center gap-3 mb-8">
                 <span className="w-2 h-2 bg-foreground"></span>
                 <span className="text-sm tracking-wide">Project Info</span>
               </div>
               
               <div className="space-y-0">
-                <div className="grid grid-cols-[100px_1fr] py-4 border-b border-border/40">
+                <div className="grid grid-cols-[80px_1fr] py-3 border-b border-border/40">
                   <span className="text-xs text-muted-foreground uppercase tracking-widest">Client</span>
                   <span className="text-sm font-medium uppercase">{project.client}</span>
                 </div>
-                <div className="grid grid-cols-[100px_1fr] py-4 border-b border-border/40">
+                <div className="grid grid-cols-[80px_1fr] py-3 border-b border-border/40">
                   <span className="text-xs text-muted-foreground uppercase tracking-widest">Service</span>
                   <span className="text-sm font-medium uppercase">{project.service}</span>
                 </div>
-                <div className="grid grid-cols-[100px_1fr] py-4 border-b border-border/40">
+                <div className="grid grid-cols-[80px_1fr] py-3 border-b border-border/40">
                   <span className="text-xs text-muted-foreground uppercase tracking-widest">Year</span>
                   <span className="text-sm font-medium uppercase">{project.year}</span>
                 </div>
               </div>
             </div>
 
-            {/* Coluna direita - Descrição (6 colunas, deixa 2 vazias para assimetria) */}
-            <div className="lg:col-span-6 lg:pt-14">
-              <p className="text-lg leading-[1.6] text-muted-foreground/70 mb-8">
+            {/* Coluna direita - Descrição (restante do espaço) */}
+            <div className="lg:pt-10">
+              <p className="text-base md:text-lg leading-[1.6] text-muted-foreground/70 mb-6">
                 {project.description}
               </p>
               {project.fullDescription && (
-                <p className="text-lg leading-[1.6] text-muted-foreground/70">
+                <p className="text-base md:text-lg leading-[1.6] text-muted-foreground/70">
                   {project.fullDescription}
                 </p>
               )}
@@ -99,7 +100,7 @@ const ProjectDetail = () => {
 
       {/* --- VÍDEO DO YOUTUBE --- */}
       {project.youtubeId && (
-        <section className="py-[120px]">
+        <section className="py-[100px]">
           <div className="container-premium">
             <YouTubeEmbed videoId={project.youtubeId} title={project.title} />
           </div>
@@ -108,9 +109,9 @@ const ProjectDetail = () => {
 
       {/* --- GALERIA DE IMAGENS --- */}
       {project.gallery && project.gallery.length > 0 && (
-        <section className="pb-[150px]">
+        <section className="pb-[120px]">
           <div className="container-premium">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {project.gallery.map((image, index) => {
                 // Regra: a cada 3 imagens, a primeira (índice 0, 3, 6...) é larga
                 const isWide = index % 3 === 0;
@@ -141,7 +142,7 @@ const ProjectDetail = () => {
       )}
 
       {/* --- MAIS PROJETOS --- */}
-      <section className="py-[120px] border-t border-border/20">
+      <section className="py-[100px] border-t border-border/20">
         <div className="container-premium">
           <h3 className="text-sm uppercase tracking-widest text-muted-foreground mb-12">Mais Projetos</h3>
            
