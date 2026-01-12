@@ -9,7 +9,7 @@ import { getProjectBySlug, getRelatedProjects } from "@/data/projects";
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
   const project = slug ? getProjectBySlug(slug) : undefined;
-  const relatedProjects = slug ? getRelatedProjects(slug, 4) : [];
+  const relatedProjects = slug ? getRelatedProjects(slug, 3) : [];
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -148,12 +148,12 @@ const ProjectDetail = () => {
         <div className="container-premium">
           <h3 className="text-sm uppercase tracking-widest text-muted-foreground mb-12">Mais Projetos</h3>
            
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {relatedProjects.map((related) => (
               <Link 
                 key={related.id}
                 to={`/projeto/${related.slug}`}
-                className="group cursor-pointer"
+                className="group cursor-pointer link-underline"
               >
                 <div className="overflow-hidden aspect-[4/3] mb-4">
                   <img 
@@ -162,15 +162,8 @@ const ProjectDetail = () => {
                     alt={related.title}
                   />
                 </div>
-                <p className="text-xs text-muted-foreground/60 mb-2 uppercase tracking-wider">
-                  {related.year} | {related.category}
-                </p>
-                <h4 className="text-sm font-bold uppercase group-hover:opacity-70 transition-opacity leading-tight mb-3">
-                  {related.title}
-                </h4>
-                <span className="text-xs text-muted-foreground/60 uppercase tracking-widest group-hover:text-foreground transition-colors">
-                  View Case
-                </span>
+                <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">{related.category}</p>
+                <h4 className="text-sm font-medium uppercase group-hover:opacity-70 transition-opacity leading-tight">{related.title}</h4>
               </Link>
             ))}
           </div>
