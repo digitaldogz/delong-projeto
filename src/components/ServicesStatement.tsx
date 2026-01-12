@@ -1,6 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+/**
+ * ServicesStatement Component
+ * Brief services intro with CTA.
+ */
 
+import { Link } from "react-router-dom";
 const ServicesStatement = () => {
   return (
     <section className="w-full bg-background py-32 md:py-48 border-t border-border">

@@ -1,7 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowUpRight, Instagram, Facebook } from 'lucide-react';
+/**
+ * Footer Component
+ * Site-wide footer with contact info and navigation.
+ */
 
+import { Link } from "react-router-dom";
+import { ArrowUpRight, Instagram, Facebook } from "lucide-react";
 const menuItems = [
   { label: 'PROJETOS', path: '/projetos' },
   { label: 'SERVIÇOS', path: '/servicos' },

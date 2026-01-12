@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+/**
+ * ServicesSection Component
+ * Interactive services menu with image gallery.
+ */
+
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-
 const services = [
   {
     id: "01",

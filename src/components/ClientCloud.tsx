@@ -1,6 +1,9 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+/**
+ * ClientCloud Component
+ * Animated grid of client names.
+ */
 
+import { motion } from "framer-motion";
 const clientRows = [
   ["PEDAL"],
   ["RED BULL", "CANAL DE BIKE"],
