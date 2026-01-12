@@ -24,7 +24,7 @@ const HeroSection = () => {
 
       {/* 2. CONTEÚDO (Fica por cima do vídeo - z-20) */}
       <div className="relative z-20 w-full h-screen flex flex-col justify-end pb-24 md:pb-28">
-        <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12">
+        <div className="container-premium w-full">
           {/* TÍTULO PRINCIPAL - Alinhado à esquerda */}
           <div className="flex flex-col gap-0 relative text-left">
             
@@ -72,7 +72,7 @@ const HeroSection = () => {
 
       {/* --- RODAPÉ DA HERO (Minimalista: Apenas Instagram e All Works) --- */}
       <div className="absolute bottom-6 left-0 w-full z-30 text-foreground mix-blend-difference pointer-events-none">
-        <div className="max-w-[1400px] mx-auto w-full px-8 md:px-12 flex justify-between items-end">
+        <div className="container-premium w-full flex justify-between items-end">
           {/* ESQUERDA: APENAS INSTAGRAM */}
           <div className="pointer-events-auto">
             <a 

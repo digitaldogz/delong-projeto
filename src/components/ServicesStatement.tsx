@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const ServicesStatement = () => {
   return (
     <section className="w-full bg-background py-32 md:py-48 border-t border-border">
-      <div className="max-w-[1400px] mx-auto px-8 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <div className="container-premium grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
         {/* Label - Esquerda */}
         <div className="lg:col-span-3">
