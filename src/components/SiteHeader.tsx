@@ -73,12 +73,12 @@ const SiteHeader = () => {
         <div className="flex items-center gap-6 z-[1000]">
           {/* Slot Desktop (mantém o layout alinhado e estável) */}
           <div className="relative hidden md:flex items-center justify-end h-10 min-w-[340px] lg:min-w-[420px]">
-            {/* Links sempre ocupam o espaço (mesmo quando invisíveis) */}
+            {/* Links (mesmo espaço, sem reflow) */}
             <motion.div
               initial={false}
               animate={!isScrolled && !isMenuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
               transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
-              className="flex items-center justify-end gap-8 w-full"
+              className="absolute inset-0 flex items-center justify-end gap-8"
               style={{
                 pointerEvents: !isScrolled && !isMenuOpen ? "auto" : "none",
                 visibility: !isScrolled && !isMenuOpen ? "visible" : "hidden",
@@ -96,31 +96,34 @@ const SiteHeader = () => {
               ))}
             </motion.div>
 
-            {/* Burger fica sobre o mesmo espaço, sem empurrar nada */}
+            {/* Burger (sobre o mesmo slot, alinhado no centro vertical) */}
             <motion.button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               initial={false}
               animate={isScrolled || isMenuOpen ? { opacity: 1, y: 0 } : { opacity: 0, y: -8 }}
               transition={{ duration: 0.25, ease: [0.33, 1, 0.68, 1] }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col gap-1.5 p-2 cursor-pointer group"
+              className="absolute inset-0 flex items-center justify-end p-2 cursor-pointer group"
               style={{ pointerEvents: isScrolled || isMenuOpen ? "auto" : "none" }}
               aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
             >
-              <span
-                className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
-                  isMenuOpen ? "rotate-45 translate-y-2" : ""
-                }`}
-              />
-              <span
-                className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${
-                  isMenuOpen ? "opacity-0" : "opacity-100 group-hover:w-4 self-end"
-                }`}
-              />
-              <span
-                className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
-                  isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                }`}
-              />
+              <span className="sr-only">Menu</span>
+              <span className="flex flex-col gap-1.5">
+                <span
+                  className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                    isMenuOpen ? "rotate-45 translate-y-2" : ""
+                  }`}
+                />
+                <span
+                  className={`w-6 h-0.5 bg-foreground block transition-opacity duration-300 ${
+                    isMenuOpen ? "opacity-0" : "opacity-100 group-hover:w-4 self-end"
+                  }`}
+                />
+                <span
+                  className={`w-6 h-0.5 bg-foreground block transition-transform duration-300 ${
+                    isMenuOpen ? "-rotate-45 -translate-y-2" : ""
+                  }`}
+                />
+              </span>
             </motion.button>
           </div>
 
@@ -153,9 +156,9 @@ const SiteHeader = () => {
               document.getElementById("footer")?.scrollIntoView({ behavior: "smooth" });
               setIsMenuOpen(false);
             }}
-            className="text-foreground text-xs font-bold uppercase tracking-widest flex items-center gap-2 hover:opacity-70 transition-opacity whitespace-nowrap"
+            className="h-10 inline-flex items-center text-foreground text-xs font-bold uppercase tracking-widest gap-2 hover:opacity-70 transition-opacity whitespace-nowrap leading-none"
           >
-            Contato <span>→</span>
+            Contato <span aria-hidden>→</span>
           </button>
         </div>
         </div>
