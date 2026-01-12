@@ -13,6 +13,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
 import { useLenis } from "./hooks/use-lenis";
 import ScrollToTop from "./components/ScrollToTop";
+import { PageTransitionProvider } from "./components/PageTransition";
 import Index from "./pages/Index";
 import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
@@ -42,15 +43,17 @@ const App = () => {
             <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
           ) : (
             <BrowserRouter key="app">
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/sobre" element={<AboutPage />} />
-                <Route path="/projetos" element={<Projects />} />
-                <Route path="/servicos" element={<ServicesPage />} />
-                <Route path="/projeto/:slug" element={<ProjectDetail />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <PageTransitionProvider>
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/sobre" element={<AboutPage />} />
+                  <Route path="/projetos" element={<Projects />} />
+                  <Route path="/servicos" element={<ServicesPage />} />
+                  <Route path="/projeto/:slug" element={<ProjectDetail />} />
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </PageTransitionProvider>
             </BrowserRouter>
           )}
         </AnimatePresence>
