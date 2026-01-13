@@ -169,24 +169,23 @@ const ServicesPage = () => {
                 to="/#contato"
                 className="hero-cta inline-flex items-center justify-center bg-foreground text-background px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-foreground/90 transition-all w-fit"
               >
-                Work with Us
+                [ Work with Us ]
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Divider */}
-      <div className="container-premium">
-        <div className="w-full h-px bg-border/30" />
-      </div>
+      {/* Divider line after hero - full width */}
+      <div className="w-full border-t border-foreground/20" />
 
       {/* Services List */}
-      <section ref={servicesRef} className="py-20 md:py-32">
+      <section ref={servicesRef}>
         <div className="container-premium">
           {services.map((service, index) => (
             <article key={service.number} className="service-item">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 py-16 md:py-24">
+              {/* Content grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 py-20 md:py-28">
                 {/* Number */}
                 <div className="lg:col-span-1">
                   <span className="service-number text-sm text-muted-foreground/60 font-mono">
@@ -217,8 +216,8 @@ const ServicesPage = () => {
                 </div>
               </div>
 
-              {/* Divider between items */}
-              <div className="w-full h-px bg-border/30" />
+              {/* Divider line after each service */}
+              <div className="w-full border-t border-foreground/20" />
             </article>
           ))}
         </div>
