@@ -55,83 +55,69 @@ const ServicesPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
 
-  // Hero entrance animation
+  // Hero entrance animation (leve e robusta)
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Masked title slide up
-      tl.fromTo(
-        ".page-title",
-        { yPercent: 100 },
-        { yPercent: 0, duration: 1.2 },
-        0
-      );
-
-      // Description fade in
-      tl.fromTo(
-        ".page-description",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        0.3
-      );
-
-      // CTA button
-      tl.fromTo(
-        ".page-cta",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.6 },
-        0.5
-      );
+      tl.from(".page-title", {
+        yPercent: 110,
+        duration: 1.05,
+        overwrite: "auto",
+      })
+        .from(
+          ".page-description",
+          {
+            autoAlpha: 0,
+            y: 16,
+            duration: 0.6,
+            overwrite: "auto",
+          },
+          0.2
+        )
+        .from(
+          ".page-cta",
+          {
+            autoAlpha: 0,
+            y: 12,
+            duration: 0.5,
+            overwrite: "auto",
+          },
+          0.35
+        );
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Services list animation
+  // Services list animation (batch: menos triggers, mais fluidez)
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const items = gsap.utils.toArray(".service-item");
-      
-      items.forEach((item: any) => {
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-          },
-        });
+      ScrollTrigger.batch(".service-item", {
+        start: "top 85%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.from(batch, {
+            autoAlpha: 0,
+            y: 32,
+            duration: 0.8,
+            stagger: 0.12,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
 
-        // Number fade in
-        tl.fromTo(
-          item.querySelector(".service-number"),
-          { opacity: 0, x: -20 },
-          { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" },
-          0
-        );
-
-        // Title slide up
-        tl.fromTo(
-          item.querySelector(".service-title"),
-          { opacity: 0, y: 40 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-          0.1
-        );
-
-        // Description fade in
-        tl.fromTo(
-          item.querySelector(".service-description"),
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" },
-          0.2
-        );
-
-        // Image reveal with scale
-        tl.fromTo(
-          item.querySelector(".service-image"),
-          { opacity: 0, scale: 1.05, xPercent: 5 },
-          { opacity: 1, scale: 1, xPercent: 0, duration: 1, ease: "power3.out" },
-          0.15
-        );
+          batch.forEach((el) => {
+            const image = (el as HTMLElement).querySelector(".service-image");
+            if (image) {
+              gsap.from(image, {
+                scale: 1.03,
+                duration: 1,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
+            }
+          });
+        },
       });
     }, servicesRef);
 
@@ -146,18 +132,18 @@ const ServicesPage = () => {
       <section ref={heroRef} className="pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="container-premium">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12">
-            <div className="overflow-hidden">
-              <h1 className="page-title text-7xl md:text-9xl lg:text-[12rem] font-light tracking-tight italic leading-[0.85]">
+            <div className="overflow-hidden py-4 -my-4">
+              <h1 className="page-title text-7xl md:text-9xl lg:text-[12rem] font-light tracking-tight italic leading-[0.95]">
                 Serviços
               </h1>
             </div>
             <div className="max-w-sm md:pt-8">
-              <p className="page-description text-muted-foreground text-sm mb-8 leading-relaxed opacity-0">
+              <p className="page-description text-muted-foreground text-sm mb-8 leading-relaxed">
                 Trabalhamos com marcas grandes e pequenas, locais e globais, em uma ampla gama de serviços criativos.
               </p>
               <Link 
                 to="/#contato" 
-                className="page-cta inline-flex items-center justify-center bg-foreground text-background px-8 py-4 text-xs font-medium tracking-widest hover:bg-foreground/90 transition-all opacity-0"
+                className="page-cta inline-flex items-center justify-center bg-foreground text-background px-8 py-4 text-xs font-medium tracking-widest hover:bg-foreground/90 transition-all"
               >
                 [ Trabalhe Conosco ]
               </Link>
@@ -184,22 +170,22 @@ const ServicesPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-[80px_minmax(0,420px)_minmax(0,1fr)] gap-10 md:gap-16 py-16 md:py-24">
                 {/* Number */}
                 <div className="md:pt-2">
-                  <span className="service-number text-xs text-muted-foreground font-mono opacity-0">{service.number}</span>
+                  <span className="service-number text-xs text-muted-foreground font-mono">{service.number}</span>
                 </div>
 
                 {/* Text */}
                 <div className="flex flex-col">
-                  <h2 className="service-title text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] mb-6 opacity-0">
+                  <h2 className="service-title text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] mb-6">
                     {service.title}
                   </h2>
-                  <p className="service-description text-muted-foreground text-sm leading-relaxed max-w-md opacity-0">
+                  <p className="service-description text-muted-foreground text-sm leading-relaxed max-w-md">
                     {service.description}
                   </p>
                 </div>
 
                 {/* Image */}
                 <div className="w-full md:justify-self-end">
-                  <div className="service-image relative aspect-[16/9] overflow-hidden w-full max-w-[720px] opacity-0">
+                  <div className="service-image relative aspect-[16/9] overflow-hidden w-full max-w-[720px]">
                     <img
                       src={service.image}
                       alt={service.title}

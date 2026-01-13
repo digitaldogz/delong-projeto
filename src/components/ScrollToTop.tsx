@@ -1,10 +1,15 @@
 /**
  * ScrollToTop Component
  * Scrolls to top on route change, compatible with Lenis smooth scroll.
+ * Also refreshes GSAP ScrollTrigger after navigation (prevents layout/trigger glitches).
  */
 
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 declare global {
   interface Window {
@@ -16,14 +21,18 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Small delay to ensure Lenis is ready after route change
     const timer = setTimeout(() => {
       if (window.lenisInstance) {
-        // Use Lenis scrollTo for smooth scroll to top
         window.lenisInstance.scrollTo(0, { immediate: true });
       } else {
-        // Fallback for when Lenis isn't available
         window.scrollTo(0, 0);
+      }
+
+      // Recalcula triggers depois que a rota muda e o layout assenta
+      try {
+        ScrollTrigger.refresh();
+      } catch {
+        // no-op
       }
     }, 50);
 

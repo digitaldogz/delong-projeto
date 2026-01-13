@@ -17,67 +17,58 @@ const ProjectsPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLElement>(null);
 
-  // Hero entrance animation
+  // Hero entrance animation (leve e robusta)
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Masked title slide up
-      tl.fromTo(
-        ".page-title",
-        { yPercent: 100 },
-        { yPercent: 0, duration: 1.2 },
-        0
-      );
-
-      // Filter fade in
-      tl.fromTo(
+      tl.from(".page-title", {
+        yPercent: 110,
+        duration: 1.05,
+        overwrite: "auto",
+      }).from(
         ".page-filter",
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8 },
-        0.4
+        {
+          autoAlpha: 0,
+          y: 12,
+          duration: 0.55,
+          overwrite: "auto",
+        },
+        0.35
       );
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Grid stagger animation with ScrollTrigger
+  // Grid reveal (batch: menos triggers, mais fluidez)
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const cards = gsap.utils.toArray(".project-card");
-      
-      cards.forEach((card: any, index) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            delay: index < 4 ? index * 0.1 : 0, // Stagger only first 4
+      ScrollTrigger.batch(".project-card", {
+        start: "top 90%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.from(batch, {
+            autoAlpha: 0,
+            y: 40,
+            duration: 0.75,
+            stagger: 0.1,
             ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-            },
-          }
-        );
+            overwrite: "auto",
+          });
 
-        // Image scale reveal
-        gsap.fromTo(
-          card.querySelector(".project-image"),
-          { scale: 1.1 },
-          {
-            scale: 1,
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-            },
-          }
-        );
+          batch.forEach((el) => {
+            const img = (el as HTMLElement).querySelector(".project-image");
+            if (img) {
+              gsap.from(img, {
+                scale: 1.04,
+                duration: 1,
+                ease: "power3.out",
+                overwrite: "auto",
+              });
+            }
+          });
+        },
       });
     }, gridRef);
 
@@ -91,14 +82,14 @@ const ProjectsPage = () => {
       {/* Hero Section */}
       <section ref={heroRef} className="pt-32 pb-20 md:pt-40 md:pb-32">
         <div className="container-premium">
-          <div className="overflow-hidden">
-            <h1 className="page-title text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic mb-12">
+          <div className="overflow-hidden py-4 -my-4">
+            <h1 className="page-title text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic mb-12 leading-[0.95]">
               Projetos
             </h1>
           </div>
 
           {/* Filter */}
-          <div className="page-filter flex items-center gap-6 text-sm uppercase tracking-widest border-b border-border/30 pb-6 opacity-0">
+          <div className="page-filter flex items-center gap-6 text-sm uppercase tracking-widest border-b border-border/30 pb-6">
             <span className="text-foreground font-bold cursor-pointer border-b border-foreground pb-1">
               All
             </span>
@@ -111,7 +102,7 @@ const ProjectsPage = () => {
         <div className="container-premium">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
             {projects.map((project) => (
-              <div key={project.id} className="project-card opacity-0">
+              <div key={project.id} className="project-card">
                 <Link
                   to={`/projeto/${project.slug}`}
                   className="group cursor-pointer flex flex-col gap-4 block"
