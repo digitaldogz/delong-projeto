@@ -1,6 +1,6 @@
 /**
  * Services Page
- * Full list of services with GSAP animations.
+ * Inspired by zeitmedia.vn/services - clean layout with smooth animations.
  */
 
 import { useRef, useEffect } from "react";
@@ -55,70 +55,90 @@ const ServicesPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
 
-  // Hero entrance animation (simples e segura - sem yPercent que causa corte)
+  // Hero entrance animation
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.from(".page-title", {
-        autoAlpha: 0,
-        y: 60,
-        duration: 0.9,
-        overwrite: "auto",
+      tl.from(".hero-title", {
+        opacity: 0,
+        y: 80,
+        duration: 1,
       })
         .from(
-          ".page-description",
+          ".hero-desc",
           {
-            autoAlpha: 0,
-            y: 16,
-            duration: 0.6,
-            overwrite: "auto",
+            opacity: 0,
+            y: 24,
+            duration: 0.7,
           },
-          0.15
+          0.2
         )
         .from(
-          ".page-cta",
+          ".hero-cta",
           {
-            autoAlpha: 0,
-            y: 12,
+            opacity: 0,
+            y: 16,
             duration: 0.5,
-            overwrite: "auto",
           },
-          0.3
+          0.4
         );
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Services list animation (batch: menos triggers, mais fluidez)
+  // Services list animation - individual items on scroll
   useEffect(() => {
     const ctx = gsap.context(() => {
-      ScrollTrigger.batch(".service-item", {
-        start: "top 85%",
-        once: true,
-        onEnter: (batch) => {
-          gsap.from(batch, {
-            autoAlpha: 0,
-            y: 32,
-            duration: 0.8,
-            stagger: 0.12,
-            ease: "power3.out",
-            overwrite: "auto",
-          });
+      const items = gsap.utils.toArray<HTMLElement>(".service-item");
 
-          batch.forEach((el) => {
-            const image = (el as HTMLElement).querySelector(".service-image");
-            if (image) {
-              gsap.from(image, {
-                scale: 1.03,
-                duration: 1,
-                ease: "power3.out",
-                overwrite: "auto",
-              });
-            }
-          });
-        },
+      items.forEach((item) => {
+        const number = item.querySelector(".service-number");
+        const title = item.querySelector(".service-title");
+        const desc = item.querySelector(".service-desc");
+        const image = item.querySelector(".service-image");
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            once: true,
+          },
+        });
+
+        tl.from(number, {
+          opacity: 0,
+          x: -20,
+          duration: 0.5,
+        })
+          .from(
+            title,
+            {
+              opacity: 0,
+              y: 40,
+              duration: 0.7,
+            },
+            0.1
+          )
+          .from(
+            desc,
+            {
+              opacity: 0,
+              y: 20,
+              duration: 0.6,
+            },
+            0.25
+          )
+          .from(
+            image,
+            {
+              opacity: 0,
+              scale: 1.05,
+              duration: 0.9,
+            },
+            0.15
+          );
       });
     }, servicesRef);
 
@@ -128,78 +148,77 @@ const ServicesPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
-      
-      {/* Hero Section */}
-      <section ref={heroRef} className="pt-32 pb-16 md:pt-40 md:pb-20">
+
+      {/* Hero Section - Zeit Media style */}
+      <section ref={heroRef} className="pt-32 pb-20 md:pt-44 md:pb-28">
         <div className="container-premium">
-          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12">
-            <div>
-              <h1 className="page-title text-7xl md:text-9xl lg:text-[12rem] font-light tracking-tight italic leading-[1]">
-                Serviços
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-end">
+            {/* Title - Full width on mobile, spans 8 cols on desktop */}
+            <div className="lg:col-span-8">
+              <h1 className="hero-title text-[15vw] md:text-[12vw] lg:text-[10vw] font-light tracking-tight italic leading-[0.9]">
+                Services
               </h1>
             </div>
-            <div className="max-w-sm md:pt-8">
-              <p className="page-description text-muted-foreground text-sm mb-8 leading-relaxed">
-                Trabalhamos com marcas grandes e pequenas, locais e globais, em uma ampla gama de serviços criativos.
+
+            {/* Description + CTA - Right aligned */}
+            <div className="lg:col-span-4 flex flex-col gap-8">
+              <p className="hero-desc text-muted-foreground text-sm leading-relaxed max-w-sm">
+                We work with big and small brands, local and global, across a wide range of creative services.
               </p>
-              <Link 
-                to="/#contato" 
-                className="page-cta inline-flex items-center justify-center bg-foreground text-background px-8 py-4 text-xs font-medium tracking-widest hover:bg-foreground/90 transition-all"
+              <Link
+                to="/#contato"
+                className="hero-cta inline-flex items-center justify-center bg-foreground text-background px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-foreground/90 transition-all w-fit"
               >
-                [ Trabalhe Conosco ]
+                Work with Us
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Divider Line */}
-      <div className="w-full">
-        <div className="container-premium">
-          <div className="w-full h-px bg-border/40" />
-        </div>
+      {/* Divider */}
+      <div className="container-premium">
+        <div className="w-full h-px bg-border/30" />
       </div>
 
       {/* Services List */}
-      <section ref={servicesRef} className="pt-24 pb-32">
+      <section ref={servicesRef} className="py-20 md:py-32">
         <div className="container-premium">
-          {services.map((service) => (
-            <article
-              key={service.number}
-              className="service-item w-full"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-[80px_minmax(0,420px)_minmax(0,1fr)] gap-10 md:gap-16 py-16 md:py-24">
+          {services.map((service, index) => (
+            <article key={service.number} className="service-item">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 py-16 md:py-24">
                 {/* Number */}
-                <div className="md:pt-2">
-                  <span className="service-number text-xs text-muted-foreground font-mono">{service.number}</span>
+                <div className="lg:col-span-1">
+                  <span className="service-number text-sm text-muted-foreground/60 font-mono">
+                    {service.number}
+                  </span>
                 </div>
 
-                {/* Text */}
-                <div className="flex flex-col">
-                  <h2 className="service-title text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.05] mb-6">
+                {/* Text Content */}
+                <div className="lg:col-span-4 flex flex-col gap-6">
+                  <h2 className="service-title text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
                     {service.title}
                   </h2>
-                  <p className="service-description text-muted-foreground text-sm leading-relaxed max-w-md">
+                  <p className="service-desc text-muted-foreground text-sm leading-relaxed">
                     {service.description}
                   </p>
                 </div>
 
                 {/* Image */}
-                <div className="w-full md:justify-self-end">
-                  <div className="service-image relative aspect-[16/9] overflow-hidden w-full max-w-[720px]">
+                <div className="lg:col-span-7 lg:col-start-6">
+                  <div className="service-image relative aspect-[16/10] overflow-hidden w-full">
                     <img
                       src={service.image}
                       alt={service.title}
                       className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                      loading="lazy"
+                      loading={index < 2 ? "eager" : "lazy"}
                     />
-                    <div className="absolute inset-0 bg-background/5" />
                   </div>
                 </div>
               </div>
 
-              {/* Divider Line */}
-              <div className="w-full h-px bg-border/40" />
+              {/* Divider between items */}
+              <div className="w-full h-px bg-border/30" />
             </article>
           ))}
         </div>
