@@ -156,20 +156,20 @@ const ServicesPage = () => {
             {/* Title - Full width on mobile, spans 8 cols on desktop */}
             <div className="lg:col-span-8">
               <h1 className="hero-title text-[15vw] md:text-[12vw] lg:text-[10vw] font-light tracking-tight italic leading-[0.9]">
-                Services
+                Serviços
               </h1>
             </div>
 
             {/* Description + CTA - Right aligned */}
             <div className="lg:col-span-4 flex flex-col gap-8">
               <p className="hero-desc text-muted-foreground text-sm leading-relaxed max-w-sm">
-                We work with big and small brands, local and global, across a wide range of creative services.
+                Trabalhamos com marcas grandes e pequenas, locais e globais, em uma ampla gama de serviços criativos.
               </p>
               <Link
                 to="/#contato"
                 className="hero-cta inline-flex items-center justify-center bg-foreground text-background px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-foreground/90 transition-all w-fit"
               >
-                [ Work with Us ]
+                [ Trabalhe Conosco ]
               </Link>
             </div>
           </div>
