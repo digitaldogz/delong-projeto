@@ -17,14 +17,15 @@ const ProjectsPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLElement>(null);
 
-  // Hero entrance animation (leve e robusta)
+  // Hero entrance animation (sem yPercent)
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.from(".page-title", {
-        yPercent: 110,
-        duration: 1.05,
+        autoAlpha: 0,
+        y: 50,
+        duration: 0.9,
         overwrite: "auto",
       }).from(
         ".page-filter",
@@ -34,7 +35,7 @@ const ProjectsPage = () => {
           duration: 0.55,
           overwrite: "auto",
         },
-        0.35
+        0.3
       );
     }, heroRef);
 
@@ -82,8 +83,8 @@ const ProjectsPage = () => {
       {/* Hero Section */}
       <section ref={heroRef} className="pt-32 pb-20 md:pt-40 md:pb-32">
         <div className="container-premium">
-          <div className="overflow-hidden py-4 -my-4">
-            <h1 className="page-title text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic mb-12 leading-[0.95]">
+          <div>
+            <h1 className="page-title text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic mb-12 leading-[1]">
               Projetos
             </h1>
           </div>
