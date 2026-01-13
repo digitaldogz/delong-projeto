@@ -22,39 +22,43 @@ const HeroBanner = ({ project }: { project: Project }) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "expo.out" } });
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      // Image reveal with scale
-      tl.fromTo(
-        ".hero-image",
-        { scale: 1.15, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.6 },
-        0
-      );
-
-      // Gradient overlay fade
-      tl.fromTo(
-        ".hero-gradient",
-        { opacity: 0 },
-        { opacity: 1, duration: 1 },
-        0.3
-      );
-
-      // Masked title slide up
-      tl.fromTo(
-        ".hero-title",
-        { yPercent: 100 },
-        { yPercent: 0, duration: 1.2 },
-        0.3
-      );
-
-      // Meta info stagger fade in
-      tl.fromTo(
-        ".hero-meta span",
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 },
-        0.7
-      );
+      tl.from(".hero-image", {
+        autoAlpha: 0,
+        scale: 1.08,
+        duration: 1.2,
+        overwrite: "auto",
+      })
+        .from(
+          ".hero-gradient",
+          {
+            autoAlpha: 0,
+            duration: 0.7,
+            overwrite: "auto",
+          },
+          0.15
+        )
+        .from(
+          ".hero-title",
+          {
+            yPercent: 120,
+            duration: 0.9,
+            overwrite: "auto",
+          },
+          0.2
+        )
+        .from(
+          ".hero-meta span",
+          {
+            autoAlpha: 0,
+            y: 12,
+            duration: 0.45,
+            stagger: 0.08,
+            overwrite: "auto",
+          },
+          0.55
+        );
     }, containerRef);
 
     return () => ctx.revert();
@@ -66,14 +70,14 @@ const HeroBanner = ({ project }: { project: Project }) => {
           <img
             src={project.image}
             alt={project.title}
-            className="hero-image w-full h-full object-cover opacity-0"
+            className="hero-image w-full h-full object-cover"
           />
-          <div className="hero-gradient absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-0" />
+          <div className="hero-gradient absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
       </div>
 
       <div className="relative z-10 w-full">
         <div className="container-premium">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden py-3 -my-3">
             <h1
               className="hero-title font-bold uppercase leading-[1.0] mb-6"
               style={{ fontSize: "clamp(40px, 6vw, 90px)" }}
@@ -111,23 +115,20 @@ const ProjectInfoSection = ({ project }: { project: Project }) => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const items = gsap.utils.toArray(".info-item");
-      
-      gsap.fromTo(
-        items,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          stagger: 0.08,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top 80%",
-          },
-        }
-      );
+      ScrollTrigger.batch(".info-item", {
+        start: "top 85%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.from(batch, {
+            autoAlpha: 0,
+            y: 24,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        },
+      });
     }, ref);
 
     return () => ctx.revert();
@@ -195,25 +196,20 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const items = gsap.utils.toArray(".gallery-item");
-      
-      items.forEach((item: any, index) => {
-        gsap.fromTo(
-          item,
-          { opacity: 0, y: 50, scale: 0.98 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.9,
-            delay: (index % 3) * 0.1, // Stagger based on position
+      ScrollTrigger.batch(".gallery-item", {
+        start: "top 90%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.from(batch, {
+            autoAlpha: 0,
+            y: 28,
+            scale: 0.99,
+            duration: 0.75,
+            stagger: 0.08,
             ease: "power3.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 90%",
-            },
-          }
-        );
+            overwrite: "auto",
+          });
+        },
       });
     }, ref);
 
