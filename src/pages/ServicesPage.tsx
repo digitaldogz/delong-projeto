@@ -55,14 +55,15 @@ const ServicesPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
 
-  // Hero entrance animation (leve e robusta)
+  // Hero entrance animation (simples e segura - sem yPercent que causa corte)
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
       tl.from(".page-title", {
-        yPercent: 110,
-        duration: 1.05,
+        autoAlpha: 0,
+        y: 60,
+        duration: 0.9,
         overwrite: "auto",
       })
         .from(
@@ -73,7 +74,7 @@ const ServicesPage = () => {
             duration: 0.6,
             overwrite: "auto",
           },
-          0.2
+          0.15
         )
         .from(
           ".page-cta",
@@ -83,7 +84,7 @@ const ServicesPage = () => {
             duration: 0.5,
             overwrite: "auto",
           },
-          0.35
+          0.3
         );
     }, heroRef);
 
@@ -132,8 +133,8 @@ const ServicesPage = () => {
       <section ref={heroRef} className="pt-32 pb-16 md:pt-40 md:pb-20">
         <div className="container-premium">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12">
-            <div className="overflow-hidden py-4 -my-4">
-              <h1 className="page-title text-7xl md:text-9xl lg:text-[12rem] font-light tracking-tight italic leading-[0.95]">
+            <div>
+              <h1 className="page-title text-7xl md:text-9xl lg:text-[12rem] font-light tracking-tight italic leading-[1]">
                 Serviços
               </h1>
             </div>

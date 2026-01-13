@@ -26,24 +26,25 @@ const HeroBanner = ({ project }: { project: Project }) => {
 
       tl.from(".hero-image", {
         autoAlpha: 0,
-        scale: 1.08,
-        duration: 1.2,
+        scale: 1.06,
+        duration: 1.1,
         overwrite: "auto",
       })
         .from(
           ".hero-gradient",
           {
             autoAlpha: 0,
-            duration: 0.7,
+            duration: 0.6,
             overwrite: "auto",
           },
-          0.15
+          0.1
         )
         .from(
           ".hero-title",
           {
-            yPercent: 120,
-            duration: 0.9,
+            autoAlpha: 0,
+            y: 40,
+            duration: 0.8,
             overwrite: "auto",
           },
           0.2
@@ -52,12 +53,12 @@ const HeroBanner = ({ project }: { project: Project }) => {
           ".hero-meta span",
           {
             autoAlpha: 0,
-            y: 12,
-            duration: 0.45,
+            y: 10,
+            duration: 0.4,
             stagger: 0.08,
             overwrite: "auto",
           },
-          0.55
+          0.5
         );
     }, containerRef);
 
@@ -77,9 +78,9 @@ const HeroBanner = ({ project }: { project: Project }) => {
 
       <div className="relative z-10 w-full">
         <div className="container-premium">
-          <div className="overflow-hidden py-3 -my-3">
+          <div>
             <h1
-              className="hero-title font-bold uppercase leading-[1.0] mb-6"
+              className="hero-title font-bold uppercase leading-[1.05] mb-6"
               style={{ fontSize: "clamp(40px, 6vw, 90px)" }}
             >
               {project.title}
