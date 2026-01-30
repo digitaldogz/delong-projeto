@@ -10,6 +10,11 @@ export interface Project {
   description: string;
   fullDescription: string;
   youtubeId?: string;
+  bunnyVideo?: {
+    libraryId: string;
+    videoId: string;
+  };
+  videoUrl?: string;
   gallery: string[];
 }
 

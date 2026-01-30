@@ -10,7 +10,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
-import YouTubeEmbed from "@/components/YouTubeEmbed";
+import VideoPlayer from "@/components/VideoPlayer";
 import { getProjectBySlug, getRelatedProjects, Project } from "@/data/projects";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -119,12 +119,17 @@ const ProjectInfoSection = ({ project }: { project: Project }) => (
 );
 
 /* ─────────────────────────────────────────────────────────────
-   Video Section
+   Video Section - Universal player supporting YouTube, Bunny, Direct URL
 ───────────────────────────────────────────────────────────── */
-const VideoSection = ({ videoId, title }: { videoId: string; title: string }) => (
+const VideoSection = ({ project }: { project: Project }) => (
   <section className="py-[100px]">
     <div className="container-premium">
-      <YouTubeEmbed videoId={videoId} title={title} />
+      <VideoPlayer
+        youtubeId={project.youtubeId}
+        bunnyVideo={project.bunnyVideo}
+        videoUrl={project.videoUrl}
+        title={project.title}
+      />
     </div>
   </section>
 );
@@ -212,7 +217,9 @@ const ProjectDetail = () => {
       <SiteHeader />
       <HeroBanner project={project} />
       <ProjectInfoSection project={project} />
-      {project.youtubeId && <VideoSection videoId={project.youtubeId} title={project.title} />}
+      {(project.youtubeId || project.bunnyVideo || project.videoUrl) && (
+        <VideoSection project={project} />
+      )}
       {project.gallery && project.gallery.length > 0 && (
         <GallerySection gallery={project.gallery} title={project.title} />
       )}
