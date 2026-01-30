@@ -80,74 +80,43 @@ const InfoItem = ({ label, value }: { label: string; value: string }) => (
 );
 
 /* ─────────────────────────────────────────────────────────────
-   Project Info Section
+   Project Info Section - Sem animações de scroll, conteúdo sempre visível
 ───────────────────────────────────────────────────────────── */
-const ProjectInfoSection = ({ project }: { project: Project }) => {
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollTrigger.batch(".info-item", {
-        start: "top 85%",
-        once: true,
-        onEnter: (batch) => {
-          gsap.from(batch, {
-            autoAlpha: 0,
-            y: 24,
-            duration: 0.7,
-            stagger: 0.08,
-            ease: "power3.out",
-            overwrite: "auto",
-          });
-        },
-      });
-    }, ref);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section ref={ref} className="py-[100px] md:py-[120px]">
-      <div className="container-premium">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16">
-          {/* Left column - Project Info */}
-          <div className="lg:col-span-4">
-            <div className="flex items-start gap-2 mb-10 info-item">
-              <span className="w-1 h-1 bg-foreground mt-2 shrink-0" />
-              <span className="text-sm tracking-wide">Project Info</span>
-            </div>
-
-            <div className="space-y-0">
-              <div className="info-item">
-                <InfoItem label="Client" value={project.client} />
-              </div>
-              <div className="info-item">
-                <InfoItem label="Service" value={project.service} />
-              </div>
-              <div className="info-item">
-                <InfoItem label="Year" value={project.year} />
-              </div>
-            </div>
+const ProjectInfoSection = ({ project }: { project: Project }) => (
+  <section className="py-[100px] md:py-[120px]">
+    <div className="container-premium">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-16">
+        {/* Left column - Project Info */}
+        <div className="lg:col-span-4">
+          <div className="flex items-start gap-2 mb-10">
+            <span className="w-1 h-1 bg-foreground mt-2 shrink-0" />
+            <span className="text-sm tracking-wide">Project Info</span>
           </div>
 
-          {/* Right column - Description */}
-          <div className="lg:col-span-6 lg:col-start-7">
-            <div className="max-w-[560px] info-item">
-              <p className="text-base leading-[1.8] text-muted-foreground/70 mb-8">
-                {project.description}
+          <div className="space-y-0">
+            <InfoItem label="Client" value={project.client} />
+            <InfoItem label="Service" value={project.service} />
+            <InfoItem label="Year" value={project.year} />
+          </div>
+        </div>
+
+        {/* Right column - Description */}
+        <div className="lg:col-span-6 lg:col-start-7">
+          <div className="max-w-[560px]">
+            <p className="text-base leading-[1.8] text-muted-foreground/70 mb-8">
+              {project.description}
+            </p>
+            {project.fullDescription && (
+              <p className="text-base leading-[1.8] text-muted-foreground/70">
+                {project.fullDescription}
               </p>
-              {project.fullDescription && (
-                <p className="text-base leading-[1.8] text-muted-foreground/70">
-                  {project.fullDescription}
-                </p>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 /* ─────────────────────────────────────────────────────────────
    Video Section
@@ -161,59 +130,33 @@ const VideoSection = ({ videoId, title }: { videoId: string; title: string }) =>
 );
 
 /* ─────────────────────────────────────────────────────────────
-   Gallery Section
+   Gallery Section - Sem animações de scroll, imagens sempre visíveis
 ───────────────────────────────────────────────────────────── */
-const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }) => {
-  const ref = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollTrigger.batch(".gallery-item", {
-        start: "top 90%",
-        once: true,
-        onEnter: (batch) => {
-          gsap.from(batch, {
-            autoAlpha: 0,
-            y: 28,
-            scale: 0.99,
-            duration: 0.75,
-            stagger: 0.08,
-            ease: "power3.out",
-            overwrite: "auto",
-          });
-        },
-      });
-    }, ref);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <section ref={ref} className="pb-[120px]">
-      <div className="container-premium">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {gallery.map((image, index) => {
-            const isWide = index % 3 === 0;
-            return (
-              <div
-                key={index}
-                className={`gallery-item overflow-hidden ${
-                  isWide ? "md:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
-                }`}
-              >
-                <img
-                  src={image}
-                  alt={`${title} - Imagem ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-                />
-              </div>
-            );
-          })}
-        </div>
+const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }) => (
+  <section className="pb-[120px]">
+    <div className="container-premium">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {gallery.map((image, index) => {
+          const isWide = index % 3 === 0;
+          return (
+            <div
+              key={index}
+              className={`overflow-hidden ${
+                isWide ? "md:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
+              }`}
+            >
+              <img
+                src={image}
+                alt={`${title} - Imagem ${index + 1}`}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+              />
+            </div>
+          );
+        })}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 /* ─────────────────────────────────────────────────────────────
    Related Projects Section
