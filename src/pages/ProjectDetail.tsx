@@ -20,46 +20,16 @@ gsap.registerPlugin(ScrollTrigger);
 const HeroBanner = ({ project }: { project: Project }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Apenas metadata com fade leve - título e imagem fixos
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-      tl.from(".hero-image", {
+      gsap.from(".hero-meta span", {
         autoAlpha: 0,
-        scale: 1.06,
-        duration: 1.1,
-        overwrite: "auto",
-      })
-        .from(
-          ".hero-gradient",
-          {
-            autoAlpha: 0,
-            duration: 0.6,
-            overwrite: "auto",
-          },
-          0.1
-        )
-        .from(
-          ".hero-title",
-          {
-            autoAlpha: 0,
-            y: 40,
-            duration: 0.8,
-            overwrite: "auto",
-          },
-          0.2
-        )
-        .from(
-          ".hero-meta span",
-          {
-            autoAlpha: 0,
-            y: 10,
-            duration: 0.4,
-            stagger: 0.08,
-            overwrite: "auto",
-          },
-          0.5
-        );
+        y: 8,
+        duration: 0.3,
+        stagger: 0.05,
+        ease: "power3.out",
+      });
     }, containerRef);
 
     return () => ctx.revert();
