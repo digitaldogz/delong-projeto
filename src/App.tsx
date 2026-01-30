@@ -1,6 +1,6 @@
 /**
  * App Component
- * Main application with routing and smooth scroll.
+ * Main application with routing, smooth scroll, and page transitions.
  */
 
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoadingScreen from "./components/LoadingScreen";
+import { TransitionProvider } from "./components/PageTransition";
 import { useLenis } from "./hooks/use-lenis";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/Index";
@@ -21,6 +22,22 @@ import ServicesPage from "./pages/ServicesPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
+
+const AppRoutes = () => {
+  return (
+    <TransitionProvider>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/sobre" element={<AboutPage />} />
+        <Route path="/projetos" element={<Projects />} />
+        <Route path="/servicos" element={<ServicesPage />} />
+        <Route path="/projeto/:slug" element={<ProjectDetail />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </TransitionProvider>
+  );
+};
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -42,15 +59,7 @@ const App = () => {
             <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
           ) : (
             <BrowserRouter key="app">
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/sobre" element={<AboutPage />} />
-                <Route path="/projetos" element={<Projects />} />
-                <Route path="/servicos" element={<ServicesPage />} />
-                <Route path="/projeto/:slug" element={<ProjectDetail />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
+              <AppRoutes />
             </BrowserRouter>
           )}
         </AnimatePresence>

@@ -4,12 +4,12 @@
  */
 
 import { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import { projects } from "@/data/projects";
+import { CaseLink } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -80,7 +80,7 @@ const ProjectsPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
             {projects.map((project) => (
               <div key={project.id} className="project-card">
-                <Link
+                <CaseLink
                   to={`/projeto/${project.slug}`}
                   className="group cursor-pointer flex flex-col gap-4 block"
                 >
@@ -116,7 +116,7 @@ const ProjectsPage = () => {
                       Ver Case
                     </span>
                   </div>
-                </Link>
+                </CaseLink>
               </div>
             ))}
           </div>
