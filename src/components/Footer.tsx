@@ -3,8 +3,8 @@
  * Site-wide footer with contact info and navigation.
  */
 
-import { Link } from "react-router-dom";
 import { ArrowUpRight, Instagram, Facebook } from "lucide-react";
+import { useTransitionNavigate } from "@/components/PageTransition";
 const menuItems = [
   { label: 'PROJETOS', path: '/projetos' },
   { label: 'SERVIÇOS', path: '/servicos' },
@@ -12,6 +12,12 @@ const menuItems = [
 ];
 
 const Footer = () => {
+  const navigateWithTransition = useTransitionNavigate();
+
+  const handleNavClick = (path: string) => {
+    navigateWithTransition(path);
+  };
+
   return <footer id="footer" className="w-full bg-background text-foreground border-t border-border">
       <div className="container-premium">
         
@@ -44,10 +50,16 @@ const Footer = () => {
             
             {/* Menu de Navegação */}
             <nav className="flex flex-col w-full">
-              {menuItems.map(item => <Link key={item.label} to={item.path} className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300">
+              {menuItems.map(item => (
+                <button
+                  key={item.label}
+                  onClick={() => handleNavClick(item.path)}
+                  className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300 cursor-pointer w-full text-left"
+                >
                   <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item.label}</span>
                   <ArrowUpRight className="text-muted-foreground w-4 h-4 group-hover:text-foreground transition-colors" />
-                </Link>)}
+                </button>
+              ))}
             </nav>
 
             {/* Social Icons */}
