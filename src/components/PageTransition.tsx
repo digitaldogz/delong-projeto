@@ -1,10 +1,10 @@
 /**
  * PageTransition Component
  * Sophisticated curtain reveal transition between pages.
- * Inspired by premium agency websites.
+ * Overlay is always mounted to ensure refs are available for GSAP.
  */
 
-import { createContext, useContext, useRef, useCallback, useState, useEffect, ReactNode } from "react";
+import { createContext, useContext, useRef, useCallback, useState, ReactNode } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import logoDelong from "@/assets/logo-delong-white.png";
@@ -47,93 +47,81 @@ export const TransitionProvider = ({ children }: TransitionProviderProps) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [showOverlay, setShowOverlay] = useState(false);
-
-  // Handle page reveal on route change (exit animation)
-  useEffect(() => {
-    if (showOverlay && overlayRef.current) {
-      // Small delay to let the new page mount
-      const revealTimer = setTimeout(() => {
-        // Scroll to top instantly
-        if (window.lenisInstance) {
-          window.lenisInstance.scrollTo(0, { immediate: true });
-        } else {
-          window.scrollTo(0, 0);
-        }
-
-        const tl = gsap.timeline({
-          onComplete: () => {
-            setShowOverlay(false);
-            setIsTransitioning(false);
-          },
-        });
-
-        // Fade out logo
-        tl.to(logoRef.current, {
-          opacity: 0,
-          scale: 0.9,
-          duration: 0.2,
-          ease: "power2.in",
-        });
-
-        // Reveal page (curtain slides up)
-        tl.to(
-          overlayRef.current,
-          {
-            clipPath: "inset(0 0 100% 0)",
-            duration: 0.5,
-            ease: "power4.out",
-          },
-          "-=0.1"
-        );
-      }, 150);
-
-      return () => clearTimeout(revealTimer);
-    }
-  }, [location.pathname, showOverlay]);
 
   const navigateWithTransition = useCallback(
     (path: string) => {
-      // Don't transition to the same page
+      // Don't transition to the same page or if already transitioning
       if (path === location.pathname || isTransitioning) return;
+      if (!overlayRef.current || !logoRef.current) return;
 
       setIsTransitioning(true);
-      setShowOverlay(true);
 
-      // Reset overlay state
-      gsap.set(overlayRef.current, {
+      const overlay = overlayRef.current;
+      const logo = logoRef.current;
+
+      // Kill any existing animations
+      gsap.killTweensOf([overlay, logo]);
+
+      // Reset initial state
+      gsap.set(overlay, {
+        visibility: "visible",
         clipPath: "inset(100% 0 0 0)",
       });
-      gsap.set(logoRef.current, {
+      gsap.set(logo, {
         opacity: 0,
         scale: 1.1,
       });
 
-      // Entry animation (curtain slides up from bottom)
+      // Create timeline
       const tl = gsap.timeline();
 
-      tl.to(overlayRef.current, {
+      // Entry animation: curtain slides up from bottom
+      tl.to(overlay, {
         clipPath: "inset(0% 0 0 0)",
         duration: 0.4,
         ease: "power4.inOut",
       });
 
       // Fade in logo
-      tl.to(
-        logoRef.current,
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.3,
-          ease: "power2.out",
-        },
-        "-=0.2"
-      );
+      tl.to(logo, {
+        opacity: 1,
+        scale: 1,
+        duration: 0.25,
+        ease: "power2.out",
+      }, "-=0.15");
 
       // Navigate after curtain covers screen
       tl.call(() => {
+        // Scroll to top
+        if (window.lenisInstance) {
+          window.lenisInstance.scrollTo(0, { immediate: true });
+        } else {
+          window.scrollTo(0, 0);
+        }
         navigate(path);
-      }, [], "+=0.1");
+      });
+
+      // Small hold
+      tl.to({}, { duration: 0.15 });
+
+      // Fade out logo
+      tl.to(logo, {
+        opacity: 0,
+        scale: 0.95,
+        duration: 0.2,
+        ease: "power2.in",
+      });
+
+      // Exit animation: curtain slides up to reveal page
+      tl.to(overlay, {
+        clipPath: "inset(0 0 100% 0)",
+        duration: 0.5,
+        ease: "power4.out",
+        onComplete: () => {
+          gsap.set(overlay, { visibility: "hidden" });
+          setIsTransitioning(false);
+        },
+      }, "-=0.1");
     },
     [navigate, location.pathname, isTransitioning]
   );
@@ -142,21 +130,20 @@ export const TransitionProvider = ({ children }: TransitionProviderProps) => {
     <TransitionContext.Provider value={{ navigateWithTransition, isTransitioning }}>
       {children}
 
-      {/* Transition Overlay */}
-      {showOverlay && (
-        <div
-          ref={overlayRef}
-          className="fixed inset-0 z-[9999] bg-background flex items-center justify-center pointer-events-none"
-          style={{ clipPath: "inset(100% 0 0 0)" }}
-        >
-          <img
-            ref={logoRef}
-            src={logoDelong}
-            alt="Delong"
-            className="w-24 h-auto opacity-0"
-          />
-        </div>
-      )}
+      {/* Transition Overlay - Always mounted, visibility controlled via GSAP */}
+      <div
+        ref={overlayRef}
+        className="fixed inset-0 z-[9999] bg-background flex items-center justify-center pointer-events-none"
+        style={{ visibility: "hidden", clipPath: "inset(100% 0 0 0)" }}
+      >
+        <img
+          ref={logoRef}
+          src={logoDelong}
+          alt="Delong"
+          className="w-24 h-auto"
+          style={{ opacity: 0 }}
+        />
+      </div>
     </TransitionContext.Provider>
   );
 };
