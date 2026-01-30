@@ -1,191 +1,212 @@
 
-# Plano: Animação de Transição de Página Sofisticada
+# Plano: VideoPlayer Universal (YouTube + Bunny Stream + URL Direta)
 
 ## Objetivo
-Criar uma transição de página elegante e fluida ao clicar em um case/projeto. A animação será inspirada em agências de design premium, com overlay curtain effect e sequência coordenada.
+Criar um componente de vídeo universal que detecta automaticamente a fonte e renderiza o player apropriado, permitindo flexibilidade total para hospedar vídeos sem restrições de copyright.
 
 ---
 
-## Conceito da Animação
+## Fontes de Vídeo Suportadas
 
-### Fluxo da Transição
-
-```text
-CLIQUE NO CASE
-     │
-     ▼
-┌─────────────────────────────────────┐
-│  1. CURTAIN SLIDE (0.4s)            │
-│     Overlay escuro desliza do       │
-│     bottom para cima, cobrindo tela │
-└─────────────────────────────────────┘
-     │
-     ▼
-┌─────────────────────────────────────┐
-│  2. NAVEGAÇÃO (durante overlay)     │
-│     Route change acontece           │
-│     enquanto tela está coberta      │
-└─────────────────────────────────────┘
-     │
-     ▼
-┌─────────────────────────────────────┐
-│  3. REVEAL (0.5s)                   │
-│     Overlay desliza para cima,      │
-│     revelando a nova página         │
-└─────────────────────────────────────┘
-```
+| Fonte | Formato do Campo | Exemplo |
+|-------|------------------|---------|
+| YouTube | `youtubeId: "abc123"` | `youtubeId: "q--pHHzrsCs"` |
+| Bunny Stream | `bunnyVideo: { libraryId, videoId }` | `bunnyVideo: { libraryId: "123456", videoId: "abc-xyz" }` |
+| URL Direta | `videoUrl: "https://..."` | `videoUrl: "https://cdn.example.com/video.mp4"` |
 
 ---
 
 ## Arquivos a Criar/Modificar
 
-### 1. CRIAR: `src/components/PageTransition.tsx`
+### 1. CRIAR: `src/components/VideoPlayer.tsx`
 
-Componente de transição global com overlay animado:
-
-- **Overlay Element**: Div fullscreen com z-index alto
-- **Estado**: `isTransitioning`, `targetPath`
-- **Animação GSAP**: clipPath ou translateY para curtain effect
-- **Callback**: Executa navegação durante a cobertura
+Componente universal que detecta automaticamente o tipo de vídeo:
 
 ```text
 Estrutura do Componente:
-├── TransitionContext (estado global)
-├── Overlay div (fixed, inset-0, z-[9999])
-├── useTransitionNavigate hook (substitui navigate)
-└── Sequência GSAP:
-    ├── Entrada: scaleY 0 → 1 (0.4s)
-    ├── Navegar durante pausa
-    └── Saída: scaleY 1 → 0 (0.5s)
+├── Props Interface
+│   ├── youtubeId?: string
+│   ├── bunnyVideo?: { libraryId: string, videoId: string }
+│   ├── videoUrl?: string
+│   └── title?: string
+│
+├── Lógica de Detecção
+│   ├── Se bunnyVideo → renderiza iframe Bunny
+│   ├── Se youtubeId → renderiza iframe YouTube
+│   └── Se videoUrl → renderiza <video> nativo HTML5
+│
+└── Renderização
+    ├── Container aspect-video responsivo
+    ├── Iframe ou Video element
+    └── Estilo consistente entre players
 ```
 
-### 2. MODIFICAR: `src/App.tsx`
+**Bunny Stream Embed:**
+```text
+URL: https://iframe.mediadelivery.net/embed/{libraryId}/{videoId}
+Parâmetros: ?autoplay=false&loop=false&muted=false&preload=true
+```
 
-- Wrap rotas com `TransitionProvider`
-- Adicionar `TransitionOverlay` no root
+**HTML5 Video (URL Direta):**
+```text
+<video controls preload="metadata">
+  <source src="{videoUrl}" type="video/mp4" />
+</video>
+```
 
-### 3. MODIFICAR: `src/components/SelectedCases.tsx`
+### 2. MODIFICAR: `src/data/projects.ts`
 
-- Substituir `<Link>` por componente custom com transição
-- Usar `useTransitionNavigate()` ao invés de Link direto
+Atualizar interface Project para suportar múltiplas fontes:
 
-### 4. MODIFICAR: `src/pages/Projects.tsx`
+```text
+Antes:
+  youtubeId?: string;
 
-- Mesma mudança: usar transição customizada nos links
+Depois:
+  youtubeId?: string;
+  bunnyVideo?: {
+    libraryId: string;
+    videoId: string;
+  };
+  videoUrl?: string;
+```
 
-### 5. MODIFICAR: `src/pages/ProjectDetail.tsx`
+### 3. MODIFICAR: `src/pages/ProjectDetail.tsx`
 
-- Aplicar nos links de "Mais Projetos"
+Substituir YouTubeEmbed por VideoPlayer universal:
+
+```text
+Antes:
+  import YouTubeEmbed from "@/components/YouTubeEmbed";
+  {project.youtubeId && <VideoSection videoId={project.youtubeId} />}
+
+Depois:
+  import VideoPlayer from "@/components/VideoPlayer";
+  {(project.youtubeId || project.bunnyVideo || project.videoUrl) && (
+    <VideoSection project={project} />
+  )}
+```
+
+### 4. MANTER: `src/components/YouTubeEmbed.tsx`
+
+Manter como backup/legado caso seja usado em outro lugar.
 
 ---
 
 ## Detalhes Técnicos
 
-### TransitionContext
+### VideoPlayer Component
 
 ```text
-interface TransitionState {
-  isTransitioning: boolean;
-  navigate: (path: string) => void;
+interface VideoPlayerProps {
+  youtubeId?: string;
+  bunnyVideo?: {
+    libraryId: string;
+    videoId: string;
+  };
+  videoUrl?: string;
+  title?: string;
 }
 
-Fluxo:
-1. User clica → navigate(path)
-2. isTransitioning = true
-3. GSAP anima overlay IN (0.4s)
-4. Aguarda 100ms
-5. router.navigate(path)
-6. Aguarda 150ms (página carrega)
-7. GSAP anima overlay OUT (0.5s)
-8. isTransitioning = false
+Prioridade de renderização:
+1. bunnyVideo (se definido)
+2. youtubeId (se definido)
+3. videoUrl (se definido)
+4. null (nenhum vídeo)
 ```
 
-### Animação do Overlay (GSAP)
+### Bunny Stream Options
 
 ```text
-ENTRADA (cubrir tela):
-├── clipPath: "inset(100% 0 0 0)" → "inset(0% 0 0 0)"
-├── duration: 0.4s
-└── ease: "power4.inOut"
-
-SAÍDA (revelar página):
-├── clipPath: "inset(0% 0 0 0)" → "inset(0 0 100% 0)"
-├── duration: 0.5s
-└── ease: "power4.out"
+Parâmetros disponíveis no iframe:
+├── autoplay=false (não inicia automaticamente)
+├── loop=false (não repete)
+├── muted=false (com som)
+├── preload=true (carrega preview)
+├── responsive=true (adapta ao container)
+└── controls=true (mostra controles)
 ```
 
-### Easing Recomendado
+### Estilo Consistente
 
 ```text
-ENTRADA: power4.inOut (suave, profissional)
-SAÍDA: power4.out (desacelera elegantemente)
-```
+Container:
+├── aspect-video (16:9)
+├── bg-secondary (placeholder enquanto carrega)
+├── overflow-hidden
+└── shadow-2xl (sombra elegante)
 
----
-
-## Componente CaseLink
-
-Componente wrapper para links de projetos:
-
-```text
-<CaseLink to="/projeto/expo-irati-2024">
-  <div className="case-card">...</div>
-</CaseLink>
-
-Comportamento:
-1. onClick captura clique
-2. preventDefault()
-3. Dispara transição via context
-4. Navega após animação
+Iframe/Video:
+├── absolute inset-0
+├── w-full h-full
+└── border-0
 ```
 
 ---
 
-## Cronograma da Animação
-
-| Fase | Duração | Descrição |
-|------|---------|-----------|
-| Curtain IN | 400ms | Overlay cobre a tela de baixo para cima |
-| Hold | 100ms | Pausa para navegação |
-| Route Change | ~50ms | React Router navega |
-| Page Load | 150ms | Nova página monta |
-| Curtain OUT | 500ms | Overlay revela de cima para baixo |
-| **Total** | **~1.2s** | Transição completa |
-
----
-
-## Visual do Overlay
+## Exemplos de Uso no projects.ts
 
 ```text
-Opção: Overlay minimalista com logo
-┌────────────────────────────────────┐
-│                                    │
-│                                    │
-│         [logo pequeno]             │
-│                                    │
-│                                    │
-└────────────────────────────────────┘
-Cor: background (preto) com logo centralizado
+// Projeto com YouTube
+{
+  slug: "expo-irati",
+  youtubeId: "q--pHHzrsCs",
+  // bunnyVideo e videoUrl não definidos
+}
+
+// Projeto com Bunny Stream
+{
+  slug: "video-musical",
+  bunnyVideo: {
+    libraryId: "123456",
+    videoId: "abc-def-ghi"
+  },
+  // youtubeId e videoUrl não definidos
+}
+
+// Projeto com URL Direta (MP4)
+{
+  slug: "demo-reel",
+  videoUrl: "https://cdn.exemplo.com/videos/demo.mp4",
+  // youtubeId e bunnyVideo não definidos
+}
 ```
 
 ---
 
 ## Arquivos Finais
 
-| Arquivo | Ação |
-|---------|------|
-| `src/components/PageTransition.tsx` | CRIAR |
-| `src/App.tsx` | Adicionar provider e overlay |
-| `src/components/SelectedCases.tsx` | Usar CaseLink |
-| `src/pages/Projects.tsx` | Usar CaseLink |
-| `src/pages/ProjectDetail.tsx` | Usar CaseLink nos relacionados |
+| Arquivo | Ação | Descrição |
+|---------|------|-----------|
+| `src/components/VideoPlayer.tsx` | CRIAR | Componente universal multi-fonte |
+| `src/data/projects.ts` | MODIFICAR | Adicionar bunnyVideo e videoUrl na interface |
+| `src/pages/ProjectDetail.tsx` | MODIFICAR | Usar VideoPlayer ao invés de YouTubeEmbed |
+| `src/components/YouTubeEmbed.tsx` | MANTER | Backup/legado |
+
+---
+
+## Como Usar Bunny Stream
+
+Após criar conta no Bunny.net:
+
+1. Fazer upload do vídeo no Bunny Stream
+2. Copiar o Library ID (nas configurações da biblioteca)
+3. Copiar o Video ID (na página do vídeo)
+4. Adicionar no projeto:
+
+```text
+bunnyVideo: {
+  libraryId: "SEU_LIBRARY_ID",
+  videoId: "SEU_VIDEO_ID"
+}
+```
 
 ---
 
 ## Resultado Esperado
 
-- Transição elegante tipo "curtain reveal"
-- Sensação cinematográfica e premium
-- Sem cortes abruptos entre páginas
-- Logo aparece brevemente durante transição
-- Experiência fluida similar a sites de agências como Zeit Media
+- Player universal que aceita 3 fontes diferentes
+- Detecção automática do tipo de vídeo
+- Estilo visual consistente entre todas as fontes
+- Flexibilidade para usar YouTube (gratuito) ou Bunny (sem restrições)
+- Preparado para URLs diretas de MP4 se necessário
