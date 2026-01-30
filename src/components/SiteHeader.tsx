@@ -5,9 +5,10 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import logoDelongWhite from "@/assets/logo-delong-white.png";
 import { scrollToTop } from "@/hooks/use-gsap-animations";
+import { useTransitionNavigate } from "@/components/PageTransition";
 
 // Animation easing
 const EASE_SMOOTH: [number, number, number, number] = [0.33, 1, 0.68, 1];
@@ -44,16 +45,22 @@ const SiteHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
+  const navigateWithTransition = useTransitionNavigate();
 
-  // Handle logo click - scroll to top or navigate home
+  // Handle logo click - scroll to top or navigate home with transition
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (location.pathname === "/") {
       scrollToTop();
     } else {
-      navigate("/");
+      navigateWithTransition("/");
     }
+  };
+
+  // Handle menu item click with transition
+  const handleMenuClick = (path: string) => {
+    setIsMenuOpen(false);
+    navigateWithTransition(path);
   };
 
   // Scroll detection with hysteresis to prevent flickering
@@ -136,15 +143,15 @@ const SiteHeader = () => {
                   visibility: showLinks ? "visible" : "hidden",
                 }}
               >
-                {MENU_ITEMS.map((item) => (
-                  <Link
+              {MENU_ITEMS.map((item) => (
+                  <button
                     key={item.label}
-                    to={item.path}
-                    className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors"
+                    onClick={() => handleMenuClick(item.path)}
+                    className="group flex items-center gap-2 text-foreground text-xs font-bold uppercase tracking-widest hover:text-muted-foreground transition-colors cursor-pointer"
                   >
                     <span className="font-normal opacity-50">{item.number}</span>
                     <span>{item.label}</span>
-                  </Link>
+                  </button>
                 ))}
               </motion.div>
 
@@ -193,25 +200,23 @@ const SiteHeader = () => {
             className="fixed inset-0 bg-background z-[998] flex items-center justify-center"
           >
             <nav className="flex flex-col gap-8 text-center">
-              <Link
-                to="/"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
+              <button
+                onClick={() => handleMenuClick("/")}
+                className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors cursor-pointer"
               >
                 Home
-              </Link>
+              </button>
               {MENU_ITEMS.map((item) => (
-                <Link
+                <button
                   key={item.label}
-                  to={item.path}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors"
+                  onClick={() => handleMenuClick(item.path)}
+                  className="text-4xl md:text-6xl font-bold uppercase tracking-tighter text-foreground hover:text-muted-foreground transition-colors cursor-pointer"
                 >
                   <span className="block text-sm font-mono opacity-40 mb-2 font-normal">
                     {item.number}
                   </span>
                   {item.label}
-                </Link>
+                </button>
               ))}
             </nav>
           </motion.div>
