@@ -17,32 +17,21 @@ const ProjectsPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLElement>(null);
 
-  // Hero entrance animation (sem yPercent)
+  // Hero entrance animation - apenas filtro com fade leve
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-
-      tl.from(".page-title", {
+      gsap.from(".page-filter", {
         autoAlpha: 0,
-        y: 50,
-        duration: 0.9,
-        overwrite: "auto",
-      }).from(
-        ".page-filter",
-        {
-          autoAlpha: 0,
-          y: 12,
-          duration: 0.55,
-          overwrite: "auto",
-        },
-        0.3
-      );
+        y: 8,
+        duration: 0.4,
+        ease: "power3.out",
+      });
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Grid reveal (batch: menos triggers, mais fluidez)
+  // Grid reveal - apenas fade simples, sem scale
   useEffect(() => {
     const ctx = gsap.context(() => {
       ScrollTrigger.batch(".project-card", {
@@ -51,23 +40,10 @@ const ProjectsPage = () => {
         onEnter: (batch) => {
           gsap.from(batch, {
             autoAlpha: 0,
-            y: 40,
-            duration: 0.75,
-            stagger: 0.1,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.08,
             ease: "power3.out",
-            overwrite: "auto",
-          });
-
-          batch.forEach((el) => {
-            const img = (el as HTMLElement).querySelector(".project-image");
-            if (img) {
-              gsap.from(img, {
-                scale: 1.04,
-                duration: 1,
-                ease: "power3.out",
-                overwrite: "auto",
-              });
-            }
           });
         },
       });

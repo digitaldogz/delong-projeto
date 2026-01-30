@@ -55,90 +55,44 @@ const ServicesPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
 
-  // Hero entrance animation
+  // Hero entrance - apenas descrição e CTA com fade leve, título fixo
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
-      tl.from(".hero-title", {
+      tl.from(".hero-desc", {
         opacity: 0,
-        y: 80,
-        duration: 1,
-      })
-        .from(
-          ".hero-desc",
-          {
-            opacity: 0,
-            y: 24,
-            duration: 0.7,
-          },
-          0.2
-        )
-        .from(
-          ".hero-cta",
-          {
-            opacity: 0,
-            y: 16,
-            duration: 0.5,
-          },
-          0.4
-        );
+        y: 12,
+        duration: 0.4,
+      }).from(
+        ".hero-cta",
+        {
+          opacity: 0,
+          y: 8,
+          duration: 0.3,
+        },
+        0.15
+      );
     }, heroRef);
 
     return () => ctx.revert();
   }, []);
 
-  // Services list animation - individual items on scroll
+  // Services list - um fade único por item, sem animações complexas
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const items = gsap.utils.toArray<HTMLElement>(".service-item");
-
-      items.forEach((item) => {
-        const number = item.querySelector(".service-number");
-        const title = item.querySelector(".service-title");
-        const desc = item.querySelector(".service-desc");
-        const image = item.querySelector(".service-image");
-
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            once: true,
-          },
-        });
-
-        tl.from(number, {
-          opacity: 0,
-          x: -20,
-          duration: 0.5,
-        })
-          .from(
-            title,
-            {
-              opacity: 0,
-              y: 40,
-              duration: 0.7,
-            },
-            0.1
-          )
-          .from(
-            desc,
-            {
-              opacity: 0,
-              y: 20,
-              duration: 0.6,
-            },
-            0.25
-          )
-          .from(
-            image,
-            {
-              opacity: 0,
-              scale: 1.05,
-              duration: 0.9,
-            },
-            0.15
-          );
+      ScrollTrigger.batch(".service-item", {
+        start: "top 85%",
+        once: true,
+        onEnter: (batch) => {
+          gsap.from(batch, {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power3.out",
+          });
+        },
       });
     }, servicesRef);
 
