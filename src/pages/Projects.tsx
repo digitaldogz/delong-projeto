@@ -31,26 +31,7 @@ const ProjectsPage = () => {
     return () => ctx.revert();
   }, []);
 
-  // Grid reveal - apenas fade simples, sem scale
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollTrigger.batch(".project-card", {
-        start: "top 90%",
-        once: true,
-        onEnter: (batch) => {
-          gsap.from(batch, {
-            autoAlpha: 0,
-            y: 20,
-            duration: 0.5,
-            stagger: 0.08,
-            ease: "power3.out",
-          });
-        },
-      });
-    }, gridRef);
-
-    return () => ctx.revert();
-  }, []);
+  // Sem animação de scroll nos cards - sempre visíveis
 
   return (
     <div className="min-h-screen bg-background text-foreground">

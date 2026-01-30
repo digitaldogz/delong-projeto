@@ -29,76 +29,36 @@ const SelectedCases = () => {
   // Pega os 6 primeiros projetos do arquivo de dados
   const displayProjects = projects.slice(0, 6);
 
+  // Header animation apenas - cards e imagens sempre visíveis
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header animation
-      const headerTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".cases-header",
-          start: "top 85%",
-        },
-      });
-
-      headerTl.fromTo(
+      // Header animation simples
+      gsap.fromTo(
         ".cases-label",
         { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" },
-        0
-      );
-
-      headerTl.fromTo(
-        ".cases-title",
-        { opacity: 0, y: 40 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        0.1
-      );
-
-      // Project cards stagger
-      const cards = gsap.utils.toArray(".case-card");
-      cards.forEach((card: any, index) => {
-        gsap.fromTo(
-          card,
-          { opacity: 0, y: 60 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-            },
-          }
-        );
-
-        // Image scale on scroll reveal
-        gsap.fromTo(
-          card.querySelector(".case-image"),
-          { scale: 1.1 },
-          {
-            scale: 1,
-            duration: 1.2,
-            ease: "power3.out",
-            scrollTrigger: {
-              trigger: card,
-              start: "top 90%",
-            },
-          }
-        );
-      });
-
-      // View all button
-      gsap.fromTo(
-        ".cases-view-all",
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
+        { 
+          opacity: 1, 
+          x: 0, 
+          duration: 0.6, 
           ease: "power3.out",
           scrollTrigger: {
-            trigger: ".cases-view-all",
-            start: "top 95%",
+            trigger: ".cases-header",
+            start: "top 85%",
+          },
+        }
+      );
+
+      gsap.fromTo(
+        ".cases-title",
+        { opacity: 0, y: 30 },
+        { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.7, 
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".cases-header",
+            start: "top 85%",
           },
         }
       );
@@ -113,11 +73,11 @@ const SelectedCases = () => {
         
         {/* Cabeçalho da Seção */}
         <div className="cases-header mb-16">
-          <span className="cases-label text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase flex items-center gap-2 mb-4 opacity-0">
+          <span className="cases-label text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase flex items-center gap-2 mb-4">
             <span className="w-1 h-1 bg-foreground rounded-full"></span>
             Our Works
           </span>
-          <h2 className="cases-title text-5xl md:text-7xl font-medium text-foreground tracking-tight opacity-0">
+          <h2 className="cases-title text-5xl md:text-7xl font-medium text-foreground tracking-tight">
             Cases selecionados
           </h2>
         </div>
@@ -132,7 +92,7 @@ const SelectedCases = () => {
               <CaseLink 
                 key={project.id} 
                 to={`/projeto/${project.slug}`} 
-                className={`case-card group cursor-pointer flex flex-col gap-4 opacity-0 ${size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}
+                className={`case-card group cursor-pointer flex flex-col gap-4 ${size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}
               >
                 {/* Container da Imagem com Zoom no Hover */}
                 <div className="relative w-full overflow-hidden aspect-[16/9] bg-secondary">
@@ -181,7 +141,7 @@ const SelectedCases = () => {
         <div className="mt-20 flex justify-center">
           <Link 
             to="/projetos" 
-            className="cases-view-all text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors opacity-0"
+            className="cases-view-all text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors"
           >
             View All Projects
           </Link>
