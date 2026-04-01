@@ -39,11 +39,15 @@ const HeroBanner = ({ project }: { project: Project }) => {
   return (
     <div ref={containerRef} className="relative w-full h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
+        {project.image ? (
           <img
             src={project.image}
             alt={project.title}
             className="hero-image w-full h-full object-cover"
           />
+        ) : (
+          <div className="hero-image w-full h-full object-cover bg-zinc-900" />
+        )}
           <div className="hero-gradient absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
       </div>
 
@@ -129,6 +133,7 @@ const VideoSection = ({ project }: { project: Project }) => (
         bunnyVideo={project.bunnyVideo}
         videoUrl={project.videoUrl}
         title={project.title}
+        poster={project.image}
       />
     </div>
   </section>
@@ -153,6 +158,8 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
               <img
                 src={image}
                 alt={`${title} - Imagem ${index + 1}`}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
               />
             </div>
@@ -180,12 +187,14 @@ const RelatedProjectsSection = ({ projects }: { projects: Project[] }) => (
             to={`/projeto/${project.slug}`}
             className="group cursor-pointer"
           >
-            <div className="overflow-hidden aspect-[4/3] mb-4">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
-              />
+            <div className="overflow-hidden aspect-[4/3] mb-4 bg-zinc-900">
+              {project.image && (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-500"
+                />
+              )}
             </div>
             <p className="text-xs text-muted-foreground mb-2 uppercase tracking-wider">
               {project.category}

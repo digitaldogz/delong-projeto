@@ -4,10 +4,10 @@
  */
 
 import { useEffect, useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTransitionNavigate } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,6 +66,7 @@ const AnimatedCounter = ({
 const IntroAndStats = () => {
   const introRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
+  const navigateWithTransition = useTransitionNavigate();
 
   // Intro section animation
   useEffect(() => {
@@ -187,10 +188,10 @@ const IntroAndStats = () => {
                 Fundada para inovar, a Delong Media House é uma produtora audiovisual full-service. Criamos vídeos que conectam e convertem, atuando como braço direito da sua comunicação visual.
               </p>
               
-              <Link to="/sobre" className="intro-cta inline-flex items-center gap-2 text-foreground font-bold text-sm tracking-widest uppercase group hover:text-primary transition-colors opacity-0">
+              <button onClick={() => navigateWithTransition('/sobre')} className="intro-cta inline-flex items-center gap-2 text-foreground font-bold text-sm tracking-widest uppercase group hover:text-primary transition-colors opacity-0 cursor-pointer">
                 Saiba Mais
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </Link>
+              </button>
             </div>
           </div>
         </div>

@@ -4,7 +4,6 @@
  */
 
 import { useState } from "react";
-import { AnimatePresence } from "framer-motion";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +18,7 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
+import FotosPage from "./pages/FotosPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +32,7 @@ const AppRoutes = () => {
         <Route path="/sobre" element={<AboutPage />} />
         <Route path="/projetos" element={<Projects />} />
         <Route path="/servicos" element={<ServicesPage />} />
+        <Route path="/fotos" element={<FotosPage />} />
         <Route path="/projeto/:slug" element={<ProjectDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
@@ -54,15 +55,15 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <AnimatePresence mode="wait">
+        <>
           {isLoading ? (
-            <LoadingScreen key="loading" onComplete={handleLoadingComplete} />
+            <LoadingScreen onComplete={handleLoadingComplete} />
           ) : (
-            <BrowserRouter key="app">
+            <BrowserRouter>
               <AppRoutes />
             </BrowserRouter>
           )}
-        </AnimatePresence>
+        </>
       </TooltipProvider>
     </QueryClientProvider>
   );

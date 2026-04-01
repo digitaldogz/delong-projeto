@@ -1,38 +1,30 @@
-/**
- * SelectedCases Component
- * Featured projects grid on the homepage with GSAP animations.
- */
-
 import { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { projects } from "@/data/projects";
-import { CaseLink } from "./PageTransition";
+import { CaseLink, useTransitionNavigate } from "./PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Configuração de tamanho para exibição no grid
-const sizeConfig: Record<number, 'large' | 'small'> = {
-  1: 'large',
-  2: 'large',
-  3: 'small',
-  4: 'small',
-  5: 'small',
-  6: 'small',
-};
+const FEATURED_SLUGS = [
+  "expo-irati-2024",
+  "shows-antony-e-gabriel",
+  "shows-joao-neto-e-frederico",
+  "institucional-prefeitura-irati",
+  "publicitario-lelac-ram",
+  "esporte-iratrail",
+];
 
 const SelectedCases = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const navigateWithTransition = useTransitionNavigate();
 
-  // Pega os 6 primeiros projetos do arquivo de dados
-  const displayProjects = projects.slice(0, 6);
+  // Pega os 6 projetos selecionados
+  const displayProjects = FEATURED_SLUGS.map(slug => projects.find(p => p.slug === slug)).filter(Boolean);
 
-  // Header animation apenas - cards e imagens sempre visíveis
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Header animation simples
       gsap.fromTo(
         ".cases-label",
         { opacity: 0, x: -20 },
@@ -68,83 +60,98 @@ const SelectedCases = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full bg-background py-24 border-t border-border">
-      <div className="container-premium">
+    <section ref={sectionRef} className="w-full bg-background pt-32 pb-40">
+      <div className="container-premium px-6 md:px-12 lg:px-20">
         
-        {/* Cabeçalho da Seção */}
+        {/* Cabeçalho */}
         <div className="cases-header mb-16">
-          <span className="cases-label text-xs md:text-sm text-muted-foreground font-medium tracking-widest uppercase flex items-center gap-2 mb-4">
-            <span className="w-1 h-1 bg-foreground rounded-full"></span>
+          <span className="cases-label text-xs font-medium text-foreground tracking-widest flex items-center gap-3 mb-6">
+            <span className="w-1.5 h-1.5 bg-foreground"></span>
             Our Works
           </span>
-          <h2 className="cases-title text-5xl md:text-7xl font-medium text-foreground tracking-tight">
-            Cases selecionados
+          <h2 className="cases-title text-[3.5rem] md:text-7xl lg:text-[6rem] font-medium text-foreground tracking-tighter leading-none">
+            Selected Cases
           </h2>
         </div>
 
-        {/* GRID DE PROJETOS */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-12">
+        {/* GRID DE PROJETOS Zeit Style */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-16">
           
           {displayProjects.map((project, index) => {
-            const size = sizeConfig[index + 1] || 'small';
-            
+            if (!project) return null;
+            // Dois grandes (50% cada) na primeira linha, quatro pequenos (25% cada) na segunda.
+            const isLarge = index < 2;
+            const spanClass = isLarge ? "md:col-span-2" : "md:col-span-1";
+
             return (
               <CaseLink 
                 key={project.id} 
                 to={`/projeto/${project.slug}`} 
-                className={`case-card group cursor-pointer flex flex-col gap-4 ${size === 'large' ? 'md:col-span-1 lg:col-span-2' : 'col-span-1'}`}
+                className={`group flex flex-col cursor-pointer ${spanClass}`}
               >
-                {/* Container da Imagem com Zoom no Hover */}
-                <div className="relative w-full overflow-hidden aspect-[16/9] bg-secondary">
-                  <img 
-                    src={project.image} 
-                    alt={project.title} 
-                    className="case-image w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100" 
-                  />
+                {/* Imagem ou Video (Zoom interno no hover) */}
+                <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-900">
+                  {project.image ? (
+                    <img 
+                      src={project.image} 
+                      alt={project.title} 
+                      className="w-full h-full object-cover transition-transform duration-[1.2s] ease-[0.33,1,0.68,1] group-hover:scale-[1.03]" 
+                    />
+                  ) : (
+                    <video 
+                      src={project.hoverVideoUrl || project.videoUrl} 
+                      autoPlay loop muted playsInline 
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-[1.2s] ease-[0.33,1,0.68,1] group-hover:scale-[1.03]" 
+                    />
+                  )}
+                </div>
+
+                {/* Informações Pós Imagem (Ganha BG no Hover) */}
+                <div className="flex flex-col flex-1 pt-6 px-6 pb-6 transition-colors duration-500 group-hover:bg-[#151515]">
                   
-                  {/* Overlay "View Case" */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-background/20 backdrop-blur-[2px]">
-                    <div className="bg-foreground/10 backdrop-blur-md px-6 py-3 rounded-full flex items-center gap-2 border border-foreground/20">
-                      <span className="text-xs font-bold text-foreground uppercase tracking-widest">View Case</span>
-                      <ArrowUpRight className="w-4 h-4 text-foreground" />
+                  {/* Metadados (Ano / Categoria) */}
+                  <div className="flex justify-between items-center text-[10px] md:text-xs text-foreground/50 mb-6">
+                    <span className="font-sans">{project.year}</span>
+                    <span className="capitalize">{project.category}</span>
+                  </div>
+                  
+                  {/* Título e Cliente */}
+                  <h3 className={`font-bold uppercase tracking-tight mb-2 leading-[1.2] ${isLarge ? 'text-2xl md:text-[1.7rem]' : 'text-lg md:text-xl'}`}>
+                    {project.title}
+                  </h3>
+                  <p className={`text-foreground/70 mb-16 ${isLarge ? 'text-sm' : 'text-xs'}`}>
+                    {project.client}
+                  </p>
+                  
+                  {/* Botão Animado de View Case (Ancorado no final) */}
+                  <div className="mt-auto relative h-[20px] md:h-[24px] overflow-hidden border border-transparent group-hover:border-white/10 transition-colors duration-500">
+                    
+                    {/* Posição Normal (Apenas texto discreto vazado, alinhado ao centro esquerdo) */}
+                    <div className="absolute inset-0 flex items-center text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/40 transition-transform duration-500 ease-[0.76,0,0.24,1] group-hover:-translate-y-full">
+                      VIEW CASE
                     </div>
+
+                    {/* Posição Hover (Barra Branca Sólida que entra rasgando de baixo) */}
+                    <div className="absolute inset-0 flex items-center justify-between px-3 bg-white text-black transition-transform duration-500 ease-[0.76,0,0.24,1] translate-y-full group-hover:translate-y-0">
+                      <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] pt-0.5">VIEW CASE</span>
+                      <ArrowRight className="w-2.5 h-2.5" />
+                    </div>
+
                   </div>
                 </div>
-
-                {/* Informações do Projeto */}
-                <div className="flex justify-between items-start border-t border-border pt-4">
-                   <div>
-                      <h3 className="text-xl md:text-2xl font-bold text-foreground uppercase leading-tight mb-1 group-hover:text-primary transition-colors">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground font-medium">
-                        {project.client}
-                      </p>
-                   </div>
-                   
-                   <div className="text-right">
-                     <span className="block text-xs text-muted-foreground uppercase tracking-wider mb-1">
-                       {project.category}
-                     </span>
-                     <span className="block text-xs text-muted-foreground/60 font-mono">
-                       {project.year}
-                     </span>
-                   </div>
-                </div>
               </CaseLink>
-            );
+            )
           })}
-
         </div>
         
-        {/* Botão de Ver Todos */}
-        <div className="mt-20 flex justify-center">
-          <Link 
-            to="/projetos" 
-            className="cases-view-all text-sm font-bold text-foreground uppercase tracking-widest border-b border-border pb-1 hover:text-primary hover:border-primary transition-colors"
+        {/* Botão de Ver Todos (Centralizado embaixo) */}
+        <div className="mt-32 flex justify-center">
+          <button 
+            onClick={() => navigateWithTransition('/projetos')} 
+            className="text-sm font-medium text-foreground tracking-widest hover:text-white/60 transition-colors"
           >
-            View All Projects
-          </Link>
+            [ All Projects ]
+          </button>
         </div>
 
       </div>

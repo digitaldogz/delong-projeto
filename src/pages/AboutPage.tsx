@@ -201,7 +201,7 @@ const AboutPage = () => {
             <div className="container-premium w-full flex flex-col md:flex-row justify-between gap-8">
               {/* Left - Description */}
               <p className="hero-description text-sm text-foreground/80 leading-relaxed max-w-md opacity-0">
-                Fundada para inovar, a Delong se tornou uma das principais agências de comunicação criativa, organização de eventos e consultoria de marca.
+                Fundada pelo fotógrafo Cesar Delong, a Delong Media House é uma produtora audiovisual de atuação nacional, dedicada a registrar e contar histórias por meio de imagens marcantes.
               </p>
 
               {/* Right - Subtitle */}
@@ -234,13 +234,13 @@ const AboutPage = () => {
               <h2 className="text-4xl md:text-6xl font-medium uppercase tracking-tight leading-[1.1] mb-8">
                 Uma jornada <br/>
                 <span className="text-muted-foreground">de criatividade</span> <br/>
-                e inovação
+                e identidade visual
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
-                Na Delong Media House, trilhamos nosso próprio caminho. Onde a criatividade incorpora coragem e cada ideia ousada se torna um marco de sucesso.
+                Cesar Delong atua desde 2014 com ampla trajetória na cobertura dos principais eventos esportivos no Brasil e exterior, hoje liderando equipes de produção audiovisual na captação de filmes institucionais e publicitários.
               </p>
               <p className="text-muted-foreground text-lg leading-relaxed max-w-md mt-6">
-                Esta é a nossa jornada: paixão e dedicação para desbloquear novos potenciais e levar marcas ao topo.
+                Reconhecido em concursos fotográficos nacionais e internacionais, destaca-se pelo talento e contribuição ao desenvolvimento de produções de grande impacto.
               </p>
             </div>
 
@@ -269,7 +269,7 @@ const AboutPage = () => {
             <div className="px-8 md:px-12 py-16 lg:py-24 flex flex-col justify-center bg-secondary/20">
               <span className="text-xs font-mono text-muted-foreground mb-6">(01)</span>
               <p className="vision-text text-xl md:text-2xl font-light leading-snug text-muted-foreground max-w-xl opacity-0">
-                "Tornar-se a agência criativa líder em comunicações, eventos e branding. Focada em desbloquear o potencial do cliente, impulsionada por uma equipe criativa com ideias inovadoras e execução eficaz."
+                "Consolidar a atuação da produtora em filmes institucionais, vídeos publicitários e eventos, elevando o padrão audiovisual, sempre com foco em qualidade, criatividade e forte identidade visual."
               </p>
             </div>
           </div>
@@ -284,7 +284,7 @@ const AboutPage = () => {
             <div className="px-8 md:px-12 py-16 lg:py-24 flex flex-col justify-center order-2 lg:order-1 bg-secondary/20 border-b lg:border-b-0 lg:border-r border-border/30">
               <span className="text-xs font-mono text-muted-foreground mb-6">(02)</span>
               <p className="mission-text text-xl md:text-2xl font-light leading-snug text-muted-foreground max-w-xl opacity-0">
-                "Criar distinção na jornada de sucesso de cada marca, transformando-a na chave para a liderança e no poder de ir além da competição comum."
+                "Atuar nos principais eventos da região e mercado nacional liderando equipes técnicas dedicadas a registrar e contar as mais diversas histórias por meio de imagens marcantes."
               </p>
             </div>
 

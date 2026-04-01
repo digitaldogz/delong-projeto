@@ -18,6 +18,7 @@ const MENU_ITEMS = [
   { number: "01", label: "Sobre", path: "/sobre" },
   { number: "02", label: "Projetos", path: "/projetos" },
   { number: "03", label: "Serviços", path: "/servicos" },
+  { number: "04", label: "Fotos", path: "/fotos" },
 ] as const;
 
 // Burger Icon Component

@@ -1,9 +1,5 @@
-/**
- * Universal Video Player Component
- * Supports YouTube, Bunny Stream, and direct video URLs.
- */
-
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { Play, Pause, Volume2, VolumeX, Maximize } from 'lucide-react';
 
 interface BunnyVideo {
   libraryId: string;
@@ -15,22 +11,37 @@ interface VideoPlayerProps {
   bunnyVideo?: BunnyVideo;
   videoUrl?: string;
   title?: string;
+  poster?: string;
 }
+
+const formatTime = (timeInSeconds: number) => {
+  const result = new Date(timeInSeconds * 1000).toISOString().substr(11, 8);
+  return result.replace(/^00:/, ''); // remove hours if zero
+};
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
   youtubeId,
   bunnyVideo,
   videoUrl,
   title = "Video",
+  poster
 }) => {
-  // Priority: Bunny Stream > YouTube > Direct URL
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
-  // Bunny Stream
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [showControls, setShowControls] = useState(false);
+  const [hasStarted, setHasStarted] = useState(false);
+
+  // Focus on bunny stream
   if (bunnyVideo) {
     const bunnyUrl = `https://iframe.mediadelivery.net/embed/${bunnyVideo.libraryId}/${bunnyVideo.videoId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`;
-    
     return (
-      <div className="relative w-full aspect-video bg-secondary overflow-hidden shadow-2xl">
+      <div className="relative w-full aspect-video bg-black overflow-hidden shadow-2xl">
         <iframe
           src={bunnyUrl}
           title={title}
@@ -43,10 +54,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     );
   }
 
-  // YouTube
+  // Focus on YouTube
   if (youtubeId) {
     return (
-      <div className="relative w-full aspect-video bg-secondary overflow-hidden shadow-2xl">
+      <div className="relative w-full aspect-video bg-black overflow-hidden shadow-2xl">
         <iframe
           src={`https://www.youtube.com/embed/${youtubeId}?rel=0&modestbranding=1`}
           title={title}
@@ -58,23 +69,148 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     );
   }
 
-  // Direct Video URL (MP4, etc.)
+  // Focus on Direct Video URL with Custom Player
   if (videoUrl) {
+    const togglePlay = () => {
+      if (videoRef.current) {
+        if (isPlaying) {
+          videoRef.current.pause();
+        } else {
+          videoRef.current.play();
+          setHasStarted(true);
+        }
+        setIsPlaying(!isPlaying);
+      }
+    };
+
+    const toggleMute = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (videoRef.current) {
+        videoRef.current.muted = !isMuted;
+        setIsMuted(!isMuted);
+      }
+    };
+
+    const handleTimeUpdate = () => {
+      if (videoRef.current) {
+        const current = videoRef.current.currentTime;
+        const total = videoRef.current.duration;
+        setCurrentTime(current);
+        setProgress((current / total) * 100);
+      }
+    };
+
+    const handleLoadedMetadata = () => {
+      if (videoRef.current) {
+        setDuration(videoRef.current.duration);
+      }
+    };
+
+    const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
+      const seekTime = (parseFloat(e.target.value) / 100) * duration;
+      if (videoRef.current) {
+        videoRef.current.currentTime = seekTime;
+        setProgress(parseFloat(e.target.value));
+      }
+    };
+
+    const toggleFullscreen = (e: React.MouseEvent) => {
+      e.stopPropagation();
+      if (!document.fullscreenElement) {
+        containerRef.current?.requestFullscreen().catch(err => {
+          console.error(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    };
+
     return (
-      <div className="relative w-full aspect-video bg-secondary overflow-hidden shadow-2xl">
+      <div 
+        ref={containerRef}
+        className="relative w-full aspect-video bg-black overflow-hidden shadow-2xl group cursor-pointer"
+        onMouseEnter={() => setShowControls(true)}
+        onMouseLeave={() => isPlaying && setShowControls(false)}
+        onClick={togglePlay}
+      >
         <video
-          controls
-          preload="metadata"
+          ref={videoRef}
+          src={videoUrl}
+          poster={poster}
+          preload="none"
           className="absolute inset-0 w-full h-full object-contain"
+          onTimeUpdate={handleTimeUpdate}
+          onLoadedMetadata={handleLoadedMetadata}
+          onEnded={() => setIsPlaying(false)}
+          playsInline
+        />
+
+        {/* Big Play Button Overlay (shown before starting) */}
+        {!hasStarted && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-500">
+            <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 hover:scale-105 hover:bg-white/20 transition-all duration-300">
+              <Play className="w-8 h-8 md:w-12 md:h-12 text-white ml-2" fill="white" />
+            </div>
+          </div>
+        )}
+
+        {/* Custom Controls */}
+        <div 
+          className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 pb-4 pt-16 px-6 transition-opacity duration-300 ${
+            showControls && hasStarted ? 'opacity-100' : 'opacity-0'
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          <source src={videoUrl} type="video/mp4" />
-          Seu navegador não suporta o elemento de vídeo.
-        </video>
+          {/* Progress Bar */}
+          <div className="w-full flex items-center gap-3 mb-4">
+            <span className="text-white text-xs font-medium w-12">{formatTime(currentTime)}</span>
+            <input
+              type="range"
+              min="0"
+              max="100"
+              value={progress}
+              onChange={handleSeek}
+              className="w-full h-1.5 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full cursor-pointer hover:[&::-webkit-slider-thumb]:scale-150 transition-all"
+              style={{
+                background: `linear-gradient(to right, white ${progress}%, rgba(255,255,255,0.3) ${progress}%)`
+              }}
+            />
+            <span className="text-white/60 text-xs font-medium w-12">{formatTime(duration)}</span>
+          </div>
+
+          {/* Bottom Bar */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-6">
+              <button 
+                onClick={togglePlay}
+                className="text-white hover:text-primary transition-colors outline-none"
+              >
+                {isPlaying ? <Pause className="w-6 h-6" fill="currentColor" /> : <Play className="w-6 h-6" fill="currentColor" />}
+              </button>
+              
+              <button 
+                onClick={toggleMute}
+                className="text-white hover:text-primary transition-colors outline-none"
+              >
+                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+              </button>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <h4 className="text-white/80 text-sm font-medium uppercase tracking-wider hidden md:block">{title}</h4>
+              <button 
+                onClick={toggleFullscreen}
+                className="text-white hover:text-primary transition-colors outline-none ml-4"
+              >
+                <Maximize className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
 
-  // No video source provided
   return null;
 };
 

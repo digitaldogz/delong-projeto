@@ -4,12 +4,14 @@
  */
 
 import { useRef, useEffect } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import gsap from "gsap";
+import { useTransitionNavigate } from "@/components/PageTransition";
 
 const NotFound = () => {
   const location = useLocation();
   const containerRef = useRef<HTMLDivElement>(null);
+  const navigateWithTransition = useTransitionNavigate();
 
   useEffect(() => {
     console.error("404 Error: User attempted to access non-existent route:", location.pathname);
@@ -53,12 +55,12 @@ const NotFound = () => {
         <p className="error-text mb-8 text-xl text-muted-foreground opacity-0">
           Oops! Página não encontrada
         </p>
-        <Link 
-          to="/" 
-          className="error-link inline-flex items-center justify-center px-8 py-4 bg-foreground text-background text-xs font-bold uppercase tracking-widest hover:bg-foreground/90 transition-colors opacity-0"
+        <button 
+          onClick={() => navigateWithTransition('/')}
+          className="error-link inline-flex items-center justify-center px-8 py-4 bg-foreground text-background text-xs font-bold uppercase tracking-widest hover:bg-foreground/90 transition-colors opacity-0 cursor-pointer"
         >
           Voltar ao Início
-        </Link>
+        </button>
       </div>
     </div>
   );

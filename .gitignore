@@ -22,3 +22,18 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# macOS resource forks
+._*
+
+# Videos (hosted on Bunny.net CDN)
+*.mp4
+*.mov
+*.avi
+*.mkv
+
+# Upload staging
+CASES_TO_UPLOAD/
+
+# Bun
+bun.lockb

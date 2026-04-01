@@ -6,11 +6,13 @@
 
 import { useRef, useEffect, useState } from "react";
 import { useMotionValue, useTransform, motion } from "framer-motion";
-import { BGPattern } from "./ui/bg-pattern";
+
 import { useHeroAnimation } from "@/hooks/use-gsap-animations";
+import { useTransitionNavigate } from "@/components/PageTransition";
 
 const HeroSection = () => {
   const heroRef = useHeroAnimation();
+  const navigateWithTransition = useTransitionNavigate();
   const scrollY = useMotionValue(0);
   const [containerHeight, setContainerHeight] = useState(0);
 
@@ -48,29 +50,31 @@ const HeroSection = () => {
     >
       {/* Video Background with reveal animation */}
       <div className="absolute inset-0 z-0 hero-media">
-        <div className="absolute inset-0 bg-background/40 z-10" />
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="w-full h-full object-cover opacity-80"
+          className="w-full h-full object-cover opacity-70"
         >
           <source
-            src="https://assets.mixkit.co/videos/preview/mixkit-abstract-video-of-a-man-with-heads-like-statues-33516-large.mp4"
+            src="/DOCUMENTARY_EXPO.mp4"
             type="video/mp4"
           />
         </video>
       </div>
 
-      {/* Background Pattern */}
-      <BGPattern
-        variant="dots"
-        mask="fade-edges"
-        size={32}
-        fill="rgba(255,255,255,0.15)"
-        className="z-[5]"
-      />
+      {/* Gradient overlay - top (protects navigation) */}
+      <div className="absolute inset-x-0 top-0 h-[30%] z-[5] pointer-events-none bg-gradient-to-b from-black/60 to-transparent" />
+
+      {/* Gradient overlay - bottom (protects title and footer links) */}
+      <div className="absolute inset-x-0 bottom-0 h-[50%] z-[5] pointer-events-none bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+
+      {/* Gradient overlay - left side */}
+      <div className="absolute inset-y-0 left-0 w-[25%] z-[5] pointer-events-none bg-gradient-to-r from-black/50 to-transparent" />
+
+      {/* Gradient overlay - right side */}
+      <div className="absolute inset-y-0 right-0 w-[25%] z-[5] pointer-events-none bg-gradient-to-l from-black/50 to-transparent" />
 
       {/* Main Content with parallax */}
       <motion.div
@@ -91,8 +95,11 @@ const HeroSection = () => {
               </h2>
             </div>
 
-            {/* Floating Widget with stagger */}
-            <div className="hero-widget absolute right-0 bottom-0 hidden md:flex items-center gap-3 bg-background/80 backdrop-blur-md p-3 border border-border/20 max-w-xs">
+            {/* Floating Widget with stagger - clickable link to case */}
+            <button
+              onClick={() => navigateWithTransition('/projeto/expo-irati-2024')}
+              className="hero-widget absolute right-0 bottom-0 hidden md:flex items-center gap-3 bg-background/80 backdrop-blur-md p-3 border border-border/20 max-w-xs cursor-pointer hover:bg-background/95 hover:scale-[1.02] transition-all duration-300"
+            >
               <div className="w-14 h-14 bg-primary flex items-center justify-center shrink-0">
                 <span className="text-[9px] text-center leading-tight font-bold text-primary-foreground">
                   NOVO
@@ -100,15 +107,15 @@ const HeroSection = () => {
                   CASE
                 </span>
               </div>
-              <div className="flex flex-col pr-3">
+              <div className="flex flex-col pr-3 text-left">
                 <span className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1">
                   Destaque Recente
                 </span>
                 <span className="text-xs font-bold uppercase leading-tight">
-                  Campanha "Futuro Visível"
+                  Documentário Expo Irati
                 </span>
               </div>
-            </div>
+            </button>
           </div>
         </div>
       </motion.div>
@@ -130,12 +137,12 @@ const HeroSection = () => {
             </a>
           </div>
           <div className="pointer-events-auto hero-stagger">
-            <a
-              href="/projetos"
-              className="text-[10px] font-bold tracking-widest uppercase opacity-80 hover:opacity-100 transition-opacity border border-foreground/30 px-4 py-2"
+            <button
+              onClick={() => navigateWithTransition('/projetos')}
+              className="text-[10px] font-bold tracking-widest uppercase opacity-80 hover:opacity-100 transition-opacity border border-foreground/30 px-4 py-2 cursor-pointer"
             >
               ALL WORKS
-            </a>
+            </button>
           </div>
         </div>
       </motion.div>

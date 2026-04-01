@@ -4,14 +4,15 @@
  */
 
 import { useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTransitionNavigate } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const ServicesStatement = () => {
   const sectionRef = useRef<HTMLElement>(null);
+  const navigateWithTransition = useTransitionNavigate();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -70,12 +71,12 @@ const ServicesStatement = () => {
           </h2>
 
           {/* Botão Estilo "Outline" */}
-          <Link 
-            to="/servicos" 
-            className="statement-cta inline-flex items-center justify-center px-8 py-4 font-mono text-xs font-bold text-foreground tracking-[0.2em] uppercase border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300 opacity-0"
+          <button 
+            onClick={() => navigateWithTransition('/servicos')} 
+            className="statement-cta inline-flex items-center justify-center px-8 py-4 font-mono text-xs font-bold text-foreground tracking-[0.2em] uppercase border border-border hover:bg-foreground hover:text-background hover:border-foreground transition-all duration-300 opacity-0 cursor-pointer"
           >
             [ Todos os Serviços ]
-          </Link>
+          </button>
         </div>
 
       </div>

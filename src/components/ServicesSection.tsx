@@ -4,43 +4,50 @@
  */
 
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useTransitionNavigate } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
     id: "01",
-    title: "Eventos",
-    description: "Concepção e produção técnica de festivais, lançamentos de produtos e convenções corporativas de alto impacto.",
-    image: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop"
+    title: "Cobertura de Eventos",
+    description: "Registramos eventos esportivos, corporativos e shows, transformando experiências em conteúdos dinâmicos e de alto impacto.",
+    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop"
   },
   {
     id: "02",
-    title: "Marketing Integrado",
-    description: "Estratégias 360º que fundem o físico e o digital para construir narrativas de marca consistentes e escaláveis.",
-    image: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop"
+    title: "Filmes Institucionais",
+    description: "Produções completas focadas em contar a história da sua marca, reforçando autoridade e posicionamento estratégico no mercado.",
+    image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071&auto=format&fit=crop"
   },
   {
     id: "03",
-    title: "Design Criativo",
-    description: "Direção de arte, branding e motion graphics. Transformamos conceitos abstratos em identidades visuais icônicas.",
-    image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?q=80&w=2000&auto=format&fit=crop"
+    title: "Vídeos Publicitários",
+    description: "Comerciais e campanhas com textura cinematográfica, direção de arte apurada e forte apelo visual para atrair e converter clientes.",
+    image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2000&auto=format&fit=crop"
   },
   {
     id: "04",
-    title: "Produção Audiovisual",
-    description: "Filmes publicitários, documentários e conteúdo social com estética cinematográfica e storytelling poderoso.",
-    image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2000&auto=format&fit=crop"
+    title: "Fotografia Profissional",
+    description: "Ensaios fotográficos e cobertura premium em altíssima qualidade para campanhas, eventos e marcas que exigem excelência.",
+    image: "https://images.unsplash.com/photo-1554046920-90cca97ec3a2?q=80&w=2072&auto=format&fit=crop"
+  },
+  {
+    id: "05",
+    title: "Produção de Sites",
+    description: "Desenvolvimento de sites de alta performance com design moderno focado em usabilidade, performance e resultado comercial.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
   }
 ];
 
 const ServicesSection = () => {
   const [activeId, setActiveId] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
+  const navigateWithTransition = useTransitionNavigate();
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -147,10 +154,10 @@ const ServicesSection = () => {
 
             {/* BOTÃO FLUTUANTE NA IMAGEM */}
             <div className="absolute bottom-8 left-8 z-20">
-               <Link to="/servicos" className="flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] md:text-xs font-bold text-white uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 group">
+               <button onClick={() => navigateWithTransition('/servicos')} className="flex items-center gap-3 px-6 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-full text-[10px] md:text-xs font-bold text-white uppercase tracking-widest hover:bg-white hover:text-black hover:border-white transition-all duration-300 group cursor-pointer">
                  Explorar Serviços 
                  <span className="group-hover:translate-x-1 transition-transform">→</span>
-               </Link>
+               </button>
             </div>
           </div>
         </div>
