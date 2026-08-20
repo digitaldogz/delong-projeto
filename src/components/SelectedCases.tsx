@@ -1,8 +1,8 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { projects } from "@/data/projects";
+import { getProjects, Project } from "@/data/projects";
 import { CaseLink, useTransitionNavigate } from "./PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,9 +19,19 @@ const FEATURED_SLUGS = [
 const SelectedCases = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const navigateWithTransition = useTransitionNavigate();
+  const [displayProjects, setDisplayProjects] = useState<Project[]>([]);
 
-  // Pega os 6 projetos selecionados
-  const displayProjects = FEATURED_SLUGS.map(slug => projects.find(p => p.slug === slug)).filter(Boolean);
+  // Busca projetos do Supabase
+  useEffect(() => {
+    const fetchProjects = async () => {
+      const allProjects = await getProjects();
+      const featured = FEATURED_SLUGS
+        .map(slug => allProjects.find(p => p.slug === slug))
+        .filter(Boolean) as Project[];
+      setDisplayProjects(featured);
+    };
+    fetchProjects();
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {

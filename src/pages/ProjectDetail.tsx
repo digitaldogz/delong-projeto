@@ -1,9 +1,10 @@
 /**
  * Project Detail Page
  * Full case study with GSAP entrance animations.
+ * Data loaded from Supabase with static fallback.
  */
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { useParams, Navigate } from "react-router-dom";
 import { CaseLink } from "@/components/PageTransition";
 import gsap from "gsap";
@@ -21,7 +22,6 @@ gsap.registerPlugin(ScrollTrigger);
 const HeroBanner = ({ project }: { project: Project }) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Apenas metadata com fade leve - título e imagem fixos
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".hero-meta span", {
@@ -84,7 +84,7 @@ const InfoItem = ({ label, value }: { label: string; value: string }) => (
 );
 
 /* ─────────────────────────────────────────────────────────────
-   Project Info Section - Sem animações de scroll, conteúdo sempre visível
+   Project Info Section
 ───────────────────────────────────────────────────────────── */
 const ProjectInfoSection = ({ project }: { project: Project }) => (
   <section className="py-[100px] md:py-[120px]">
@@ -134,13 +134,14 @@ const VideoSection = ({ project }: { project: Project }) => (
         videoUrl={project.videoUrl}
         title={project.title}
         poster={project.image}
+        videoOrientation={project.videoOrientation}
       />
     </div>
   </section>
 );
 
 /* ─────────────────────────────────────────────────────────────
-   Gallery Section - Sem animações de scroll, imagens sempre visíveis
+   Gallery Section
 ───────────────────────────────────────────────────────────── */
 const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }) => (
   <section className="pb-[120px]">
@@ -214,8 +215,36 @@ const RelatedProjectsSection = ({ projects }: { projects: Project[] }) => (
 ───────────────────────────────────────────────────────────── */
 const ProjectDetail = () => {
   const { slug } = useParams<{ slug: string }>();
-  const project = slug ? getProjectBySlug(slug) : undefined;
-  const relatedProjects = slug ? getRelatedProjects(slug, 3) : [];
+  
+  const [project, setProject] = useState<Project | null>(null);
+  const [relatedProjects, setRelatedProjects] = useState<Project[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (slug) {
+        const [projectData, relatedData] = await Promise.all([
+          getProjectBySlug(slug),
+          getRelatedProjects(slug, 3),
+        ]);
+        setProject(projectData);
+        setRelatedProjects(relatedData);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, [slug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background text-foreground flex flex-col">
+        <SiteHeader />
+        <div className="flex-1 flex items-center justify-center">
+          <span className="uppercase text-sm tracking-widest text-muted-foreground/50">Carregando...</span>
+        </div>
+      </div>
+    );
+  }
 
   if (!project) {
     return <Navigate to="/projetos" replace />;

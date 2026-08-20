@@ -12,6 +12,7 @@ interface VideoPlayerProps {
   videoUrl?: string;
   title?: string;
   poster?: string;
+  videoOrientation?: string;
 }
 
 const formatTime = (timeInSeconds: number) => {
@@ -24,7 +25,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   bunnyVideo,
   videoUrl,
   title = "Video",
-  poster
+  poster,
+  videoOrientation = 'horizontal'
 }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -37,11 +39,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   const [showControls, setShowControls] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
-  // Focus on bunny stream
+  // Focus on bunny stream (explicit bunnyVideo prop)
   if (bunnyVideo) {
     const bunnyUrl = `https://iframe.mediadelivery.net/embed/${bunnyVideo.libraryId}/${bunnyVideo.videoId}?autoplay=false&loop=false&muted=false&preload=true&responsive=true`;
+    const isVertical = videoOrientation === 'vertical';
     return (
-      <div className="relative w-full aspect-video bg-black overflow-hidden shadow-2xl">
+      <div className={`relative w-full ${isVertical ? 'aspect-[9/16] max-w-[400px] mx-auto' : 'aspect-video'} bg-black overflow-hidden shadow-2xl`}>
         <iframe
           src={bunnyUrl}
           title={title}
@@ -68,6 +71,36 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       </div>
     );
   }
+
+  // Auto-detect Bunny Stream URLs no campo video_url
+  // Formatos: iframe.mediadelivery.net/play/... OU iframe.mediadelivery.net/embed/...
+  if (videoUrl && videoUrl.includes('mediadelivery.net')) {
+    const isVertical = videoOrientation === 'vertical';
+    // Converte /play/ para /embed/ se necessário e adiciona params
+    let embedUrl = videoUrl;
+    if (videoUrl.includes('/play/')) {
+      embedUrl = videoUrl.replace('/play/', '/embed/');
+    }
+    // Adiciona parâmetros se ainda não tem
+    if (!embedUrl.includes('?')) {
+      embedUrl += '?autoplay=false&loop=false&muted=false&preload=true&responsive=true';
+    }
+    return (
+      <div className={`relative w-full ${isVertical ? 'aspect-[9/16] max-w-[400px] mx-auto' : 'aspect-video'} bg-black overflow-hidden shadow-2xl`}>
+        <iframe
+          src={embedUrl}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+          allowFullScreen
+          className="absolute inset-0 w-full h-full border-0"
+        />
+      </div>
+    );
+  }
+
+  // Auto-detect Bunny CDN direct file URLs (b-cdn.net)
+  // Esses funcionam com <video> tag normalmente
 
   // Focus on Direct Video URL with Custom Player
   if (videoUrl) {
@@ -125,10 +158,12 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       }
     };
 
+    const isVertical = videoOrientation === 'vertical';
+
     return (
       <div 
         ref={containerRef}
-        className="relative w-full aspect-video bg-black overflow-hidden shadow-2xl group cursor-pointer"
+        className={`relative w-full ${isVertical ? 'aspect-[9/16] max-w-[400px] mx-auto' : 'aspect-video'} bg-black overflow-hidden shadow-2xl group cursor-pointer`}
         onMouseEnter={() => setShowControls(true)}
         onMouseLeave={() => isPlaying && setShowControls(false)}
         onClick={togglePlay}

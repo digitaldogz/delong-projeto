@@ -45,39 +45,15 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         0
       );
 
-      /* ── 2. Logo fade‑in + scale ─────────────────────── */
+      /* ── 2. Logo and counter fade‑in ─────────────────────── */
       tl.fromTo(
-        ".intro-logo",
-        { autoAlpha: 0, scale: 0.85 },
-        { autoAlpha: 1, scale: 1, duration: 1.2, ease: "expo.out" },
+        ".intro-content",
+        { autoAlpha: 0, scale: 0.95, y: 15 },
+        { autoAlpha: 1, scale: 1, y: 0, duration: 1.2, ease: "expo.out" },
         0.2
       );
 
-      /* ── 3. Horizontal line wipe ─────────────────────── */
-      tl.fromTo(
-        ".intro-line",
-        { scaleX: 0 },
-        { scaleX: 1, duration: 1.6, ease: "power3.inOut" },
-        0.3
-      );
-
-      /* ── 4. Tagline reveal ───────────────────────────── */
-      tl.fromTo(
-        ".intro-tagline",
-        { autoAlpha: 0, y: 12 },
-        { autoAlpha: 1, y: 0, duration: 0.8, ease: "power3.out" },
-        0.9
-      );
-
-      /* ── 5. Counter text reveal ──────────────────────── */
-      tl.fromTo(
-        ".intro-counter",
-        { autoAlpha: 0, y: 30 },
-        { autoAlpha: 1, y: 0, duration: 0.6, ease: "power3.out" },
-        0.15
-      );
-
-      /* ── 6. Hold briefly before exit ─────────────────── */
+      /* ── 3. Hold briefly before exit ─────────────────── */
       tl.to({}, { duration: 0.4 });
     }, containerRef);
 
@@ -87,36 +63,23 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center"
+      className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center p-6"
     >
-      {/* ── Central Logo ──────────────────────────────── */}
-      <div className="intro-logo flex flex-col items-center gap-6 opacity-0">
+      <div className="intro-content flex flex-col items-center gap-8 opacity-0">
+        {/* ── Logo ──────────────────────────────── */}
         <img
           src={logo}
           alt="Delong Media House"
-          className="h-10 md:h-16 w-auto brightness-0 invert"
+          className="h-14 md:h-20 w-auto"
         />
-      </div>
 
-      {/* ── Horizontal Line ───────────────────────────── */}
-      <div
-        className="intro-line w-[200px] md:w-[300px] h-px bg-white/30 mt-6 origin-center"
-        style={{ transform: "scaleX(0)" }}
-      />
-
-      {/* ── Tagline ───────────────────────────────────── */}
-      <p className="intro-tagline text-[10px] md:text-xs uppercase tracking-[0.35em] text-white/40 mt-5 opacity-0">
-        Premium Audiovisual
-      </p>
-
-      {/* ── Counter ───────────────────────────────────── */}
-      <div className="intro-counter absolute bottom-6 right-6 md:bottom-12 md:right-12 opacity-0">
+        {/* ── Counter ───────────────────────────────────── */}
         <span
           ref={counterRef}
-          className="text-5xl md:text-8xl font-bold tracking-tighter text-white/10"
+          className="text-4xl md:text-5xl font-light tracking-tighter text-foreground"
         >
           {counter}
-          <span className="text-xl md:text-4xl font-light ml-1">%</span>
+          <span className="text-2xl md:text-3xl ml-1">%</span>
         </span>
       </div>
     </div>

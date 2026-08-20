@@ -1,3 +1,5 @@
+import { supabase } from '@/lib/supabase';
+
 export interface PhotoCollection {
   id: number;
   slug: string;
@@ -11,7 +13,8 @@ export interface PhotoCollection {
   gallery: string[];
 }
 
-export const photoCollections: PhotoCollection[] = [
+// Dados estáticos como fallback
+const staticPhotoCollections: PhotoCollection[] = [
   {
     id: 1,
     slug: "inca-divide-peru-2019",
@@ -181,3 +184,47 @@ export const photoCollections: PhotoCollection[] = [
     gallery: [],
   }
 ];
+
+// Exporta para uso na listagem (estático como fallback)
+export const photoCollections = staticPhotoCollections;
+
+/**
+ * Busca uma coleção de fotos por slug.
+ * Tenta primeiro no Supabase; se falhar, busca nos dados estáticos.
+ */
+export const getPhotoBySlug = async (slug: string): Promise<PhotoCollection | null> => {
+  try {
+    const { data, error } = await supabase
+      .from('photos')
+      .select('*')
+      .eq('slug', slug)
+      .single();
+
+    if (!error && data) {
+      return {
+        id: data.id,
+        slug: data.slug,
+        year: data.year || '',
+        category: data.category || 'Fotos',
+        title: data.title,
+        client: data.client || '',
+        service: data.service || '',
+        image: data.image || '',
+        description: data.description || '',
+        gallery: data.gallery || [],
+      };
+    }
+  } catch (e) {
+    console.warn('Supabase indisponível para photos, usando dados estáticos.');
+  }
+
+  // Fallback para dados estáticos
+  return staticPhotoCollections.find((p) => p.slug === slug) || null;
+};
+
+/**
+ * Busca coleções de fotos relacionadas (excluindo a atual).
+ */
+export const getRelatedPhotos = (currentSlug: string, limit: number = 3): PhotoCollection[] => {
+  return staticPhotoCollections.filter((p) => p.slug !== currentSlug).slice(0, limit);
+};

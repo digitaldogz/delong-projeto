@@ -180,8 +180,8 @@ const AboutPage = () => {
         {/* Background Image */}
         <div className="absolute inset-0">
           <img 
-            src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=2070&auto=format&fit=crop" 
-            alt="Delong Crew" 
+            src="/projects/galleries/cesar/502451891.jpg" 
+            alt="Cesar Delong" 
             className="w-full h-full object-cover opacity-60 grayscale"
           />
           <div className="absolute inset-0 bg-background/40" />
@@ -246,8 +246,8 @@ const AboutPage = () => {
 
             <div className="manifesto-image w-full aspect-square bg-secondary overflow-hidden opacity-0">
               <img 
-                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" 
-                alt="Team working" 
+                src="/projects/galleries/cesar/305A4844.jpg" 
+                alt="Cesar Delong em ação" 
                 className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
               />
             </div>
@@ -304,16 +304,16 @@ const AboutPage = () => {
         <div className="mb-4 overflow-hidden">
           <div className="flex gap-4 animate-marquee-left" style={{ animationDuration: '40s', width: 'max-content' }}>
             {[
-              "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?q=80&w=600&auto=format&fit=crop",
+              "/projects/galleries/expo 24/24EXPO00455.jpg",
+              "/projects/galleries/iratrail/DELONG00021.jpg",
+              "/projects/galleries/BRUNO E MARRONE/153imb00171.jpg",
+              "/projects/galleries/franco run/MIR_3286.jpg",
+              "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00476.jpg",
+              "/projects/galleries/expo 24/DJI_20240825170948_0471_D.jpg",
+              "/projects/galleries/iratrail/DELONG00025.jpg",
+              "/projects/galleries/BRUNO E MARRONE/153imb00224.jpg",
+              "/projects/galleries/franco run/RBK_6854.jpg",
+              "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00723.jpg",
             ].map((src, i) => (
               <div key={i} className="shrink-0 w-[300px] md:w-[400px] h-[200px] md:h-[280px] overflow-hidden">
                 <img 
@@ -330,16 +330,16 @@ const AboutPage = () => {
         <div className="overflow-hidden">
           <div className="flex gap-4 animate-marquee-right" style={{ animationDuration: '40s', width: 'max-content' }}>
             {[
-              "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1560439514-4e9645039924?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1515169067868-5387ec356754?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1560439514-4e9645039924?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1531482615713-2afd69097998?q=80&w=600&auto=format&fit=crop",
-              "https://images.unsplash.com/photo-1523580494863-6f3031224c94?q=80&w=600&auto=format&fit=crop",
+              "/projects/galleries/iratrail/DJI_0608.jpg",
+              "/projects/galleries/BRUNO E MARRONE/153imb00283.jpg",
+              "/projects/galleries/expo 24/24EXPO00728.jpg",
+              "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00685.jpg",
+              "/projects/galleries/franco run/RBK_8068.jpg",
+              "/projects/galleries/iratrail/DJI_0889.jpg",
+              "/projects/galleries/BRUNO E MARRONE/153imb00564.jpg",
+              "/projects/galleries/expo 24/24EXPO01061.jpg",
+              "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00915.jpg",
+              "/projects/galleries/franco run/DJI_20250323080544_0348_D.jpg",
             ].map((src, i) => (
               <div key={i} className="shrink-0 w-[300px] md:w-[400px] h-[200px] md:h-[280px] overflow-hidden">
                 <img 

@@ -19,6 +19,7 @@ import ProjectDetail from "./pages/ProjectDetail";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
 import FotosPage from "./pages/FotosPage";
+import PhotoDetail from "./pages/PhotoDetail";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const AppRoutes = () => {
         <Route path="/servicos" element={<ServicesPage />} />
         <Route path="/fotos" element={<FotosPage />} />
         <Route path="/projeto/:slug" element={<ProjectDetail />} />
+        <Route path="/foto/:slug" element={<PhotoDetail />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </TransitionProvider>

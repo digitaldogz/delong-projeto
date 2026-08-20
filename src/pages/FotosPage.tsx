@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import { photoCollections } from "@/data/photos";
-// import { CaseLink } from "@/components/PageTransition";
+import { CaseLink } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,14 +53,15 @@ const FotosPage = () => {
         </div>
       </section>
 
-      {/* Projects Grid */}
+      {/* Photos Grid */}
       <section ref={gridRef} className="pb-32">
         <div className="container-premium">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
             {photoCollections.map((photo) => (
               <div key={photo.id} className="project-card">
-                <div
-                  className="group cursor-pointer flex flex-col gap-4 block"
+                <CaseLink
+                  to={`/foto/${photo.slug}`}
+                  className="group cursor-pointer flex flex-col gap-4"
                 >
                   {/* Image */}
                   <div className="w-full overflow-hidden bg-muted aspect-video relative flex items-center justify-center">
@@ -98,7 +99,7 @@ const FotosPage = () => {
                       Explorar Galeria
                     </span>
                   </div>
-                </div>
+                </CaseLink>
               </div>
             ))}
           </div>
