@@ -168,9 +168,7 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
           return (
             <div
               key={index}
-              className={`overflow-hidden bg-muted relative ${
-                isWide ? "md:col-span-2 aspect-[16/9]" : "aspect-[9/16] md:aspect-[4/3]"
-              }`}
+              className={`overflow-hidden bg-muted relative ${isWide ? "md:col-span-2" : ""}`}
             >
               {isDirectVideo ? (
                 <video
@@ -179,7 +177,7 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
                   loop
                   muted
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  className="w-full h-auto block object-cover hover:scale-105 transition-transform duration-700"
                 />
               ) : isIframeVideo ? (
                 <div className="absolute inset-0 w-full h-full pointer-events-none">
@@ -196,7 +194,7 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
                   alt={`${title} - Mídia ${index + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  className="w-full h-auto block object-cover hover:scale-105 transition-transform duration-700"
                 />
               )}
             </div>
