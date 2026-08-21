@@ -54,6 +54,7 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-0 hero-media">
         <video
           key={config.hero_video_url}
+          poster={config.hero_video_url?.includes('.b-cdn.net') ? config.hero_video_url.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg') : ''}
           autoPlay
           loop
           muted

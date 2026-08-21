@@ -113,7 +113,7 @@ const SelectedCases = () => {
                       src={project.hoverVideoUrl || project.videoUrl} 
                       autoPlay loop muted playsInline 
                       className="w-full h-full object-cover opacity-80 group-hover:opacity-100 active:opacity-100 group-active:opacity-100 transition-all duration-[1.2s] ease-[0.33,1,0.68,1] group-hover:scale-[1.03] active:scale-[1.03] group-active:scale-[1.03]" 
-                    />
+                    poster={(project.hoverVideoUrl || project.videoUrl)?.includes('.b-cdn.net') ? (project.hoverVideoUrl || project.videoUrl).replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg') : project.image} />
                   )}
                 </div>
 
