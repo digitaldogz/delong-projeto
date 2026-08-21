@@ -25,7 +25,7 @@ const Footer = () => {
       <div className="container-premium">
         
         {/* MAIN FOOTER CONTENT */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 py-16 md:py-24">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16 py-12 md:py-24">
           
           {/* LADO ESQUERDO */}
           <div className="flex flex-col justify-between gap-12">
@@ -37,7 +37,7 @@ const Footer = () => {
 
             {/* CTA Box */}
             <a href={`https://wa.me/${config.whatsapp_number}`} target="_blank" rel="noreferrer" className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-8 flex justify-between items-center">
-              <span className="text-lg md:text-xl font-bold text-background tracking-tight">Tem um projeto? Vamos conversar</span>
+              <span className="text-base md:text-xl font-bold text-background tracking-tight">Tem um projeto? Vamos conversar</span>
               <ArrowUpRight className="text-background w-6 h-6 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
             </a>
             
@@ -78,7 +78,7 @@ const Footer = () => {
             </div>
 
             {/* Contato */}
-            <div className="mt-12 grid grid-cols-2 gap-8">
+            <div className="mt-12 flex flex-col md:grid md:grid-cols-2 gap-8">
               <div>
                 <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">CONTATO</span>
                 <a href={`mailto:${config.contact_email}`} className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">{config.contact_email}</a>

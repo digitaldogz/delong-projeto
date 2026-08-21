@@ -85,13 +85,13 @@ const SelectedCases = () => {
         </div>
 
         {/* GRID DE PROJETOS Zeit Style */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-x-6 gap-y-16">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-x-6 gap-x-6 gap-y-16">
           
           {displayProjects.map((project, index) => {
             if (!project) return null;
             // Dois grandes (50% cada) na primeira linha, quatro pequenos (25% cada) na segunda.
             const isLarge = index < 2;
-            const spanClass = isLarge ? "md:col-span-2" : "md:col-span-1";
+            const spanClass = isLarge ? "col-span-1 md:col-span-2" : "col-span-1 md:col-span-1";
 
             return (
               <CaseLink 
@@ -155,7 +155,7 @@ const SelectedCases = () => {
         </div>
         
         {/* Botão de Ver Todos (Centralizado embaixo) */}
-        <div className="mt-32 flex justify-center">
+        <div className="mt-16 md:mt-32 flex justify-center">
           <button 
             onClick={() => navigateWithTransition('/projetos')} 
             className="text-sm font-medium text-foreground tracking-widest hover:text-white/60 transition-colors"
