@@ -9,12 +9,14 @@ import { useMotionValue, useTransform, motion } from "framer-motion";
 
 import { useHeroAnimation } from "@/hooks/use-gsap-animations";
 import { useTransitionNavigate } from "@/components/PageTransition";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 const HeroSection = () => {
   const heroRef = useHeroAnimation();
   const navigateWithTransition = useTransitionNavigate();
   const scrollY = useMotionValue(0);
   const [containerHeight, setContainerHeight] = useState(0);
+  const { config } = useSiteConfig();
 
   // Setup scroll listener and container height
   useEffect(() => {
@@ -51,6 +53,7 @@ const HeroSection = () => {
       {/* Video Background with reveal animation */}
       <div className="absolute inset-0 z-0 hero-media">
         <video
+          key={config.hero_video_url}
           autoPlay
           loop
           muted
@@ -58,7 +61,7 @@ const HeroSection = () => {
           className="w-full h-full object-cover opacity-70"
         >
           <source
-            src="/DOCUMENTARY_EXPO.mp4"
+            src={config.hero_video_url}
             type="video/mp4"
           />
         </video>
@@ -86,33 +89,33 @@ const HeroSection = () => {
             {/* Masked Title Animation */}
             <div className="overflow-hidden hero-title-mask">
               <h1 className="hero-title text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1]">
-                A Arte é o Princípio —
+                {config.hero_title}
               </h1>
             </div>
             <div className="overflow-hidden hero-title-mask">
               <h2 className="hero-title text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-muted-foreground">
-                Criatividade no Comando
+                {config.hero_subtitle}
               </h2>
             </div>
 
             {/* Floating Widget with stagger - clickable link to case */}
             <button
-              onClick={() => navigateWithTransition('/projeto/expo-irati-2024')}
+              onClick={() => navigateWithTransition('/projetos')}
               className="hero-widget absolute right-0 bottom-0 hidden md:flex items-center gap-3 bg-background/80 backdrop-blur-md p-3 border border-border/20 max-w-xs cursor-pointer hover:bg-background/95 hover:scale-[1.02] transition-all duration-300"
             >
               <div className="w-14 h-14 bg-primary flex items-center justify-center shrink-0">
                 <span className="text-[9px] text-center leading-tight font-bold text-primary-foreground">
-                  NOVO
+                  VER
                   <br />
-                  CASE
+                  TUDO
                 </span>
               </div>
               <div className="flex flex-col pr-3 text-left">
                 <span className="text-[9px] uppercase tracking-widest text-muted-foreground mb-1">
-                  Destaque Recente
+                  Nosso Portfólio
                 </span>
                 <span className="text-xs font-bold uppercase leading-tight">
-                  Documentário Expo Irati
+                  Explorar Projetos
                 </span>
               </div>
             </button>
@@ -128,7 +131,7 @@ const HeroSection = () => {
         <div className="container-premium flex justify-between items-end">
           <div className="pointer-events-auto hero-stagger">
             <a
-              href="https://instagram.com"
+              href={config.instagram_url}
               target="_blank"
               rel="noreferrer"
               className="text-[10px] font-bold tracking-widest uppercase opacity-80 hover:opacity-100 transition-opacity"

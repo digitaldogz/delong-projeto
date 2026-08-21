@@ -8,10 +8,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
+import { useSiteConfig } from "@/hooks/useSiteConfig";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const AboutPage = () => {
+  const { config } = useSiteConfig();
   const heroRef = useRef<HTMLElement>(null);
   const manifestoRef = useRef<HTMLElement>(null);
   const visionRef = useRef<HTMLElement>(null);
@@ -201,7 +203,7 @@ const AboutPage = () => {
             <div className="container-premium w-full flex flex-col md:flex-row justify-between gap-8">
               {/* Left - Description */}
               <p className="hero-description text-sm text-foreground/80 leading-relaxed max-w-md opacity-0">
-                Fundada pelo fotógrafo Cesar Delong, a Delong Media House é uma produtora audiovisual de atuação nacional, dedicada a registrar e contar histórias por meio de imagens marcantes.
+                {config.about_text_1}
               </p>
 
               {/* Right - Subtitle */}
@@ -237,7 +239,7 @@ const AboutPage = () => {
                 e identidade visual
               </h2>
               <p className="text-muted-foreground text-lg leading-relaxed max-w-md">
-                Cesar Delong atua desde 2014 com ampla trajetória na cobertura dos principais eventos esportivos no Brasil e exterior, hoje liderando equipes de produção audiovisual na captação de filmes institucionais e publicitários.
+                {config.about_text_2}
               </p>
               <p className="text-muted-foreground text-lg leading-relaxed max-w-md mt-6">
                 Reconhecido em concursos fotográficos nacionais e internacionais, destaca-se pelo talento e contribuição ao desenvolvimento de produções de grande impacto.
@@ -305,12 +307,12 @@ const AboutPage = () => {
           <div className="flex gap-4 animate-marquee-left" style={{ animationDuration: '40s', width: 'max-content' }}>
             {[
               "/projects/galleries/expo 24/24EXPO00455.jpg",
-              "/projects/galleries/iratrail/DELONG00021.jpg",
+              "{config.about_image_1}",
               "/projects/galleries/BRUNO E MARRONE/153imb00171.jpg",
               "/projects/galleries/franco run/MIR_3286.jpg",
               "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00476.jpg",
               "/projects/galleries/expo 24/DJI_20240825170948_0471_D.jpg",
-              "/projects/galleries/iratrail/DELONG00025.jpg",
+              "{config.about_image_2}",
               "/projects/galleries/BRUNO E MARRONE/153imb00224.jpg",
               "/projects/galleries/franco run/RBK_6854.jpg",
               "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00723.jpg",
