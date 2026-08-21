@@ -85,23 +85,23 @@ const SelectedCases = () => {
         </div>
 
         {/* GRID DE PROJETOS Zeit Style */}
-        <div className="flex md:grid flex-nowrap md:grid-cols-4 gap-4 md:gap-x-6 gap-y-16 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none pb-8 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div className="flex md:grid flex-nowrap md:grid-cols-4 gap-4 md:gap-x-6 gap-y-16 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none pb-8 md:pb-0 px-6 md:px-0 -mx-6 md:mx-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           
           {displayProjects.map((project, index) => {
             if (!project) return null;
             // Dois grandes (50% cada) na primeira linha, quatro pequenos (25% cada) na segunda.
             const isLarge = index < 2;
             const spanClass = isLarge ? "md:col-span-2" : "md:col-span-1";
-            const mobileClass = "min-w-[85vw] sm:min-w-[60vw] snap-center shrink-0 md:min-w-0 md:shrink";
+            const mobileClass = "w-[75vw] min-w-[75vw] max-w-[75vw] sm:w-[60vw] sm:min-w-[60vw] sm:max-w-[60vw] snap-center shrink-0 md:w-auto md:min-w-0 md:max-w-none md:shrink";
 
             return (
               <CaseLink 
                 key={project.id} 
                 to={`/projeto/${project.slug}`} 
-                className={`group flex flex-col cursor-pointer ${spanClass} ${mobileClass}`}
+                className={`group flex flex-col overflow-hidden cursor-pointer ${spanClass} ${mobileClass}`}
               >
                 {/* Imagem ou Video (Zoom interno no hover) */}
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-900">
+                <div className="relative w-full aspect-[4/5] md:aspect-[16/10] overflow-hidden bg-zinc-900">
                   {project.image ? (
                     <img 
                       src={project.image} 
@@ -127,7 +127,7 @@ const SelectedCases = () => {
                   </div>
                   
                   {/* Título e Cliente */}
-                  <h3 className={`font-bold uppercase tracking-tight mb-2 leading-[1.2] ${isLarge ? 'text-2xl md:text-[1.7rem]' : 'text-lg md:text-xl'}`}>
+                  <h3 className={`font-bold uppercase tracking-tight mb-2 leading-[1.2] ${isLarge ? 'text-xl md:text-[1.7rem]' : 'text-lg md:text-xl'} line-clamp-2`}>
                     {project.title}
                   </h3>
                   <p className={`text-foreground/70 mb-16 ${isLarge ? 'text-sm' : 'text-xs'}`}>
