@@ -3,7 +3,7 @@
  * Inspired by zeitmedia.vn/services - clean layout with smooth animations.
  */
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
@@ -21,7 +21,7 @@ const ServicesPage = () => {
   const [loading, setLoading] = useState(true);
 
   // Busca dados
-  useEffect(() => {
+  useLayoutEffect(() => {
     const fetchServices = async () => {
       const data = await getServices();
       setServicesData(data);
@@ -31,7 +31,7 @@ const ServicesPage = () => {
   }, []);
 
   // Hero entrance
-  useEffect(() => {
+  useLayoutEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
@@ -54,20 +54,24 @@ const ServicesPage = () => {
   }, []);
 
   // Services list animations (dependem do carregamento)
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (loading || servicesData.length === 0) return;
     
     const ctx = gsap.context(() => {
+      // Inicia todos os itens como invisíveis instantaneamente para não piscar
+      gsap.set(".service-item", { opacity: 0, y: 30 });
+
       ScrollTrigger.batch(".service-item", {
         start: "top 85%",
         once: true,
         onEnter: (batch) => {
-          gsap.from(batch, {
-            opacity: 0,
-            y: 20,
-            duration: 0.5,
-            stagger: 0.1,
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            stagger: 0.15,
             ease: "power3.out",
+            clearProps: "all" // Limpa as props no final para evitar bugs futuros
           });
         },
       });
