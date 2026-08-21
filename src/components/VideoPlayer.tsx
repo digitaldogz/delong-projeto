@@ -209,10 +209,11 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         onMouseLeave={() => isPlaying && setShowControls(false)}
         onClick={togglePlay}
       >
+        {/* Auto-derive Bunny thumbnail if possible */}
         <video
           ref={videoRef}
           src={videoUrl}
-          poster={poster}
+          poster={videoUrl && videoUrl.includes('.b-cdn.net') ? videoUrl.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg') : poster}
           
           preload="metadata"
           className="absolute inset-0 w-full h-full object-contain"
