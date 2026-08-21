@@ -197,7 +197,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         <video
           ref={videoRef}
           src={processedUrl}
-          poster={processedUrl && processedUrl.includes('.b-cdn.net') ? processedUrl.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg') : poster}
+          poster={processedUrl && processedUrl.includes('.b-cdn.net') ? (poster || processedUrl.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg')) : poster}
           
           preload="metadata"
           className="absolute inset-0 w-full h-full object-contain"
