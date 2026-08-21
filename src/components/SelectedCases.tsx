@@ -91,13 +91,14 @@ const SelectedCases = () => {
             if (!project) return null;
             // Dois grandes (50% cada) na primeira linha, quatro pequenos (25% cada) na segunda.
             const isLarge = index < 2;
-            const spanClass = isLarge ? "col-span-1 md:col-span-2" : "col-span-1 md:col-span-1";
+            const spanClass = isLarge ? "md:col-span-2" : "md:col-span-1";
+            const mobileClass = "min-w-[85vw] sm:min-w-[60vw] snap-center shrink-0 md:min-w-0 md:shrink";
 
             return (
               <CaseLink 
                 key={project.id} 
                 to={`/projeto/${project.slug}`} 
-                className={`group flex flex-col cursor-pointer ${spanClass}`}
+                className={`group flex flex-col cursor-pointer ${spanClass} ${mobileClass}`}
               >
                 {/* Imagem ou Video (Zoom interno no hover) */}
                 <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-900">
