@@ -85,7 +85,7 @@ const SelectedCases = () => {
         </div>
 
         {/* GRID DE PROJETOS Zeit Style */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-x-6 gap-x-6 gap-y-16">
+        <div className="flex md:grid flex-nowrap md:grid-cols-4 gap-4 md:gap-x-6 gap-y-16 overflow-x-auto md:overflow-visible snap-x snap-mandatory md:snap-none pb-8 md:pb-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           
           {displayProjects.map((project, index) => {
             if (!project) return null;
