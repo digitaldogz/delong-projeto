@@ -73,38 +73,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     );
   }
 
-  // Auto-detect Bunny Stream URLs no campo video_url
-  // Formatos: iframe.mediadelivery.net/play/... OU iframe.mediadelivery.net/embed/...
-  if (videoUrl && videoUrl.includes('mediadelivery.net')) {
-    const isVertical = videoOrientation === 'vertical';
-    // Converte /play/ para /embed/ se necessário e adiciona params
-    let embedUrl = videoUrl;
-    if (videoUrl.includes('/play/')) {
-      embedUrl = videoUrl.replace('/play/', '/embed/');
+  // Auto-convert Bunny Stream Embed URLs into Direct MP4 URLs so the custom player is ALWAYS used
+  let processedUrl = videoUrl;
+  if (processedUrl && processedUrl.includes('mediadelivery.net')) {
+    const match = videoUrl.match(/\/(play|embed)\/\d+\/([a-zA-Z0-9-]+)/);
+    if (match) {
+      const guid = match[2];
+      // Forcefully convert to the direct CDN url so we get the custom bolinha branca player!
+      processedUrl = `https://vz-b5c6f4c7-023.b-cdn.net/${guid}/play_1080p.mp4`;
     }
-    // Adiciona parâmetros se ainda não tem
-    if (!embedUrl.includes('?')) {
-      embedUrl += '?autoplay=false&loop=false&muted=false&preload=true&responsive=true';
-    }
-    return (
-      <div className={`relative w-full ${isVertical ? 'aspect-[9/16] max-w-[400px] mx-auto' : 'aspect-video'} bg-black overflow-hidden shadow-2xl`}>
-        <iframe
-          src={embedUrl}
-          title={title}
-          loading="lazy"
-          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
-          allowFullScreen
-          className="absolute inset-0 w-full h-full border-0"
-        />
-      </div>
-    );
   }
 
   // Auto-detect Bunny CDN direct file URLs (b-cdn.net)
   // Esses funcionam com <video> tag normalmente
 
   // Focus on Direct Video URL with Custom Player
-  if (videoUrl) {
+  if (processedUrl) {
     const handleGlobalPause = (e: any) => {
       if (e.detail !== videoRef.current) {
         if (videoRef.current && !videoRef.current.paused) {
@@ -212,8 +196,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         {/* Auto-derive Bunny thumbnail if possible */}
         <video
           ref={videoRef}
-          src={videoUrl}
-          poster={videoUrl && videoUrl.includes('.b-cdn.net') ? videoUrl.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg') : poster}
+          src={processedUrl}
+          poster={processedUrl && processedUrl.includes('.b-cdn.net') ? videoUrl.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg') : poster}
           
           preload="metadata"
           className="absolute inset-0 w-full h-full object-contain"
