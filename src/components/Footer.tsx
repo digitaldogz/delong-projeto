@@ -6,6 +6,7 @@ const menuItems = [
   { label: 'PROJETOS', path: '/projetos' },
   { label: 'SERVIÇOS', path: '/servicos' },
   { label: 'QUEM SOMOS', path: '/sobre' },
+  { label: 'FOTOS', path: '/fotos' },
 ];
 
 const Footer = () => {
@@ -129,7 +130,7 @@ const Footer = () => {
 
       {/* COPYRIGHT BAR (Shared) */}
       <div className="border-t border-border">
-        <div className="container-premium py-6 flex flex-col md:flex-row justify-between items-center text-[10px] md:text-xs text-foreground md:text-muted-foreground uppercase tracking-wider font-bold md:font-normal">
+        <div className="container-premium py-6 flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center text-[10px] md:text-xs text-foreground md:text-muted-foreground uppercase tracking-wider font-bold md:font-normal text-left">
           <span>© {new Date().getFullYear()} Delong media house. Todos os direitos reservados. </span>
         </div>
       </div>
