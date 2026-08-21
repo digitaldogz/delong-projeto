@@ -79,7 +79,7 @@ const SelectedCases = () => {
             <span className="w-1.5 h-1.5 bg-foreground"></span>
             Our Works
           </span>
-          <h2 className="cases-title text-[3.5rem] md:text-7xl lg:text-[6rem] font-medium text-foreground tracking-tighter leading-none">
+          <h2 className="cases-title text-4xl md:text-7xl lg:text-[6rem] font-medium text-foreground tracking-tighter leading-none">
             Selected Cases
           </h2>
         </div>
@@ -92,7 +92,7 @@ const SelectedCases = () => {
             // Dois grandes (50% cada) na primeira linha, quatro pequenos (25% cada) na segunda.
             const isLarge = index < 2;
             const spanClass = isLarge ? "md:col-span-2" : "md:col-span-1";
-            const mobileClass = "w-[75vw] min-w-[75vw] max-w-[75vw] sm:w-[60vw] sm:min-w-[60vw] sm:max-w-[60vw] snap-center shrink-0 md:w-auto md:min-w-0 md:max-w-none md:shrink";
+            const mobileClass = "w-[65vw] min-w-[65vw] max-w-[65vw] sm:w-[50vw] sm:min-w-[50vw] sm:max-w-[50vw] snap-center shrink-0 md:w-auto md:min-w-0 md:max-w-none md:shrink";
 
             return (
               <CaseLink 
@@ -101,7 +101,7 @@ const SelectedCases = () => {
                 className={`group flex flex-col overflow-hidden cursor-pointer ${spanClass} ${mobileClass}`}
               >
                 {/* Imagem ou Video (Zoom interno no hover) */}
-                <div className="relative w-full aspect-[4/5] md:aspect-[16/10] overflow-hidden bg-zinc-900">
+                <div className="relative w-full aspect-[16/10] overflow-hidden bg-zinc-900">
                   {project.image ? (
                     <img 
                       src={project.image} 
@@ -127,7 +127,7 @@ const SelectedCases = () => {
                   </div>
                   
                   {/* Título e Cliente */}
-                  <h3 className={`font-bold uppercase tracking-tight mb-2 leading-[1.2] ${isLarge ? 'text-xl md:text-[1.7rem]' : 'text-lg md:text-xl'} line-clamp-2`}>
+                  <h3 className={`font-bold uppercase tracking-tight mb-2 leading-[1.2] ${isLarge ? 'text-lg md:text-[1.7rem]' : 'text-base md:text-xl'} line-clamp-2`}>
                     {project.title}
                   </h3>
                   <p className={`text-foreground/70 mb-16 ${isLarge ? 'text-sm' : 'text-xs'}`}>
