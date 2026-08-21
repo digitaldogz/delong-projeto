@@ -4,9 +4,10 @@
  * Data loaded from Supabase with static fallback.
  */
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useSearchParams } from "react-router-dom";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import { getProjects, Project } from "@/data/projects";
@@ -19,6 +20,10 @@ const ProjectsPage = () => {
   const gridRef = useRef<HTMLElement>(null);
   const [projectsList, setProjectsList] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // URL Params para Filtro Direto
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentCategory = searchParams.get("categoria") || "All";
 
   // Busca projetos do Supabase
   useEffect(() => {
@@ -29,6 +34,32 @@ const ProjectsPage = () => {
     };
     fetchProjects();
   }, []);
+
+  // Extrai categorias únicas (ignorando cases e espaços extras)
+  const categories = useMemo(() => {
+    const unique = new Set<string>();
+    projectsList.forEach(p => {
+      if (p.category) unique.add(p.category.trim());
+    });
+    return ["All", ...Array.from(unique).sort()];
+  }, [projectsList]);
+
+  // Filtra projetos baseados na categoria ativa
+  const filteredProjects = useMemo(() => {
+    if (currentCategory === "All") return projectsList;
+    return projectsList.filter(p => 
+      p.category?.trim().toLowerCase() === currentCategory.toLowerCase()
+    );
+  }, [projectsList, currentCategory]);
+
+  const setCategory = (cat: string) => {
+    if (cat === "All") {
+      searchParams.delete("categoria");
+    } else {
+      searchParams.set("categoria", cat.toLowerCase());
+    }
+    setSearchParams(searchParams);
+  };
 
   // Hero entrance animation
   useEffect(() => {
@@ -49,7 +80,7 @@ const ProjectsPage = () => {
       <SiteHeader />
 
       {/* Hero Section */}
-      <section ref={heroRef} className="pt-32 pb-20 md:pt-40 md:pb-32">
+      <section ref={heroRef} className="pt-32 pb-12 md:pt-40 md:pb-24">
         <div className="container-premium">
           <div>
             <h1 className="page-title text-6xl md:text-8xl lg:text-[10rem] font-light tracking-tight italic mb-12 leading-[1]">
@@ -57,11 +88,21 @@ const ProjectsPage = () => {
             </h1>
           </div>
 
-          {/* Filter */}
-          <div className="page-filter flex items-center gap-6 text-sm uppercase tracking-widest border-b border-border/30 pb-6">
-            <span className="text-foreground font-bold cursor-pointer border-b border-foreground pb-1">
-              All
-            </span>
+          {/* Dynamic Filters */}
+          <div className="page-filter flex flex-wrap items-center gap-6 text-xs md:text-sm uppercase tracking-widest border-b border-border/30 pb-6">
+            {!loading && categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setCategory(cat)}
+                className={`cursor-pointer transition-colors pb-1 border-b-2 ${
+                  currentCategory.toLowerCase() === cat.toLowerCase() 
+                    ? "text-foreground font-bold border-foreground" 
+                    : "text-muted-foreground border-transparent hover:text-foreground"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
       </section>
@@ -73,9 +114,13 @@ const ProjectsPage = () => {
             <div className="flex items-center justify-center py-20">
               <span className="uppercase text-sm tracking-widest text-muted-foreground/50">Carregando projetos...</span>
             </div>
+          ) : filteredProjects.length === 0 ? (
+             <div className="flex items-center justify-center py-20">
+              <span className="uppercase text-sm tracking-widest text-muted-foreground/50">Nenhum projeto encontrado nesta categoria.</span>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
-              {projectsList.map((project) => (
+              {filteredProjects.map((project) => (
                 <div key={project.id} className="project-card">
                   <CaseLink
                     to={`/projeto/${project.slug}`}

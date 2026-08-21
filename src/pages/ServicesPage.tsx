@@ -15,33 +15,33 @@ gsap.registerPlugin(ScrollTrigger);
 const services = [
   {
     number: "01",
-    title: "Cobertura de Eventos",
-    description: "Capturamos a essência de cada momento com expertise e criatividade. Desde competições esportivas até grandes shows e eventos corporativos, oferecemos cobertura completa que transforma a energia e a experiência do ambiente em registros dinâmicos inesquecíveis.",
-    image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop"
-  },
-  {
-    number: "02",
     title: "Filmes Institucionais",
-    description: "Produções completas focadas em contar a história verdadeira da sua marca. Trabalhamos lado a lado com empresas para produzir filmes que não apenas informam, mas elevam a reputação corporativa, reforçando autoridade e consolidando um posicionamento estratégico no mercado.",
+    description: "Produções focadas em contar a história verdadeira da sua marca. Trabalhamos com prefeituras, grandes indústrias e empresas para produzir filmes que não apenas informam, mas elevam a reputação corporativa, reforçando autoridade e consolidando um posicionamento estratégico no mercado.",
     image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071&auto=format&fit=crop"
   },
   {
-    number: "03",
-    title: "Vídeos Publicitários",
-    description: "Trazemos o visual requintado do cinema para a publicidade da sua marca. Criamos comerciais, spots e campanhas projetadas com extrema atenção aos detalhes – desde o jogo de luz e direção de arte até a coloração final – visando prender a atenção do público e gerar conversões reais.",
+    number: "02",
+    title: "Publicidade & Motion Graphics",
+    description: "Trazemos o visual requintado do cinema e animações gráficas modernas para a publicidade da sua marca. Criamos comerciais, spots e motion design projetados com extrema atenção aos detalhes visando prender a atenção do público nas redes sociais e gerar conversões reais.",
     image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2000&auto=format&fit=crop"
   },
   {
-    number: "04",
+    number: "03",
     title: "Fotografia Profissional",
-    description: "A essência de tudo começa aqui. Realizamos ensaios fotográficos de altíssimo nível, foto produto, arquitetura e cobertura fotográfica VIP para marcas que precisam de imagens impactantes, entregando arquivos tratados prontos para estampar publicações, outdoors e campanhas completas.",
+    description: "Realizamos ensaios fotográficos de altíssimo nível, foto produto, arquitetura e cobertura de eventos corporativos para marcas que precisam de imagens impactantes, entregando arquivos tratados prontos para estampar publicações, outdoors e campanhas completas.",
     image: "https://images.unsplash.com/photo-1554046920-90cca97ec3a2?q=80&w=2072&auto=format&fit=crop"
   },
   {
-    number: "05",
-    title: "Produção de Sites",
-    description: "A presença digital da sua marca começa com uma estrutura sólida. Desenvolvemos sites institucionais, hotsites de eventos e páginas de alta performance totalmente responsivos e personalizados. Combinamos design inovador com velocidade impecável para ser o palco perfeito do seu conteúdo audiovisual.",
+    number: "04",
+    title: "Desenvolvimento de Sites",
+    description: "A presença digital da sua marca começa com uma estrutura sólida. Desenvolvemos sites institucionais, hotsites e Landing Pages de alta performance. Combinamos design inovador com velocidade impecável para ser o palco perfeito do seu negócio e receber seus clientes.",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
+  },
+  {
+    number: "05",
+    title: "Tráfego Pago & Performance",
+    description: "De nada adianta ter o melhor vídeo e o melhor site se ninguém ver. Criamos e gerenciamos campanhas de anúncios (Ads) ultra segmentadas no Google, Instagram e Facebook. Colocamos o seu conteúdo de alta qualidade diretamente na tela de potenciais clientes que já estão buscando pelo seu serviço, transformando visualizações em vendas reais.",
+    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2074&auto=format&fit=crop"
   }
 ];
 
