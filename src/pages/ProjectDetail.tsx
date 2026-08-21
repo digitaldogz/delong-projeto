@@ -128,7 +128,7 @@ const ProjectInfoSection = ({ project }: { project: Project }) => (
 const VideoSection = ({ project }: { project: Project }) => (
   <section className="py-[100px]">
     <div className="container-premium">
-      <div className={`grid gap-4 ${project.videoOrientation === 'vertical' ? (project.videoUrls.length === 1 ? 'grid-cols-1 max-w-sm mx-auto' : project.videoUrls.length === 2 ? 'grid-cols-2 max-w-4xl mx-auto' : project.videoUrls.length === 3 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4') : 'grid-cols-1'}`}>
+      <div className={`grid gap-4 ${project.videoOrientation === 'vertical' ? (project.videoUrls.length === 1 ? 'grid-cols-1 max-w-sm mx-auto' : project.videoUrls.length === 2 ? 'grid-cols-2 max-w-4xl mx-auto' : project.videoUrls.length === 3 ? 'grid-cols-1 md:grid-cols-3' : project.videoUrls.length === 4 ? 'grid-cols-2 max-w-4xl mx-auto' : 'grid-cols-2 md:grid-cols-4') : 'grid-cols-1'}`}>
         {project.videoUrls.map((url, i) => (
           <VideoPlayer
             key={i}
