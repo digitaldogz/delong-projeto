@@ -171,13 +171,10 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
               className={`overflow-hidden bg-muted relative ${isWide ? "md:col-span-2" : ""}`}
             >
               {isDirectVideo ? (
-                <video
-                  src={mediaUrl}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-auto block object-cover hover:scale-105 transition-transform duration-700"
+                <VideoPlayer
+                  videoUrl={mediaUrl}
+                  title={title + " " + index}
+                  videoOrientation="horizontal"
                 />
               ) : isIframeVideo ? (
                 <div className="absolute inset-0 w-full h-full pointer-events-none">

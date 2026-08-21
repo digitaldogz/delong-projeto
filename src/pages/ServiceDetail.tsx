@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
 import NotFound from "@/pages/NotFound";
 import { getServiceBySlug, ServiceItem } from "@/data/services";
+import VideoPlayer from "@/components/VideoPlayer";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -98,24 +99,53 @@ const ServiceDetail = () => {
 
       {/* Featured Media */}
       <section className="service-image-container px-4 md:px-8 mb-20 md:mb-32">
-        <div className="w-full aspect-video md:aspect-[21/9] overflow-hidden bg-muted">
-          {service.image.match(/\.(mp4|webm|mov)$/i) || service.image.includes('bunny') ? (
-            <video
-              src={service.image}
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <img 
-              src={service.image} 
-              alt={service.title} 
-              className="w-full h-full object-cover"
-            />
-          )}
-        </div>
+        {(() => {
+          // Parse image as JSON array if possible
+          let mediaUrls = [service.image];
+          try {
+            if (service.image.trim().startsWith('[')) {
+              mediaUrls = JSON.parse(service.image);
+            }
+          } catch (e) {
+            // keep as single item
+          }
+
+          const isVideo = (url) => url.match(/\.(mp4|webm|mov)$/i) || url.includes('bunny');
+          const isAllVideos = mediaUrls.every(isVideo);
+
+          if (isAllVideos) {
+            // Render VideoPlayers in a grid
+            const gridClass = mediaUrls.length === 1 
+              ? 'grid-cols-1 max-w-5xl mx-auto' 
+              : mediaUrls.length === 2 
+                ? 'grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-4' 
+                : 'grid-cols-1 md:grid-cols-3 gap-4';
+
+            return (
+              <div className={`grid ${gridClass}`}>
+                {mediaUrls.map((url, idx) => (
+                  <VideoPlayer
+                    key={idx}
+                    videoUrl={url}
+                    title={service.title}
+                    videoOrientation={mediaUrls.length > 1 ? 'vertical' : 'horizontal'}
+                  />
+                ))}
+              </div>
+            );
+          } else {
+            // Render as single image Hero
+            return (
+              <div className="w-full aspect-video md:aspect-[21/9] overflow-hidden bg-muted">
+                <img 
+                  src={service.image} 
+                  alt={service.title} 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            );
+          }
+        })()}
       </section>
 
       {/* Content Section */}

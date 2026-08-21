@@ -36,7 +36,7 @@ const Footer = () => {
             </div>
 
             {/* CTA Box */}
-            <a href={`https://wa.me/${config.whatsapp_number}`} target="_blank" rel="noreferrer" className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-8 flex justify-between items-center">
+            <a href={`https://wa.me/${config.whatsapp_number}`} target="_blank" rel="noreferrer" className="group block w-full max-w-md bg-foreground hover:bg-foreground/90 transition-colors py-6 px-6 md:px-8 flex justify-between items-center rounded-none">
               <span className="text-base md:text-xl font-bold text-background tracking-tight">Tem um projeto? Vamos conversar</span>
               <ArrowUpRight className="text-background w-6 h-6 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
             </a>
@@ -59,7 +59,7 @@ const Footer = () => {
                   onClick={() => handleNavClick(item.path)}
                   className="group py-6 border-b border-border flex justify-between items-center hover:pl-2 transition-all duration-300 cursor-pointer w-full text-left"
                 >
-                  <span className="text-xs md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item.label}</span>
+                  <span className="text-sm md:text-sm font-medium text-muted-foreground uppercase tracking-widest group-hover:text-foreground transition-colors">{item.label}</span>
                   <ArrowUpRight className="text-muted-foreground w-4 h-4 group-hover:text-foreground transition-colors" />
                 </button>
               ))}
@@ -83,7 +83,7 @@ const Footer = () => {
                 <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">CONTATO</span>
                 <a href={`mailto:${config.contact_email}`} className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">{config.contact_email}</a>
               </div>
-              <div className="text-left md:text-right mt-8 md:mt-0">
+              <div className="text-left md:text-right mt-2 md:mt-0">
                 <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">TELEFONE/WHATSAPP</span>
                 <a href={`https://wa.me/${config.whatsapp_number}`} className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">{config.whatsapp_number}</a>
               </div>
