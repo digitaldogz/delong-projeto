@@ -33,6 +33,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
   
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(1);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -136,8 +137,31 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
     const toggleMute = (e: React.MouseEvent) => {
       e.stopPropagation();
       if (videoRef.current) {
-        videoRef.current.muted = !isMuted;
-        setIsMuted(!isMuted);
+        if (isMuted) {
+          videoRef.current.muted = false;
+          videoRef.current.volume = volume === 0 ? 1 : volume;
+          if (volume === 0) setVolume(1);
+          setIsMuted(false);
+        } else {
+          videoRef.current.muted = true;
+          setIsMuted(true);
+        }
+      }
+    };
+
+    const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      e.stopPropagation();
+      const newVolume = parseFloat(e.target.value);
+      setVolume(newVolume);
+      if (videoRef.current) {
+        videoRef.current.volume = newVolume;
+        if (newVolume === 0) {
+          videoRef.current.muted = true;
+          setIsMuted(true);
+        } else {
+          videoRef.current.muted = false;
+          setIsMuted(false);
+        }
       }
     };
 
@@ -188,7 +212,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         <video
           ref={videoRef}
           src={videoUrl}
-          poster={poster}
+          
           preload="none"
           className="absolute inset-0 w-full h-full object-contain"
           onTimeUpdate={handleTimeUpdate}
@@ -233,19 +257,27 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           {/* Bottom Bar */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
-              <button 
-                onClick={togglePlay}
-                className="text-white hover:text-primary transition-colors outline-none"
-              >
-                {isPlaying ? <Pause className="w-6 h-6" fill="currentColor" /> : <Play className="w-6 h-6" fill="currentColor" />}
-              </button>
-              
+              <div className="flex items-center gap-2 group/volume relative">
               <button 
                 onClick={toggleMute}
                 className="text-white hover:text-primary transition-colors outline-none"
               >
-                {isMuted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+                {isMuted || volume === 0 ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
               </button>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={isMuted ? 0 : volume}
+                onChange={handleVolumeChange}
+                onClick={(e) => e.stopPropagation()}
+                className="w-0 opacity-0 group-hover/volume:w-16 group-hover/volume:opacity-100 transition-all duration-300 h-1.5 bg-white/30 rounded-full appearance-none [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-full cursor-pointer hover:[&::-webkit-slider-thumb]:scale-125"
+                style={{
+                  background: `linear-gradient(to right, white ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.3) ${(isMuted ? 0 : volume) * 100}%)`
+                }}
+              />
+            </div>
             </div>
 
             <div className="flex items-center gap-4">
