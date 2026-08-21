@@ -48,7 +48,7 @@ const HeroSection = () => {
   return (
     <section
       ref={heroRef}
-      className="relative w-full h-screen overflow-hidden text-foreground bg-background"
+      className="relative w-full h-[100dvh] overflow-hidden text-foreground bg-background"
     >
       {/* Video Background with reveal animation */}
       <div className="absolute inset-0 z-0 hero-media">
@@ -82,18 +82,18 @@ const HeroSection = () => {
       {/* Main Content with parallax */}
       <motion.div
         style={{ opacity, y, scale }}
-        className="relative z-20 w-full h-screen flex flex-col justify-end pb-24 md:pb-28"
+        className="relative z-20 w-full h-[100dvh] flex flex-col justify-end pb-24 md:pb-28"
       >
         <div className="container-premium">
           <div className="flex flex-col gap-0 relative text-left">
             {/* Masked Title Animation */}
             <div className="overflow-hidden hero-title-mask">
-              <h1 className="hero-title text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1]">
+              <h1 className="hero-title text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1]">
                 {config.hero_title}
               </h1>
             </div>
             <div className="overflow-hidden hero-title-mask">
-              <h2 className="hero-title text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-muted-foreground">
+              <h2 className="hero-title text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight leading-[1.1] text-muted-foreground">
                 {config.hero_subtitle}
               </h2>
             </div>
