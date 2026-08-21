@@ -96,14 +96,25 @@ const ServiceDetail = () => {
         </div>
       </section>
 
-      {/* Featured Image */}
+      {/* Featured Media */}
       <section className="service-image-container px-4 md:px-8 mb-20 md:mb-32">
         <div className="w-full aspect-video md:aspect-[21/9] overflow-hidden bg-muted">
-          <img 
-            src={service.image} 
-            alt={service.title} 
-            className="w-full h-full object-cover"
-          />
+          {service.image.match(/\.(mp4|webm|mov)$/i) || service.image.includes('bunny') ? (
+            <video
+              src={service.image}
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <img 
+              src={service.image} 
+              alt={service.title} 
+              className="w-full h-full object-cover"
+            />
+          )}
         </div>
       </section>
 

@@ -3,12 +3,12 @@
  * Grid of all photo collections with GSAP animations.
  */
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
-import { photoCollections } from "@/data/photos";
+import { getPhotos, PhotoCollection } from "@/data/photos";
 import { CaseLink } from "@/components/PageTransition";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,8 +16,21 @@ gsap.registerPlugin(ScrollTrigger);
 const FotosPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const gridRef = useRef<HTMLElement>(null);
+  
+  const [photos, setPhotos] = useState<PhotoCollection[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Hero entrance animation - apenas filtro com fade leve
+  // Busca dados
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      const data = await getPhotos();
+      setPhotos(data);
+      setLoading(false);
+    };
+    fetchPhotos();
+  }, []);
+
+  // Hero entrance animation
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from(".page-filter", {
@@ -56,53 +69,59 @@ const FotosPage = () => {
       {/* Photos Grid */}
       <section ref={gridRef} className="pb-32">
         <div className="container-premium">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
-            {photoCollections.map((photo) => (
-              <div key={photo.id} className="project-card">
-                <CaseLink
-                  to={`/foto/${photo.slug}`}
-                  className="group cursor-pointer flex flex-col gap-4"
-                >
-                  {/* Image */}
-                  <div className="w-full overflow-hidden bg-muted aspect-video relative flex items-center justify-center">
-                    {photo.image ? (
-                      <img
-                        src={photo.image}
-                        alt={photo.title}
-                        className="project-image w-full h-full object-cover transition-transform duration-700 ease-[0.33,1,0.68,1] group-hover:scale-105"
-                      />
-                    ) : (
-                      <span className="text-muted-foreground/30 font-mono text-sm uppercase">Capa Pendente</span>
-                    )}
-                    <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
-                  </div>
+          {loading ? (
+            <div className="py-20 flex justify-center">
+              <span className="text-xs uppercase tracking-widest text-muted-foreground">Carregando galerias...</span>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-20">
+              {photos.map((photo) => (
+                <div key={photo.id} className="project-card">
+                  <CaseLink
+                    to={`/foto/${photo.slug}`}
+                    className="group cursor-pointer flex flex-col gap-4"
+                  >
+                    {/* Image */}
+                    <div className="w-full overflow-hidden bg-muted aspect-video relative flex items-center justify-center">
+                      {photo.image ? (
+                        <img
+                          src={photo.image}
+                          alt={photo.title}
+                          className="project-image w-full h-full object-cover transition-transform duration-700 ease-[0.33,1,0.68,1] group-hover:scale-105"
+                        />
+                      ) : (
+                        <span className="text-muted-foreground/30 font-mono text-sm uppercase">Capa Pendente</span>
+                      )}
+                      <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-500" />
+                    </div>
 
-                  {/* Metadata */}
-                  <div className="flex justify-between items-center text-[10px] md:text-xs font-mono text-muted-foreground border-b border-border/30 pb-3 mt-2">
-                    <span>{photo.year}</span>
-                    <span className="uppercase">{photo.category}</span>
-                  </div>
+                    {/* Metadata */}
+                    <div className="flex justify-between items-center text-[10px] md:text-xs font-mono text-muted-foreground border-b border-border/30 pb-3 mt-2">
+                      <span>{photo.year}</span>
+                      <span className="uppercase">{photo.category}</span>
+                    </div>
 
-                  {/* Titles */}
-                  <div className="flex flex-col gap-1">
-                    <h3 className="text-xl md:text-2xl font-bold leading-tight uppercase tracking-tight group-hover:text-muted-foreground transition-colors">
-                      {photo.title}
-                    </h3>
-                    <p className="text-xs md:text-sm text-muted-foreground/60">
-                      {photo.description}
-                    </p>
-                  </div>
+                    {/* Titles */}
+                    <div className="flex flex-col gap-1">
+                      <h3 className="text-xl md:text-2xl font-bold leading-tight uppercase tracking-tight group-hover:text-muted-foreground transition-colors">
+                        {photo.title}
+                      </h3>
+                      <p className="text-xs md:text-sm text-muted-foreground/60">
+                        {photo.description}
+                      </p>
+                    </div>
 
-                  {/* View Gallery Button */}
-                  <div className="mt-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
-                    <span className="text-[10px] font-bold uppercase tracking-widest border-b border-transparent group-hover:border-foreground transition-all pb-0.5">
-                      Explorar Galeria
-                    </span>
-                  </div>
-                </CaseLink>
-              </div>
-            ))}
-          </div>
+                    {/* View Gallery Button */}
+                    <div className="mt-2 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                      <span className="text-[10px] font-bold uppercase tracking-widest border-b border-transparent group-hover:border-foreground transition-all pb-0.5">
+                        Explorar Galeria
+                      </span>
+                    </div>
+                  </CaseLink>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
