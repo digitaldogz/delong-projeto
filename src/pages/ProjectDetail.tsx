@@ -149,31 +149,49 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {gallery.map((mediaUrl, index) => {
           const isWide = index % 3 === 0;
-          const isVideo = mediaUrl.match(/\.(mp4|webm|mov)$/i) || mediaUrl.includes('bunny');
+          const isDirectVideo = mediaUrl.match(/\.(mp4|webm|mov)$/i) || mediaUrl.includes('bunny');
+          const isIframeVideo = mediaUrl.includes('mediadelivery.net');
           
+          let embedUrl = mediaUrl;
+          if (isIframeVideo) {
+            embedUrl = embedUrl.replace('/play/', '/embed/');
+            if (!embedUrl.includes('?')) {
+              embedUrl += '?autoplay=true&loop=true&muted=true&preload=true&responsive=true';
+            }
+          }
+
           return (
             <div
               key={index}
-              className={`overflow-hidden bg-muted ${
+              className={`overflow-hidden bg-muted relative ${
                 isWide ? "md:col-span-2 aspect-[16/9]" : "aspect-[9/16] md:aspect-[4/3]"
               }`}
             >
-              {isVideo ? (
+              {isDirectVideo ? (
                 <video
                   src={mediaUrl}
                   autoPlay
                   loop
                   muted
                   playsInline
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
+              ) : isIframeVideo ? (
+                <div className="absolute inset-0 w-full h-full pointer-events-none">
+                  <iframe
+                    src={embedUrl}
+                    loading="lazy"
+                    allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture"
+                    className="absolute inset-0 w-full h-full border-0 scale-105"
+                  />
+                </div>
               ) : (
                 <img
                   src={mediaUrl}
                   alt={`${title} - Mídia ${index + 1}`}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
               )}
             </div>
