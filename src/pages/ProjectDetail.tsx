@@ -147,22 +147,35 @@ const GallerySection = ({ gallery, title }: { gallery: string[]; title: string }
   <section className="pb-[120px]">
     <div className="container-premium">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {gallery.map((image, index) => {
+        {gallery.map((mediaUrl, index) => {
           const isWide = index % 3 === 0;
+          const isVideo = mediaUrl.match(/\.(mp4|webm|mov)$/i) || mediaUrl.includes('bunny');
+          
           return (
             <div
               key={index}
-              className={`overflow-hidden ${
-                isWide ? "md:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
+              className={`overflow-hidden bg-muted ${
+                isWide ? "md:col-span-2 aspect-[16/9]" : "aspect-[9/16] md:aspect-[4/3]"
               }`}
             >
-              <img
-                src={image}
-                alt={`${title} - Imagem ${index + 1}`}
-                loading="lazy"
-                decoding="async"
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
-              />
+              {isVideo ? (
+                <video
+                  src={mediaUrl}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              ) : (
+                <img
+                  src={mediaUrl}
+                  alt={`${title} - Mídia ${index + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
+                />
+              )}
             </div>
           );
         })}
