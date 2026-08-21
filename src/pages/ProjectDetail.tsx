@@ -128,14 +128,19 @@ const ProjectInfoSection = ({ project }: { project: Project }) => (
 const VideoSection = ({ project }: { project: Project }) => (
   <section className="py-[100px]">
     <div className="container-premium">
-      <VideoPlayer
-        youtubeId={project.youtubeId}
-        bunnyVideo={project.bunnyVideo}
-        videoUrl={project.videoUrl}
-        title={project.title}
-        poster={project.image}
-        videoOrientation={project.videoOrientation}
-      />
+      <div className={`grid gap-4 ${project.videoOrientation === 'vertical' ? (project.videoUrls.length === 1 ? 'grid-cols-1 max-w-sm mx-auto' : project.videoUrls.length === 2 ? 'grid-cols-2 max-w-4xl mx-auto' : project.videoUrls.length === 3 ? 'grid-cols-1 md:grid-cols-3' : 'grid-cols-2 md:grid-cols-4') : 'grid-cols-1'}`}>
+        {project.videoUrls.map((url, i) => (
+          <VideoPlayer
+            key={i}
+            youtubeId={i === 0 ? project.youtubeId : undefined}
+            bunnyVideo={i === 0 ? project.bunnyVideo : undefined}
+            videoUrl={url}
+            title={project.title}
+            poster={i === 0 ? project.image : undefined}
+            videoOrientation={project.videoOrientation}
+          />
+        ))}
+      </div>
     </div>
   </section>
 );
@@ -286,7 +291,7 @@ const ProjectDetail = () => {
       <SiteHeader />
       <HeroBanner project={project} />
       <ProjectInfoSection project={project} />
-      {(project.youtubeId || project.bunnyVideo || project.videoUrl) && (
+      {(project.youtubeId || project.bunnyVideo || (project.videoUrls && project.videoUrls.length > 0)) && (
         <VideoSection project={project} />
       )}
       {project.gallery && project.gallery.length > 0 && (

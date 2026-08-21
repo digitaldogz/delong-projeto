@@ -16,7 +16,7 @@ export interface Project {
     libraryId: string;
     videoId: string;
   };
-  videoUrl?: string;
+  videoUrls?: string[];
   videoUrl2?: string;
   hoverVideoUrl?: string;
   videoOrientation?: string;
@@ -38,7 +38,7 @@ const staticProjects: Project[] = [
       "Comissionado pela Prefeitura Municipal de Irati, este documentário é o registro definitivo da ExpoIrati 2024. Nossa produção mobilizou uma estrutura técnica avançada para capturar a magnitude do evento, equilibrando a precisão do agronegócio com a energia dos grandes espetáculos. O resultado é uma narrativa audiovisual que não apenas documenta números, mas preserva a identidade cultural e o crescimento econômico da região em uma obra de alto impacto técnico e institucional.",
     fullDescription:
       "Capturamos a essência e a energia da maior feira do Centro-Sul no documentário oficial da ExpoIrati 2024.",
-    videoUrl: "/projects/expo-irati-2024/DOCUMENTARY_EXPO-001-006.mp4",
+    videoUrls: ["/projects/expo-irati-2024/DOCUMENTARY_EXPO-001-006.mp4"],
     gallery: [
       "/projects/eventos/24EXPO00973.jpg",
       "/projects/eventos/24EXPO00988.jpg",
@@ -58,7 +58,7 @@ const staticProjects: Project[] = [
     image: "/projects/institucional-prefeitura-irati/capa.jpg",
     description: "Vídeo institucional horizontal para a Prefeitura de Irati.",
     fullDescription: "Produção de vídeo institucional destacando as ações e o desenvolvimento na cidade de Irati.",
-    videoUrl: "/projects/institucional-prefeitura-irati/video.mp4",
+    videoUrls: ["/projects/institucional-prefeitura-irati/video.mp4"],
     hoverVideoUrl: "/projects/institucional-prefeitura-irati/hover.mp4",
     gallery: [],
   },
@@ -73,7 +73,7 @@ const staticProjects: Project[] = [
     image: "/projects/aciai-institucional/capa.jpg",
     description: "Vídeo institucional focado no fortalecimento do comércio e indústria local.",
     fullDescription: "Apresentação institucional horizontal produzida para a Associação Comercial e Empresarial de Irati.",
-    videoUrl: "/projects/aciai-institucional/video.mp4",
+    videoUrls: ["/projects/aciai-institucional/video.mp4"],
     gallery: [],
   },
 ];
@@ -95,7 +95,16 @@ const mapSupabaseToProject = (data: any): Project => ({
   image: data.image || '',
   description: data.description || '',
   fullDescription: data.full_description || '',
-  videoUrl: data.video_url || undefined,
+  videoUrls: (() => {
+    if (!data.video_url) return [];
+    try {
+      const parsed = JSON.parse(data.video_url);
+      if (Array.isArray(parsed)) return parsed;
+      return [data.video_url];
+    } catch (e) {
+      return [data.video_url];
+    }
+  })(),
   videoUrl2: data.video_url2 || undefined,
   hoverVideoUrl: data.hover_video_url || undefined,
   videoOrientation: data.video_orientation || 'horizontal',
