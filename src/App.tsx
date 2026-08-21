@@ -18,6 +18,7 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
+import ServiceDetail from "./pages/ServiceDetail";
 import FotosPage from "./pages/FotosPage";
 import PhotoDetail from "./pages/PhotoDetail";
 import NotFound from "./pages/NotFound";
@@ -33,6 +34,7 @@ const AppRoutes = () => {
         <Route path="/sobre" element={<AboutPage />} />
         <Route path="/projetos" element={<Projects />} />
         <Route path="/servicos" element={<ServicesPage />} />
+        <Route path="/servicos/:slug" element={<ServiceDetail />} />
         <Route path="/fotos" element={<FotosPage />} />
         <Route path="/projeto/:slug" element={<ProjectDetail />} />
         <Route path="/foto/:slug" element={<PhotoDetail />} />

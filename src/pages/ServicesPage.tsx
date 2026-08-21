@@ -3,54 +3,34 @@
  * Inspired by zeitmedia.vn/services - clean layout with smooth animations.
  */
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SiteHeader from "@/components/SiteHeader";
 import Footer from "@/components/Footer";
-import { useTransitionNavigate } from "@/components/PageTransition";
+import { CaseLink, useTransitionNavigate } from "@/components/PageTransition";
+import { getServices, ServiceItem } from "@/data/services";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const services = [
-  {
-    number: "01",
-    title: "Filmes Institucionais",
-    description: "Produções focadas em contar a história verdadeira da sua marca. Trabalhamos com prefeituras, grandes indústrias e empresas para produzir filmes que não apenas informam, mas elevam a reputação corporativa, reforçando autoridade e consolidando um posicionamento estratégico no mercado.",
-    image: "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=2071&auto=format&fit=crop"
-  },
-  {
-    number: "02",
-    title: "Publicidade & Motion Graphics",
-    description: "Trazemos o visual requintado do cinema e animações gráficas modernas para a publicidade da sua marca. Criamos comerciais, spots e motion design projetados com extrema atenção aos detalhes visando prender a atenção do público nas redes sociais e gerar conversões reais.",
-    image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?q=80&w=2000&auto=format&fit=crop"
-  },
-  {
-    number: "03",
-    title: "Fotografia Profissional",
-    description: "Realizamos ensaios fotográficos de altíssimo nível, foto produto, arquitetura e cobertura de eventos corporativos para marcas que precisam de imagens impactantes, entregando arquivos tratados prontos para estampar publicações, outdoors e campanhas completas.",
-    image: "https://images.unsplash.com/photo-1554046920-90cca97ec3a2?q=80&w=2072&auto=format&fit=crop"
-  },
-  {
-    number: "04",
-    title: "Desenvolvimento de Sites",
-    description: "A presença digital da sua marca começa com uma estrutura sólida. Desenvolvemos sites institucionais, hotsites e Landing Pages de alta performance. Combinamos design inovador com velocidade impecável para ser o palco perfeito do seu negócio e receber seus clientes.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2015&auto=format&fit=crop"
-  },
-  {
-    number: "05",
-    title: "Tráfego Pago & Performance",
-    description: "De nada adianta ter o melhor vídeo e o melhor site se ninguém ver. Criamos e gerenciamos campanhas de anúncios (Ads) ultra segmentadas no Google, Instagram e Facebook. Colocamos o seu conteúdo de alta qualidade diretamente na tela de potenciais clientes que já estão buscando pelo seu serviço, transformando visualizações em vendas reais.",
-    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2074&auto=format&fit=crop"
-  }
-];
 
 const ServicesPage = () => {
   const heroRef = useRef<HTMLElement>(null);
   const servicesRef = useRef<HTMLElement>(null);
   const navigateWithTransition = useTransitionNavigate();
+  const [servicesData, setServicesData] = useState<ServiceItem[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Hero entrance - apenas descrição e CTA com fade leve, título fixo
+  // Busca dados
+  useEffect(() => {
+    const fetchServices = async () => {
+      const data = await getServices();
+      setServicesData(data);
+      setLoading(false);
+    };
+    fetchServices();
+  }, []);
+
+  // Hero entrance
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -73,8 +53,10 @@ const ServicesPage = () => {
     return () => ctx.revert();
   }, []);
 
-  // Services list - um fade único por item, sem animações complexas
+  // Services list animations (dependem do carregamento)
   useEffect(() => {
+    if (loading || servicesData.length === 0) return;
+    
     const ctx = gsap.context(() => {
       ScrollTrigger.batch(".service-item", {
         start: "top 85%",
@@ -92,24 +74,22 @@ const ServicesPage = () => {
     }, servicesRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [loading, servicesData]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
 
-      {/* Hero Section - Zeit Media style */}
+      {/* Hero Section */}
       <section ref={heroRef} className="pt-32 pb-20 md:pt-44 md:pb-28">
         <div className="container-premium">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-end">
-            {/* Title - Full width on mobile, spans 8 cols on desktop */}
             <div className="lg:col-span-8">
               <h1 className="hero-title text-[15vw] md:text-[12vw] lg:text-[8vw] xl:text-[7vw] font-light tracking-tight italic leading-[0.9]">
                 Serviços
               </h1>
             </div>
 
-            {/* Description + CTA - Right aligned */}
             <div className="lg:col-span-4 flex flex-col gap-8">
               <p className="hero-desc text-muted-foreground text-sm leading-relaxed max-w-sm">
                 Trabalhamos com marcas grandes e pequenas, locais e globais, em uma ampla gama de serviços criativos.
@@ -125,50 +105,65 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      {/* Divider line after hero - full width */}
       <div className="w-full border-t border-foreground/20" />
 
       {/* Services List */}
       <section ref={servicesRef}>
         <div className="container-premium">
-          {services.map((service, index) => (
-            <article key={service.number} className="service-item">
-              {/* Content grid */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 py-20 md:py-28">
-                {/* Number */}
-                <div className="lg:col-span-1">
-                  <span className="service-number text-sm text-muted-foreground/60 font-mono">
-                    {service.number}
-                  </span>
-                </div>
+          {loading ? (
+            <div className="py-20 flex justify-center">
+              <span className="text-xs uppercase tracking-widest text-muted-foreground">Carregando serviços...</span>
+            </div>
+          ) : (
+            servicesData.map((service, index) => (
+              <article key={service.id} className="service-item group relative">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 py-20 md:py-28">
+                  
+                  {/* Number */}
+                  <div className="lg:col-span-1">
+                    <span className="service-number text-sm text-muted-foreground/60 font-mono">
+                      {service.number}
+                    </span>
+                  </div>
 
-                {/* Text Content */}
-                <div className="lg:col-span-4 flex flex-col gap-6">
-                  <h2 className="service-title text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1]">
-                    {service.title}
-                  </h2>
-                  <p className="service-desc text-muted-foreground text-sm leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
+                  {/* Text Content */}
+                  <div className="lg:col-span-4 flex flex-col gap-6">
+                    <h2 className="service-title text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight leading-[1.1] transition-colors group-hover:text-muted-foreground">
+                      {service.title}
+                    </h2>
+                    <p className="service-desc text-muted-foreground text-sm leading-relaxed">
+                      {service.full_description}
+                    </p>
+                    
+                    {/* Link / Button */}
+                    <div className="mt-4 opacity-50 group-hover:opacity-100 transition-opacity duration-300">
+                      <CaseLink to={`/servicos/${service.slug}`} className="inline-flex items-center text-[10px] font-bold uppercase tracking-widest border-b border-transparent group-hover:border-foreground transition-all pb-0.5">
+                        Ver detalhes
+                        <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="ml-2 transform group-hover:translate-x-1 transition-transform">
+                          <path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fillRule="evenodd" clipRule="evenodd"></path>
+                        </svg>
+                      </CaseLink>
+                    </div>
+                  </div>
 
-                {/* Image */}
-                <div className="lg:col-span-7 lg:col-start-6">
-                  <div className="service-image relative aspect-[16/10] overflow-hidden w-full">
-                    <img
-                      src={service.image}
-                      alt={service.title}
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                      loading={index < 2 ? "eager" : "lazy"}
-                    />
+                  {/* Image */}
+                  <div className="lg:col-span-7 lg:col-start-6">
+                    <CaseLink to={`/servicos/${service.slug}`} className="block service-image relative aspect-[16/10] overflow-hidden w-full cursor-pointer">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        loading={index < 2 ? "eager" : "lazy"}
+                      />
+                    </CaseLink>
                   </div>
                 </div>
-              </div>
 
-              {/* Divider line after each service */}
-              <div className="w-full border-t border-foreground/20" />
-            </article>
-          ))}
+                {/* Divider line after each service */}
+                <div className="w-full border-t border-foreground/20" />
+              </article>
+            ))
+          )}
         </div>
       </section>
 

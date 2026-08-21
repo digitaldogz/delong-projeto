@@ -196,7 +196,7 @@ export const getPhotoBySlug = async (slug: string): Promise<PhotoCollection | nu
   try {
     const { data, error } = await supabase
       .from('photos')
-      .select('*')
+      .select('*').eq('is_active', true)
       .eq('slug', slug)
       .single();
 

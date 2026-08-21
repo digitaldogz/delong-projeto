@@ -112,7 +112,7 @@ export const getProjects = async (): Promise<Project[]> => {
   try {
     const { data, error } = await supabase
       .from('projects')
-      .select('*')
+      .select('*').eq('is_active', true)
       .order('sort_order', { ascending: true });
 
     if (!error && data && data.length > 0) {
@@ -133,7 +133,7 @@ export const getProjectBySlug = async (slug: string): Promise<Project | null> =>
   try {
     const { data, error } = await supabase
       .from('projects')
-      .select('*')
+      .select('*').eq('is_active', true)
       .eq('slug', slug)
       .single();
 
@@ -155,7 +155,8 @@ export const getRelatedProjects = async (currentSlug: string, limit: number = 3)
   try {
     const { data, error } = await supabase
       .from('projects')
-      .select('*')
+      .select('*').eq('is_active', true)
+      .eq('is_active', true)
       .neq('slug', currentSlug)
       .order('sort_order', { ascending: true })
       .limit(limit);
