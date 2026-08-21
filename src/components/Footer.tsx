@@ -83,7 +83,7 @@ const Footer = () => {
                 <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">CONTATO</span>
                 <a href={`mailto:${config.contact_email}`} className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">{config.contact_email}</a>
               </div>
-              <div className="text-right">
+              <div className="text-left md:text-right mt-8 md:mt-0">
                 <span className="text-xs text-muted-foreground uppercase tracking-widest block mb-3">TELEFONE/WHATSAPP</span>
                 <a href={`https://wa.me/${config.whatsapp_number}`} className="text-base md:text-lg font-bold hover:text-muted-foreground transition-colors">{config.whatsapp_number}</a>
               </div>

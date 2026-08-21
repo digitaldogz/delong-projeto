@@ -106,19 +106,19 @@ const SelectedCases = () => {
                     <img 
                       src={project.image} 
                       alt={project.title} 
-                      className="w-full h-full object-cover transition-transform duration-[1.2s] ease-[0.33,1,0.68,1] group-hover:scale-[1.03]" 
+                      className="w-full h-full object-cover transition-transform duration-[1.2s] ease-[0.33,1,0.68,1] group-hover:scale-[1.03] active:scale-[1.03] group-active:scale-[1.03]" 
                     />
                   ) : (
                     <video 
                       src={project.hoverVideoUrl || project.videoUrl} 
                       autoPlay loop muted playsInline 
-                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all duration-[1.2s] ease-[0.33,1,0.68,1] group-hover:scale-[1.03]" 
+                      className="w-full h-full object-cover opacity-80 group-hover:opacity-100 active:opacity-100 group-active:opacity-100 transition-all duration-[1.2s] ease-[0.33,1,0.68,1] group-hover:scale-[1.03] active:scale-[1.03] group-active:scale-[1.03]" 
                     />
                   )}
                 </div>
 
                 {/* Informações Pós Imagem (Ganha BG no Hover) */}
-                <div className="flex flex-col flex-1 pt-6 px-6 pb-6 transition-colors duration-500 group-hover:bg-[#151515]">
+                <div className="flex flex-col flex-1 pt-6 px-6 pb-6 transition-colors duration-500 group-hover:bg-[#151515] active:bg-[#151515] group-active:bg-[#151515]">
                   
                   {/* Metadados (Ano / Categoria) */}
                   <div className="flex justify-between items-center text-[10px] md:text-xs text-foreground/50 mb-6">
@@ -135,15 +135,15 @@ const SelectedCases = () => {
                   </p>
                   
                   {/* Botão Animado de View Case (Ancorado no final) */}
-                  <div className="mt-auto relative h-[20px] md:h-[24px] overflow-hidden border border-transparent group-hover:border-white/10 transition-colors duration-500">
+                  <div className="mt-auto relative h-[20px] md:h-[24px] overflow-hidden border border-transparent group-hover:border-white/10 active:border-white/10 group-active:border-white/10 transition-colors duration-500">
                     
                     {/* Posição Normal (Apenas texto discreto vazado, alinhado ao centro esquerdo) */}
-                    <div className="absolute inset-0 flex items-center text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/40 transition-transform duration-500 ease-[0.76,0,0.24,1] group-hover:-translate-y-full">
+                    <div className="absolute inset-0 flex items-center text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] text-foreground/40 transition-transform duration-500 ease-[0.76,0,0.24,1] group-hover:-translate-y-full active:-translate-y-full group-active:-translate-y-full">
                       VIEW CASE
                     </div>
 
                     {/* Posição Hover (Barra Branca Sólida que entra rasgando de baixo) */}
-                    <div className="absolute inset-0 flex items-center justify-between px-3 bg-white text-black transition-transform duration-500 ease-[0.76,0,0.24,1] translate-y-full group-hover:translate-y-0">
+                    <div className="absolute inset-0 flex items-center justify-between px-3 bg-white text-black transition-transform duration-500 ease-[0.76,0,0.24,1] translate-y-full group-hover:translate-y-0 active:translate-y-0 group-active:translate-y-0">
                       <span className="text-[8px] md:text-[9px] font-bold uppercase tracking-[0.2em] pt-0.5">VIEW CASE</span>
                       <ArrowRight className="w-2.5 h-2.5" />
                     </div>
