@@ -104,6 +104,22 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
 
   // Focus on Direct Video URL with Custom Player
   if (videoUrl) {
+    const handleGlobalPause = (e: any) => {
+      if (e.detail !== videoRef.current) {
+        if (videoRef.current && !videoRef.current.paused) {
+          videoRef.current.pause();
+          setIsPlaying(false);
+        }
+      }
+    };
+
+    useEffect(() => {
+      window.addEventListener('bunnyVideoPlay', handleGlobalPause);
+      return () => {
+        window.removeEventListener('bunnyVideoPlay', handleGlobalPause);
+      };
+    }, []);
+
     const togglePlay = () => {
       if (videoRef.current) {
         if (isPlaying) {
@@ -111,6 +127,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         } else {
           videoRef.current.play();
           setHasStarted(true);
+          window.dispatchEvent(new CustomEvent('bunnyVideoPlay', { detail: videoRef.current }));
         }
         setIsPlaying(!isPlaying);
       }
