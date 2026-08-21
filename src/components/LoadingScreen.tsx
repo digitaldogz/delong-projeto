@@ -69,9 +69,10 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
         {/* ── Counter ───────────────────────────────────── */}
         <span
           ref={counterRef}
-          className="text-7xl md:text-9xl font-light tracking-tighter text-foreground"
+          className="text-7xl md:text-9xl font-light tracking-tighter text-foreground flex items-baseline"
         >
           {counter}
+          <span className="text-4xl md:text-6xl ml-2">%</span>
         </span>
       </div>
     </div>
