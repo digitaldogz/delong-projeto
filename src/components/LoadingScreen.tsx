@@ -65,21 +65,13 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
       ref={containerRef}
       className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center p-6"
     >
-      <div className="intro-content flex flex-col items-center gap-8 opacity-0">
-        {/* ── Logo ──────────────────────────────── */}
-        <img
-          src={logo}
-          alt="Delong Media House"
-          className="h-14 md:h-20 w-auto"
-        />
-
+      <div className="intro-content flex flex-col items-center opacity-0">
         {/* ── Counter ───────────────────────────────────── */}
         <span
           ref={counterRef}
-          className="text-4xl md:text-5xl font-light tracking-tighter text-foreground"
+          className="text-7xl md:text-9xl font-light tracking-tighter text-foreground"
         >
           {counter}
-          <span className="text-2xl md:text-3xl ml-1">%</span>
         </span>
       </div>
     </div>
