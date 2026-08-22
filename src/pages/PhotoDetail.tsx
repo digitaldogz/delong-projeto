@@ -197,6 +197,7 @@ const PhotoDetail = () => {
   const navigateWithTransition = useTransitionNavigate();
 
   const [photo, setPhoto] = useState<PhotoCollection | null>(null);
+  const [relatedPhotos, setRelatedPhotos] = useState<PhotoCollection[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Busca dados
@@ -205,13 +206,15 @@ const PhotoDetail = () => {
       if (slug) {
         const data = await getPhotoBySlug(slug);
         setPhoto(data);
+        const related = await getRelatedPhotos(slug, 3);
+        setRelatedPhotos(related);
       }
       setLoading(false);
     };
     fetchPhoto();
   }, [slug]);
 
-  const relatedPhotos = slug ? getRelatedPhotos(slug, 3) : [];
+  // relatedPhotos is now in state
 
   if (loading) {
     return (
