@@ -162,6 +162,7 @@ const ServicesPage = () => {
                       {service.image.match(/\.(mp4|webm|mov)$/i) || service.image.includes('bunny') ? (
                         <video
                           src={service.image}
+                          poster={service.image.includes('.b-cdn.net') ? service.image.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg') : ''}
                           autoPlay
                           loop
                           muted

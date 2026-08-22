@@ -200,7 +200,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           poster={processedUrl && processedUrl.includes('.b-cdn.net') ? (poster || processedUrl.replace(/\/[^\/]+\.mp4$/, '/thumbnail.jpg')) : poster}
           
           preload="metadata"
-          className="absolute inset-0 w-full h-full object-contain"
+          className="absolute inset-0 w-full h-full object-cover"
           onTimeUpdate={handleTimeUpdate}
           onLoadedMetadata={handleLoadedMetadata}
           onEnded={() => setIsPlaying(false)}
