@@ -208,7 +208,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         />
 
         {/* Big Play Button Overlay (shown before starting) */}
-        {!hasStarted && (
+        {(!hasStarted || !isPlaying) && (
           <div className="absolute inset-0 flex items-center justify-center bg-black/40 transition-opacity duration-500">
             <div className="w-20 h-20 md:w-28 md:h-28 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/20 hover:scale-105 hover:bg-white/20 transition-all duration-300">
               <Play className="w-8 h-8 md:w-12 md:h-12 text-white ml-2" fill="white" />
@@ -243,6 +243,9 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           {/* Bottom Bar */}
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
+              <button onClick={togglePlay} className="text-white hover:text-primary transition-colors outline-none">
+                {isPlaying ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5" />}
+              </button>
               <div className="flex items-center gap-2 group/volume relative">
               <button 
                 onClick={toggleMute}
