@@ -307,12 +307,12 @@ const AboutPage = () => {
           <div className="flex gap-4 animate-marquee-left" style={{ animationDuration: '40s', width: 'max-content' }}>
             {[
               "/projects/galleries/expo 24/24EXPO00455.jpg",
-              "{config.about_image_1}",
+              config?.about_image_1 || "/projects/galleries/cesar/305A4844.jpg",
               "/projects/galleries/BRUNO E MARRONE/153imb00171.jpg",
               "/projects/galleries/franco run/MIR_3286.jpg",
               "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00476.jpg",
               "/projects/galleries/expo 24/DJI_20240825170948_0471_D.jpg",
-              "{config.about_image_2}",
+              config?.about_image_2 || "/projects/galleries/expo 24/24EXPO00728.jpg",
               "/projects/galleries/BRUNO E MARRONE/153imb00224.jpg",
               "/projects/galleries/franco run/RBK_6854.jpg",
               "/projects/galleries/JOAO_NETO_E_FREDERICO/6AGRIFRUT00723.jpg",
