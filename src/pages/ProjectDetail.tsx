@@ -136,7 +136,7 @@ const VideoSection = ({ project }: { project: Project }) => (
             bunnyVideo={i === 0 ? project.bunnyVideo : undefined}
             videoUrl={url}
             title={project.title}
-            poster={project.image}
+            poster={i === 0 ? project.image : undefined}
             videoOrientation={project.videoOrientation}
           />
         ))}
